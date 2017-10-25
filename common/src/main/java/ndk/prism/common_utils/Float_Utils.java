@@ -1,4 +1,4 @@
-package ndk.prism.snake_common;
+package ndk.prism.common_utils;
 
 
 public class Float_Utils {

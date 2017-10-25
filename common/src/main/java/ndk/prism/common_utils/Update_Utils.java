@@ -1,4 +1,4 @@
-package ndk.prism.snake_common;
+package ndk.prism.common_utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -44,19 +44,20 @@ public class Update_Utils {
 
 
     @SuppressWarnings("deprecation")
-    public static String[] get_server_version(String flavour) {
+    public static String[] get_server_version(String flavour, String full_version_check_URL) {
         String network_action_response;
         try {
             // Network access.
             DefaultHttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost("http://" + General_Data.SERVER_IP_ADDRESS + "/android/get_version.php");
+//            HttpPost http_post = new HttpPost("http://" + General_Data.SERVER_IP_ADDRESS + "/android/get_version.php");
+            HttpPost http_post = new HttpPost(full_version_check_URL);
             ArrayList<NameValuePair> name_pair_value = new ArrayList<>(1);
             name_pair_value.add(new BasicNameValuePair("flavour", flavour));
             http_post.setEntity(new UrlEncodedFormEntity(name_pair_value));
 
             ResponseHandler<String> response_handler = new BasicResponseHandler();
             network_action_response = http_client.execute(http_post, response_handler);
-            Log.d(General_Data.TAG, network_action_response);
+            Log.d("Server Version", network_action_response);
             return new String[]{"0", network_action_response};
 
         } catch (UnsupportedEncodingException e) {

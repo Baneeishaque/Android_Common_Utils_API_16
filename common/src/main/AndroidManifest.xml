@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="ndk.prism.snake_common">
+    package="ndk.prism.common_utils">
 
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">

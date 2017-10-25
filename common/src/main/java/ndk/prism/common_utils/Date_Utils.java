@@ -1,4 +1,4 @@
-package ndk.prism.snake_common;
+package ndk.prism.common_utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
