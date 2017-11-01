@@ -16,6 +16,14 @@ public class Date_Picker_Utils {
 
     }
 
+    public static void show_date_picker_from_today(Context context, DatePickerDialog.OnDateSetListener date, Calendar calendar)
+    {
+        DatePickerDialog date_Picker_Dialog = new DatePickerDialog(context, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        date_Picker_Dialog.getDatePicker().setMinDate(new Date().getTime());
+        date_Picker_Dialog.show();
+
+    }
+
     public static void show_date_picker_upto_today_plus(Context context, DatePickerDialog.OnDateSetListener date, Calendar calendar)
     {
         DatePickerDialog date_Picker_Dialog = new DatePickerDialog(context, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
