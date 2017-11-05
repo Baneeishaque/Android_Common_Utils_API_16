@@ -10,7 +10,7 @@ public class Date_Utils {
 
     public static SimpleDateFormat mysql_Date_Format = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
     public static SimpleDateFormat normal_Date_Format = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
-    public static SimpleDateFormat normal_Date_Format_words = new SimpleDateFormat("E,M d yyyy", Locale.UK);
+    public static SimpleDateFormat normal_Date_Format_words = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.UK);
 
     public static String get_current_date_string_in_mysql_format() {
         return mysql_Date_Format.format(new Date());
