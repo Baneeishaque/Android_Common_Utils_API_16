@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Common_Utils.iml" filepath="$PROJECT_DIR$/Common_Utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Android_Common_Utils.iml" filepath="$PROJECT_DIR$/.idea/Android_Common_Utils.iml" />
+      <module fileurl="file://D:\DK-HP-PA-2000AR\Laboratory\Android_Studio\Android_Common_Utils\Common_Utils.iml" filepath="D:\DK-HP-PA-2000AR\Laboratory\Android_Studio\Android_Common_Utils\Common_Utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://D:\DK-HP-PA-2000AR\Laboratory\Android_Studio\Android_Common_Utils\common\common.iml" filepath="D:\DK-HP-PA-2000AR\Laboratory\Android_Studio\Android_Common_Utils\common\common.iml" />
     </modules>
   </component>
 </project>
