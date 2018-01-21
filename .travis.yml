@@ -6,8 +6,8 @@ env:
   global:
     # - "FTP_USER=coordinator@edcccet.in"
     # - "FTP_USER=root@filebooker.com"        
-    - "FTP_USER=ndk@vfmob.com.md-in-64.webhostbox.net"
-    - "FTP_PASSWORD=9895204814"
+    # - "FTP_USER=ndk@vfmob.com.md-in-64.webhostbox.net"
+    # - "FTP_PASSWORD=9895204814"
     
 notifications:
   email:
@@ -17,8 +17,8 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-26.0.2
-    - android-26
+    - build-tools-27.0.3
+    - android-27
     - extra-android-m2repository
 
 before_cache:
