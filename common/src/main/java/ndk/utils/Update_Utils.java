@@ -1,4 +1,4 @@
-package ndk.prism.common_utils;
+package ndk.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

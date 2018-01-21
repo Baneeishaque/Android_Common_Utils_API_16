@@ -1,4 +1,4 @@
-package ndk.prism.common_utils;
+package ndk.utils;
 
 
 public class Float_Utils {

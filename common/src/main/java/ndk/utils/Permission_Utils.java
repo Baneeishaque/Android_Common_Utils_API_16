@@ -1,4 +1,4 @@
-package ndk.prism.common_utils;
+package ndk.utils;
 
 import android.Manifest;
 import android.app.Activity;
