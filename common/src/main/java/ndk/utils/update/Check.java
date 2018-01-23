@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import ndk.utils.Network_Utils;
-import ndk.utils.update.network_tasks.Update_Check_Task;
+import ndk.utils.network_tasks.update.Update_Check_Task;
 
 import static ndk.utils.Network_Utils.display_Long_no_FAB_no_network_bottom_SnackBar;
 

@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 
-import ndk.utils.update.network_tasks.Application_VCS_Utils;
+import ndk.utils.network_tasks.update.Application_VCS_Utils;
 
 /**
  * Created by Nabeel on 21-01-2018.

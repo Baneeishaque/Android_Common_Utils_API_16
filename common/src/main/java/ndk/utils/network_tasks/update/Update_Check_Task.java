@@ -1,4 +1,4 @@
-package ndk.utils.update.network_tasks;
+package ndk.utils.network_tasks.update;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
