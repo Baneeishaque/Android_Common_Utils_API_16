@@ -57,70 +57,51 @@ public class Pass_Book_Utils {
         }
     }
 
-    boolean create_Pass_Book_Pdf(String TAG, ArrayList<Pass_Book_Entry> pass_book_entries, Context context, File pass_book_pdf) {
+    public static boolean create_Pass_Book_Pdf(String TAG, ArrayList<Pass_Book_Entry> pass_book_entries, Context context, File pass_book_pdf,String application_name) {
 
-        File docsFolder = new File(Environment.getExternalStorageDirectory() + "/Documents");
-        boolean is_documents_Present = true;
-        if (!docsFolder.exists()) {
-            is_documents_Present = docsFolder.mkdir();
-        }
-        if (is_documents_Present) {
-            File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOCUMENTS), "Caventa Manager");
-            boolean is_caventa_manager_Present = true;
-            if (!pdfFolder.exists()) {
-                is_caventa_manager_Present = pdfFolder.mkdir();
-            }
-            if (is_caventa_manager_Present) {
+        if(Folder_Utils.create_Documents_application_sub_folder(TAG,context,application_name))
+        {
+            try {
+                OutputStream output = new FileOutputStream(pass_book_pdf);
 
-                Log.i(TAG, "Pdf Directory created");
+                //Step 1
+                Document document = new Document(PageSize.A4);
 
-                //Create time stamp
-                Date date = new Date();
-                String timeStamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(date);
-                pass_book_pdf = new File(pdfFolder + "/Pass_Book_" + timeStamp + ".pdf");
+                //Step 2
+                PdfWriter.getInstance(document, output);
 
-                try {
-                    OutputStream output = new FileOutputStream(pass_book_pdf);
+                //Step 3
+                document.open();
 
-                    //Step 1
-                    Document document = new Document(PageSize.A4);
+                //Step 4 Add content
 
-                    //Step 2
-                    PdfWriter.getInstance(document, output);
+                Paragraph title = new Paragraph(application_name+", Pass Book", FontFactory.getFont(FontFactory.TIMES_ROMAN, 16, Font.BOLD, BaseColor.BLACK));
 
-                    //Step 3
-                    document.open();
+                addEmptyLine(title, 1);
+                title.setAlignment(Element.ALIGN_CENTER);
+                document.add(title);
 
-                    //Step 4 Add content
+                PdfPTable table = new PdfPTable(5);
 
-                    Paragraph title = new Paragraph("Caventa Manager, Account Ledger", FontFactory.getFont(FontFactory.TIMES_ROMAN, 16, Font.BOLD, BaseColor.BLACK));
+                PdfPCell c1 = new PdfPCell(new Phrase("Date"));
+                c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c1);
 
-                    addEmptyLine(title, 1);
-                    title.setAlignment(Element.ALIGN_CENTER);
-                    document.add(title);
+                PdfPCell c2 = new PdfPCell(new Phrase("Particulars"));
+                c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c2);
 
-                    PdfPTable table = new PdfPTable(5);
+                PdfPCell c3 = new PdfPCell(new Phrase("Debit"));
+                c3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c3);
 
-                    PdfPCell c1 = new PdfPCell(new Phrase("Date"));
-                    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c1);
+                PdfPCell c4 = new PdfPCell(new Phrase("Credit"));
+                c4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c4);
 
-                    PdfPCell c2 = new PdfPCell(new Phrase("Particulars"));
-                    c2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c2);
-
-                    PdfPCell c3 = new PdfPCell(new Phrase("Debit"));
-                    c3.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c3);
-
-                    PdfPCell c4 = new PdfPCell(new Phrase("Credit"));
-                    c4.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c4);
-
-                    PdfPCell c5 = new PdfPCell(new Phrase("Balance"));
-                    c5.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    table.addCell(c5);
+                PdfPCell c5 = new PdfPCell(new Phrase("Balance"));
+                c5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(c5);
 
 //                    table.setHeaderRows(1);
 
@@ -128,36 +109,27 @@ public class Pass_Book_Utils {
 //                    table.addCell("1.2");
 //                    table.addCell("1.3");
 
-                    if (!pass_book_entries.isEmpty()) {
-                        for (Pass_Book_Entry pass_book_entry : pass_book_entries) {
-                            table.addCell(Date_Utils.normal_date_time_short_year_format.format(pass_book_entry.getInsertion_date()));
-                            table.addCell(pass_book_entry.getParticulars());
-                            table.addCell(String.valueOf(pass_book_entry.getDebit_amount()));
-                            table.addCell(String.valueOf(pass_book_entry.getCredit_amount()));
-                            table.addCell(String.valueOf(pass_book_entry.getBalance()));
-                        }
+                if (!pass_book_entries.isEmpty()) {
+                    for (Pass_Book_Entry pass_book_entry : pass_book_entries) {
+                        table.addCell(Date_Utils.normal_date_time_short_year_format.format(pass_book_entry.getInsertion_date()));
+                        table.addCell(pass_book_entry.getParticulars());
+                        table.addCell(String.valueOf(pass_book_entry.getDebit_amount()));
+                        table.addCell(String.valueOf(pass_book_entry.getCredit_amount()));
+                        table.addCell(String.valueOf(pass_book_entry.getBalance()));
                     }
-
-                    document.add(table);
-
-                    //Step 5: Close the document
-                    document.close();
-                    return true;
-
-                } catch (DocumentException | FileNotFoundException e) {
-                    e.printStackTrace();
-                    Log.i(TAG, "Pdf Creation failure " + e.getLocalizedMessage());
-                    Toast_Utils.longToast(context, "Pdf fail");
                 }
 
-            } else {
-                Log.i(TAG, "Folder Creation failure ");
-                Toast_Utils.longToast(context, "Folder fail");
-            }
+                document.add(table);
 
-        } else {
-            Log.i(TAG, "Folder Creation failure ");
-            Toast_Utils.longToast(context, "Folder fail");
+                //Step 5: Close the document
+                document.close();
+                return true;
+
+            } catch (DocumentException | FileNotFoundException e) {
+                e.printStackTrace();
+                Log.i(TAG, "Pdf Creation failure " + e.getLocalizedMessage());
+                Toast_Utils.longToast(context, "Pdf fail");
+            }
         }
         return false;
     }

@@ -193,7 +193,7 @@ public class Pdf_Utils {
         }
     }
 
-    private void prompt_For_Next_Action_After_Creation(final Context context, String dialog_Title, final File pass_book_pdf, final String application_name, final String time_stamp, final String email_subject, final String email_text) {
+    public static void prompt_For_Next_Action_After_Creation(final Context context, String dialog_Title, final File pass_book_pdf, final String application_name, final String time_stamp, final String email_subject, final String email_text) {
         final String[] options = {
                 "Preview It",
                 "Cancel"
@@ -223,7 +223,7 @@ public class Pdf_Utils {
 
     }
 
-    private void viewPdf(File pass_book_pdf, Context context) {
+    private static void viewPdf(File pass_book_pdf, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(pass_book_pdf), "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

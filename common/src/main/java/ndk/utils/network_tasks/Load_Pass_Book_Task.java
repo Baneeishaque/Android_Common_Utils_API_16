@@ -36,8 +36,9 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
     private AppCompatActivity current_activity;
     private View progressBar, form;
     private Pass_Book_TableView pass_book_tableView;
+    private ArrayList<Pass_Book_Entry> pass_book_entries;
 
-    Load_Pass_Book_Task(String URL, Load_Pass_Book_Task load_pass_Book_task, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView pass_book_tableView) {
+    public Load_Pass_Book_Task(String URL, Load_Pass_Book_Task load_pass_Book_task, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView pass_book_tableView,ArrayList<Pass_Book_Entry> pass_book_entries) {
 
         this.URL = URL;
         this.load_pass_Book_task = load_pass_Book_task;
@@ -46,6 +47,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
         this.form = form;
         this.TAG = TAG;
         this.pass_book_tableView = pass_book_tableView;
+        this.pass_book_entries=pass_book_entries;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
         Log.d(TAG, network_action_response_array[0]);
         Log.d(TAG, network_action_response_array[1]);
 
-        ArrayList<Pass_Book_Entry> pass_book_entries = new ArrayList<>();
+        pass_book_entries = new ArrayList<>();
 
         if (network_action_response_array[0].equals("1")) {
             Toast.makeText(current_activity, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
