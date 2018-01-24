@@ -1,4 +1,4 @@
-package ndk.utils.network_tasks.update;
+package ndk.utils.network_task.update;
 
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -7,21 +7,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.File;
 
 import ndk.utils.Toast_Utils;
 
-import static ndk.utils.update.Install_Apk.install_apk;
-
 /**
- * Created by Nabeel on 21-01-2018.
+ * Created on 02-12-2017 12:49 under Caventa_Android.
  */
 
-public class Download_Install_Apk {
-    public static void download_apk_to_downloads(String application_name, float version_name,String update_URL, final Context context,String TAG)
-    {
+public class Application_VCS_Utils {
+
+    public static void download_and_install_apk(String application_name, float version_name,String update_URL, final Context context,String TAG) {
+
         //get destination to update file and set Uri.
         //Download directory in external storage.
         String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
@@ -56,7 +56,14 @@ public class Download_Install_Apk {
         //set BroadcastReceiver to install app when .apk is downloaded
         BroadcastReceiver onComplete = new BroadcastReceiver() {
             public void onReceive(Context ctxt, Intent intent) {
-                install_apk(uri,manager,downloadId,context,this);
+                Intent install = new Intent(Intent.ACTION_VIEW);
+                install.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                install.setDataAndType(uri,
+                        manager.getMimeTypeForDownloadedFile(downloadId));
+                context.startActivity(install);
+
+                context.unregisterReceiver(this);
+                ((AppCompatActivity) context).finish();
             }
         };
 

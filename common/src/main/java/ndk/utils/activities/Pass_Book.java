@@ -14,7 +14,7 @@ import java.util.Date;
 
 import ndk.utils.R;
 import ndk.utils.models.sortable_tableView.pass_book.Pass_Book_Entry;
-import ndk.utils.network_tasks.Load_Pass_Book_Task;
+import ndk.utils.network_task.Load_Pass_Book_Task;
 import ndk.utils.widgets.pass_book.Pass_Book_TableView;
 
 import static ndk.utils.Pass_Book_Utils.create_Pass_Book_Pdf;
