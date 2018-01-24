@@ -7,16 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -100,12 +93,12 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
                     double balance = 0;
                     for (int i = 1; i < json_array.length(); i++) {
 
-                        if (json_array.getJSONObject(i).getString("particulars").contains("~Credit")) {
+                        if (json_array.getJSONObject(i).getString("particulars").contains("Credit")) {
                             balance = balance + Double.parseDouble(json_array.getJSONObject(i).getString("amount"));
                             pass_book_entries.add(new Pass_Book_Entry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), balance));
                             Log.d(TAG, String.valueOf(balance));
                         }
-                        if (json_array.getJSONObject(i).getString("particulars").contains("~Debit")) {
+                        if (json_array.getJSONObject(i).getString("particulars").contains("Debit")) {
                             balance = balance - Double.parseDouble(json_array.getJSONObject(i).getString("amount"));
                             pass_book_entries.add(new Pass_Book_Entry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, balance));
                             Log.d(TAG, String.valueOf(balance));

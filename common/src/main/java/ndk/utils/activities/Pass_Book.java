@@ -23,7 +23,6 @@ import static ndk.utils.Pdf_Utils.prompt_For_Next_Action_After_Creation;
 import static ndk.utils.ProgressBar_Utils.showProgress;
 
 //TODO: Transform meta-data to string resources
-//TODO: edit passbook to accept post variables
 //TODO: edit rest insert for extension
 
 public class Pass_Book extends AppCompatActivity {
