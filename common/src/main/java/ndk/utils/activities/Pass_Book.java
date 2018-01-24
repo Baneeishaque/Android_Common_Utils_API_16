@@ -37,9 +37,7 @@ public class Pass_Book extends AppCompatActivity {
             load_pass_Book_task.cancel(true);
             load_pass_Book_task = null;
         }
-
-        //TODO: Intent Utils
-
+        
 //        String URL="";
 //        String TAG="";
 //        String application_name="";

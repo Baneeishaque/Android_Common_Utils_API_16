@@ -45,10 +45,10 @@ public class Spinner_Utils {
     }
 
     public static void get_json_from_network_and_populate(final Context context, View progress_Bar, View form, String URL, final String application_name, final int start_index, final Spinner spinner, final ArrayList<String> spinner_items, final String key) {
-        if (REST_select_task != null) {
-            REST_select_task.cancel(true);
-            REST_select_task = null;
-        }
+//        if (REST_select_task != null) {
+//            REST_select_task.cancel(true);
+//            REST_select_task = null;
+//        }
 
         if (isOnline(context)) {
             showProgress(true, context, progress_Bar, form);
