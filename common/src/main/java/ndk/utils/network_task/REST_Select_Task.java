@@ -17,7 +17,6 @@ import static ndk.utils.ProgressBar_Utils.showProgress;
  * Created by Nabeel on 23-01-2018.
  */
 
-//TODO : add items to spinner from network task
 public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
 
     private String URL, TAG;

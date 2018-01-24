@@ -85,38 +85,7 @@ public class Validation_Utils {
         return new Pair<>(false, null);
     }
 
-    public static void handle_json_insertion_response_and_switch_with_finish(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, Context context, View view_to_focus_on_error,View view_to_toggle,String TAG) {
-        Log.d(TAG, network_action_response_array[0]);
-        Log.d(TAG, network_action_response_array[1]);
 
-        if (network_action_response_array[0].equals("1")) {
-            Toast.makeText(context, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
-            Log.d(TAG, network_action_response_array[1]);
-        } else {
-
-            try {
-                JSONObject json = new JSONObject(network_action_response_array[1]);
-                String response_code = json.getString("status");
-                switch (response_code) {
-                    case "0":
-                        Toast.makeText(context, "OK", Toast.LENGTH_LONG).show();
-                        Activity_Utils.start_activity_with_finish(current_activity,to_switch_activity);
-                        break;
-                    case "1":
-                        Toast.makeText(context, "Error : " + json.getString("error"), Toast.LENGTH_LONG).show();
-                        view_to_focus_on_error.requestFocus();
-                        break;
-                    default:
-                        Toast.makeText(context, "Error : Check json", Toast.LENGTH_LONG).show();
-                }
-
-            } catch (JSONException e) {
-                Toast.makeText(context, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.getLocalizedMessage());
-            }
-        }
-        view_to_toggle.setEnabled(true);
-    }
 
 
 }

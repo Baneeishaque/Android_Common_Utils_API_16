@@ -1,6 +1,7 @@
 package ndk.utils.network_task;
 
 import android.os.AsyncTask;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import ndk.utils.Network_Utils;
 import ndk.utils.Pass_Book_Utils;
 import ndk.utils.models.sortable_tableView.pass_book.Pass_Book_Entry;
 import ndk.utils.widgets.pass_book.Pass_Book_TableView;
@@ -37,8 +39,9 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
     private View progressBar, form;
     private Pass_Book_TableView pass_book_tableView;
     private ArrayList<Pass_Book_Entry> pass_book_entries;
+    private Pair[] name_value_pair;
 
-    public Load_Pass_Book_Task(String URL, Load_Pass_Book_Task load_pass_Book_task, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView pass_book_tableView,ArrayList<Pass_Book_Entry> pass_book_entries) {
+    public Load_Pass_Book_Task(String URL, Load_Pass_Book_Task load_pass_Book_task, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView pass_book_tableView,ArrayList<Pass_Book_Entry> pass_book_entries,Pair[] name_value_pair) {
 
         this.URL = URL;
         this.load_pass_Book_task = load_pass_Book_task;
@@ -48,24 +51,27 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
         this.TAG = TAG;
         this.pass_book_tableView = pass_book_tableView;
         this.pass_book_entries=pass_book_entries;
+        this.name_value_pair=name_value_pair;
     }
 
     @Override
     protected String[] doInBackground(Void... params) {
-        try {
-            DefaultHttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost(URL);
-            ResponseHandler<String> response_handler = new BasicResponseHandler();
-            String network_action_response = http_client.execute(http_post, response_handler);
-            return new String[]{"0", network_action_response};
 
-        } catch (UnsupportedEncodingException e) {
-            return new String[]{"1", "UnsupportedEncodingException : " + e.getLocalizedMessage()};
-        } catch (ClientProtocolException e) {
-            return new String[]{"1", "ClientProtocolException : " + e.getLocalizedMessage()};
-        } catch (IOException e) {
-            return new String[]{"1", "IOException : " + e.getLocalizedMessage()};
-        }
+        return Network_Utils.perform_http_client_network_task(URL,name_value_pair);
+//        try {
+//            DefaultHttpClient http_client = new DefaultHttpClient();
+//            HttpPost http_post = new HttpPost(URL);
+//            ResponseHandler<String> response_handler = new BasicResponseHandler();
+//            String network_action_response = http_client.execute(http_post, response_handler);
+//            return new String[]{"0", network_action_response};
+//
+//        } catch (UnsupportedEncodingException e) {
+//            return new String[]{"1", "UnsupportedEncodingException : " + e.getLocalizedMessage()};
+//        } catch (ClientProtocolException e) {
+//            return new String[]{"1", "ClientProtocolException : " + e.getLocalizedMessage()};
+//        } catch (IOException e) {
+//            return new String[]{"1", "IOException : " + e.getLocalizedMessage()};
+//        }
     }
 
 

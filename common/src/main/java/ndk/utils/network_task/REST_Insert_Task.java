@@ -46,8 +46,7 @@ public class REST_Insert_Task extends AsyncTask<Void, Void, String[]> {
         REST_Insert_task = null;
 
         showProgress(false, current_activity, progressBar, form);
-//        TODO : remove redundent parameter context
-        Network_Utils.handle_json_insertion_response_and_switch_with_finish(network_action_response_array, current_activity, next_activity, current_activity, focus_on_error, TAG);
+        Network_Utils.handle_json_insertion_response_and_switch_with_finish(network_action_response_array, current_activity, next_activity, focus_on_error, TAG);
     }
 
     @Override

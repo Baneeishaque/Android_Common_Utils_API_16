@@ -2,6 +2,7 @@ package ndk.utils.activities;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,10 @@ import static ndk.utils.Pass_Book_Utils.create_Pass_Book_Pdf;
 import static ndk.utils.Pdf_Utils.prompt_For_Next_Action_After_Creation;
 import static ndk.utils.ProgressBar_Utils.showProgress;
 
+//TODO: Transform meta-data to string resources
+//TODO: edit passbook to accept post variables
+//TODO: edit rest insert for extension
+
 public class Pass_Book extends AppCompatActivity {
 
     private ProgressBar mProgressView;
@@ -37,18 +42,19 @@ public class Pass_Book extends AppCompatActivity {
             load_pass_Book_task.cancel(true);
             load_pass_Book_task = null;
         }
-        
-//        String URL="";
-//        String TAG="";
-//        String application_name="";
+
+//        String URL = "";
+//        String application_name = "";
+//        String user_id = "";
+//
 //        Intent intent = new Intent(getBaseContext(), Pass_Book.class);
-//        intent.putExtra("URL",URL);
-//        intent.putExtra("TAG",TAG);
-//        intent.putExtra("application_name",application_name);
+//        intent.putExtra("URL", URL);
+//        intent.putExtra("application_name", application_name);
+//        intent.putExtra("user_id", user_id);
 //        startActivity(intent);
 
         showProgress(true, this, mProgressView, pass_book_tableView);
-        load_pass_Book_task = new Load_Pass_Book_Task(getIntent().getStringExtra("URL"), load_pass_Book_task, this, mProgressView, pass_book_tableView, getIntent().getStringExtra("application_name"), pass_book_tableView, pass_book_entries);
+        load_pass_Book_task = new Load_Pass_Book_Task(getIntent().getStringExtra("URL"), load_pass_Book_task, this, mProgressView, pass_book_tableView, getIntent().getStringExtra("application_name"), pass_book_tableView, pass_book_entries, new Pair[]{new Pair<>("user_id", getIntent().getStringExtra("user_id"))});
         load_pass_Book_task.execute((Void) null);
 
     }
