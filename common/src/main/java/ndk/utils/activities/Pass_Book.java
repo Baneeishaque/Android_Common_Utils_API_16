@@ -39,7 +39,6 @@ public class Pass_Book extends AppCompatActivity {
         }
 
         //TODO: Intent Utils
-        //TODO: Custom application class
 
 //        String URL="";
 //        String TAG="";
@@ -51,7 +50,7 @@ public class Pass_Book extends AppCompatActivity {
 //        startActivity(intent);
 
         showProgress(true, this, mProgressView, pass_book_tableView);
-        load_pass_Book_task = new Load_Pass_Book_Task(getIntent().getStringExtra("URL"), load_pass_Book_task, this, mProgressView, pass_book_tableView, getIntent().getStringExtra("TAG"), pass_book_tableView, pass_book_entries);
+        load_pass_Book_task = new Load_Pass_Book_Task(getIntent().getStringExtra("URL"), load_pass_Book_task, this, mProgressView, pass_book_tableView, getIntent().getStringExtra("application_name"), pass_book_tableView, pass_book_entries);
         load_pass_Book_task.execute((Void) null);
 
     }
@@ -80,7 +79,7 @@ public class Pass_Book extends AppCompatActivity {
                 Environment.DIRECTORY_DOCUMENTS), getIntent().getStringExtra("application_name")) + "/Pass_Book_" + time_stamp + ".pdf");
 
         if (id == R.id.menu_item_save) {
-            if (create_Pass_Book_Pdf(getIntent().getStringExtra("TAG"), pass_book_entries, this, pass_book_pdf, getIntent().getStringExtra("application_name")))
+            if (create_Pass_Book_Pdf(getIntent().getStringExtra("application_name"), pass_book_entries, this, pass_book_pdf, getIntent().getStringExtra("application_name")))
                 prompt_For_Next_Action_After_Creation(this, "Pass Book Saved, What Next?", pass_book_pdf, getIntent().getStringExtra("application_name"), time_stamp, "", "");
             return true;
         }

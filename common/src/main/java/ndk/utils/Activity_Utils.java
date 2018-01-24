@@ -24,6 +24,16 @@ public class Activity_Utils {
         context.startActivity(intent);
     }
 
+    public static void start_activity_with_string_extras(Context context, Class activity, Pair[] extras) {
+        Intent intent = new Intent(context, activity);
+        if(extras.length!=0) {
+            for (Pair<String, String> extra : extras) {
+                intent.putExtra(extra.first,extra.second);
+            }
+        }
+        context.startActivity(intent);
+    }
+
     public static void start_activity_with_integer_extras_and_finish(Context context, Class activity, Pair[] extras) {
         Intent intent = new Intent(context, activity);
         if(extras.length!=0) {
