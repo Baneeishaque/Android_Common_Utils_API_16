@@ -34,15 +34,13 @@ import ndk.utils.network_task.REST_Select_Task_Wrapper;
 
 public class Login extends AppCompatActivity {
 
-    Context application_context, activity_context = this;
+    Context activity_context = this;
 
     // UI references.
     private EditText username;
     private EditText password;
     private View mProgressView;
     private View mLoginFormView;
-
-    private REST_Select_Task REST_select_task = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,17 +108,8 @@ public class Login extends AppCompatActivity {
                         String user_count = json_object.getString("user_count");
                         switch (user_count) {
                             case "1":
-
-                                try {
-                                    SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                                    Activity_Utils.start_activity_with_finish(Login.this, Class.forName(ManifestMetadata.get(getApplicationContext()).getValue("NEXT_ACTIVITY_CLASS")));
-                                } catch (JSONException e) {
-                                    Toast_Utils.longToast(getApplicationContext(), "JSON Response Error");
-                                    Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), e.getLocalizedMessage());
-                                } catch (ClassNotFoundException e) {
-                                    Toast_Utils.longToast(getApplicationContext(), "Next Activity Error");
-                                    Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), e.getLocalizedMessage());
-                                }
+                                SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
+                                Activity_Utils.start_activity_with_finish(Login.this, Class.forName(ManifestMetadata.get(getApplicationContext()).getValue("NEXT_ACTIVITY_CLASS")));
                                 break;
 
                             case "0":
@@ -132,36 +121,32 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Error : Check json", Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
-                        Exception_Utils.display_exception_toast(Login.this, e);
+                        Toast_Utils.longToast(getApplicationContext(), "JSON Response Error");
                         try {
                             Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Exception_Utils.get_exception_details(e));
                         } catch (PackageManager.NameNotFoundException exc) {
-                            Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error : " + exc.getLocalizedMessage());
-                            Log.d("<meta-data> Error", exc.getLocalizedMessage());
+                            Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error");
+                            Log.d("<meta-data> Error", Exception_Utils.get_exception_details(exc));
                         }
-                    } catch (PackageManager.NameNotFoundException e) {
-                        Toast_Utils.longToast(getApplicationContext(), "Next Activity Error : " + e.getLocalizedMessage());
+                    } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {
+                        Toast_Utils.longToast(getApplicationContext(), "Next Activity Error");
                         try {
-                            Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), e.getLocalizedMessage());
+                            Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Exception_Utils.get_exception_details(e));
                         } catch (PackageManager.NameNotFoundException exc) {
-                            Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error : " + exc.getLocalizedMessage());
-                            Log.d("<meta-data> Error", exc.getLocalizedMessage());
+                            Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error");
+                            Log.d("<meta-data> Error", Exception_Utils.get_exception_details(exc));
                         }
                     }
-
                 }
             };
 
             try {
-                REST_Select_Task_Wrapper.execute(ManifestMetadata.get(getApplicationContext()).getValue("SELECT_CONFIGURATION_URL"), activity_context, mProgressView, mLoginFormView, ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), new Pair[]{new Pair<>("username", username.getText().toString()), new Pair<>("password", password.getText().toString())}, async_response_json_object_delegate);
+                REST_Select_Task_Wrapper.execute(ManifestMetadata.get(getApplicationContext()).getValue("SELECT_USER_URL"), activity_context, mProgressView, mLoginFormView, ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), new Pair[]{new Pair<>("username", username.getText().toString()), new Pair<>("password", password.getText().toString())}, async_response_json_object_delegate);
             } catch (PackageManager.NameNotFoundException e) {
-                Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error : " + e.getLocalizedMessage());
-                Log.d("<meta-data> Error", e.getLocalizedMessage());
+                Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error");
+                Log.d("<meta-data> Error", Exception_Utils.get_exception_details(e));
             }
         }
-
-
     }
-
 }
 
