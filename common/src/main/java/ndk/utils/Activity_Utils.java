@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.github.kimkevin.cachepot.CachePot;
 
+import java.util.Objects;
+
 public class Activity_Utils {
 
     public static void start_activity(Context context, Class activity) {
@@ -109,5 +111,16 @@ public class Activity_Utils {
         ((AppCompatActivity) context).finish();
     }
 
+    public static void start_activity_with_string_extras_and_finish(Context context, Class activity, Pair[] extras) {
+        Intent intent = new Intent(context, activity);
+        if (extras.length != 0) {
+
+            for (Pair extra : extras) {
+                intent.putExtra(Objects.requireNonNull(extra.first).toString(), Objects.requireNonNull(extra.second).toString());
+            }
+        }
+        context.startActivity(intent);
+        ((AppCompatActivity) context).finish();
+    }
 
 }

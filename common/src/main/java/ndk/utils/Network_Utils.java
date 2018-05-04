@@ -1,17 +1,14 @@
 package ndk.utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -150,5 +147,66 @@ public class Network_Utils {
             }
         }
         view_to_toggle.setEnabled(true);
+    }
+
+    public static void check_network_then_start_activity_with_string_extras(Context context, Class activity, Pair[] extras) {
+        if (isOnline(context)) {
+            Activity_Utils.start_activity_with_string_extras(context, activity, extras);
+        } else {
+            Toast_Utils.longToast(context, "Internet is unavailable");
+        }
+    }
+
+    public static void check_network_then_start_activity(Context context, Class activity) {
+        if (isOnline(context)) {
+            Activity_Utils.start_activity(context, activity);
+        } else {
+            Toast_Utils.longToast(context, "Internet is unavailable");
+        }
+    }
+
+    public static void handle_json_insertion_response_and_clear_fields(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, EditText[] texts_to_clear, View view_to_focus_on_error, String TAG) {
+
+        Log.d(TAG, network_action_response_array[0]);
+        Log.d(TAG, network_action_response_array[1]);
+
+        if (network_action_response_array[0].equals("1")) {
+            Toast.makeText(current_activity, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
+            Log.d(TAG, network_action_response_array[1]);
+        } else {
+            try {
+                JSONObject json = new JSONObject(network_action_response_array[1]);
+                String response_code = json.getString("status");
+                byte var8 = -1;
+                switch (response_code.hashCode()) {
+                    case 48:
+                        if (response_code.equals("0")) {
+                            var8 = 0;
+                        }
+                        break;
+                    case 49:
+                        if (response_code.equals("1")) {
+                            var8 = 1;
+                        }
+                }
+
+                switch (var8) {
+                    case 0:
+                        Toast.makeText(current_activity, "OK", Toast.LENGTH_LONG).show();
+                        Text_Clear_Utils.reset_fields(texts_to_clear);
+                        break;
+                    case 1:
+                        Toast.makeText(current_activity, "Error : " + json.getString("error"), Toast.LENGTH_LONG).show();
+                        view_to_focus_on_error.requestFocus();
+                        break;
+                    default:
+                        Toast.makeText(current_activity, "Error : Check json", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException var9) {
+                Toast.makeText(current_activity, "Error : " + var9.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Log.d(TAG, var9.getLocalizedMessage());
+            }
+        }
+
     }
 }

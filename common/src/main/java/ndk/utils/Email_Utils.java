@@ -6,12 +6,8 @@ import android.net.Uri;
 
 import java.io.File;
 
-/**
- * Created by Nabeel on 23-01-2018.
- */
-
 public class Email_Utils {
-    static void email_attachment(String email_subject, String email_text, File email_attachment, Context context) {
+    public static void email_attachment(String email_subject, String email_text, File email_attachment, Context context) {
         Intent email = new Intent(Intent.ACTION_SEND);
         email.putExtra(Intent.EXTRA_SUBJECT, email_subject);
         email.putExtra(Intent.EXTRA_TEXT, email_text);

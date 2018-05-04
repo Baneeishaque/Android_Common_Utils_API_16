@@ -18,9 +18,6 @@ import ndk.utils.network_task.REST_Select_Task;
 import static ndk.utils.Network_Utils.isOnline;
 import static ndk.utils.ProgressBar_Utils.showProgress;
 
-/**
- * Created on 03-12-2017 10:35 under Caventa_Android.
- */
 public class Spinner_Utils {
     private static REST_Select_Task REST_select_task = null;
 
@@ -45,18 +42,14 @@ public class Spinner_Utils {
     }
 
     public static void get_json_from_network_and_populate(final Context context, View progress_Bar, View form, String URL, final String application_name, final int start_index, final Spinner spinner, final ArrayList<String> spinner_items, final String key) {
-//        if (REST_select_task != null) {
-//            REST_select_task.cancel(true);
-//            REST_select_task = null;
-//        }
 
         if (isOnline(context)) {
             showProgress(true, context, progress_Bar, form);
-            REST_select_task = new REST_Select_Task(URL, REST_select_task, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.AsyncResponse() {
+            REST_select_task = new REST_Select_Task(URL, REST_select_task, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array_with_error_status_delegate() {
 
                 @Override
-                public void processFinish(JSONArray json_array) {
-                    populate_spinner_from_json_array(start_index, json_array, context, application_name, spinner, spinner_items, key);
+                public void processFinish(JSONArray json_array_with_error_status) {
+                    populate_spinner_from_json_array(start_index, json_array_with_error_status, context, application_name, spinner, spinner_items, key);
                 }
 
             });
