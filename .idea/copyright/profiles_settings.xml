@@ -10,6 +10,9 @@
     <LanguageOptions name="JAVA">
       <option name="fileTypeOverride" value="1" />
     </LanguageOptions>
+    <LanguageOptions name="Kotlin">
+      <option name="fileTypeOverride" value="1" />
+    </LanguageOptions>
     <LanguageOptions name="Properties">
       <option name="fileTypeOverride" value="1" />
     </LanguageOptions>
