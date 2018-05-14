@@ -35,7 +35,7 @@ public class Splash extends AppCompatActivity {
         application_context = getApplicationContext();
 
         try {
-            REST_Select_Task_Wrapper.execute_splash(this, REST_select_task, ManifestMetadata.get(this).getValue("SELECT_CONFIGURATION_URL"), ManifestMetadata.get(this).getValue("APPLICATION_NAME"), new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array_with_error_status_delegate() {
+            REST_Select_Task_Wrapper.execute_splash(this, ManifestMetadata.get(this).getValue("SELECT_CONFIGURATION_URL"), ManifestMetadata.get(this).getValue("APPLICATION_NAME"), new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array_with_error_status_delegate() {
 
                 public void processFinish(JSONArray json_array_with_error_status) {
                     try {

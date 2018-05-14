@@ -19,7 +19,6 @@ import static ndk.utils.Network_Utils.isOnline;
 import static ndk.utils.ProgressBar_Utils.showProgress;
 
 public class Spinner_Utils {
-    private static REST_Select_Task REST_select_task = null;
 
     public static void attach_items_to_simple_spinner(Context context, Spinner spinner, ArrayList<String> items) {
         ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, items);
@@ -29,14 +28,12 @@ public class Spinner_Utils {
 
     public static void populate_spinner_from_json_array(int start_index, JSONArray json_array, Context context, String application_name, Spinner spinner, ArrayList<String> spinner_items, String key) {
         for (int i = start_index; i < json_array.length(); i++) {
-
             try {
                 spinner_items.add(json_array.getJSONObject(i).getString(key));
             } catch (JSONException e) {
                 Toast.makeText(context, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(application_name, e.getLocalizedMessage());
             }
-
         }
         Spinner_Utils.attach_items_to_simple_spinner(context, spinner, spinner_items);
     }
@@ -45,7 +42,7 @@ public class Spinner_Utils {
 
         if (isOnline(context)) {
             showProgress(true, context, progress_Bar, form);
-            REST_select_task = new REST_Select_Task(URL, REST_select_task, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array_with_error_status_delegate() {
+            REST_Select_Task REST_select_task = new REST_Select_Task(URL, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array_with_error_status_delegate() {
 
                 @Override
                 public void processFinish(JSONArray json_array_with_error_status) {
@@ -53,7 +50,7 @@ public class Spinner_Utils {
                 }
 
             });
-            REST_select_task.execute((Void) null);
+            REST_select_task.execute();
         } else {
             Toast_Utils.longToast(context, "Internet is unavailable");
         }

@@ -40,7 +40,7 @@ public class Network_Utils {
 
     public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo netInfo = cm != null ? cm.getActiveNetworkInfo() : null;
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
@@ -56,8 +56,8 @@ public class Network_Utils {
             http_post = new HttpPost(URL);
             if (name_pair_values.length != 0) {
                 name_pair_value_array = new ArrayList<>(name_pair_values.length);
-                for (Pair<String, String> name_pair_value : name_pair_values) {
-                    name_pair_value_array.add(new BasicNameValuePair(name_pair_value.first, name_pair_value.second));
+                for (Pair name_pair_value : name_pair_values) {
+                    name_pair_value_array.add(new BasicNameValuePair(name_pair_value.first != null ? name_pair_value.first.toString() : null, name_pair_value.second != null ? name_pair_value.second.toString() : null));
                 }
                 http_post.setEntity(new UrlEncodedFormEntity(name_pair_value_array));
             }
@@ -74,37 +74,41 @@ public class Network_Utils {
         }
     }
 
-    public static void handle_json_insertion_response_and_switch_with_finish(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, View view_to_focus_on_error, String TAG) {
-        Log.d(TAG, network_action_response_array[0]);
-        Log.d(TAG, network_action_response_array[1]);
+    public static void handle_json_insertion_response_and_switch_with_finish_or_clear_fields(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, EditText[] texts_to_clear, View view_to_focus_on_error, String TAG, int action_flag) {
+
+        Log.d(TAG, "Network Action Response Index 0 : " + network_action_response_array[0]);
+        Log.d(TAG, "Network Action Response Index 1 : " + network_action_response_array[1]);
 
         if (network_action_response_array[0].equals("1")) {
-            Toast.makeText(current_activity, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
-            Log.d(TAG, network_action_response_array[1]);
+            Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Error, Network Action Response Index 1 : " + network_action_response_array[1]);
         } else {
-
             try {
                 JSONObject json = new JSONObject(network_action_response_array[1]);
-                String response_code = json.getString("status");
-                switch (response_code) {
+                switch (json.getString("status")) {
                     case "0":
                         Toast.makeText(current_activity, "OK", Toast.LENGTH_LONG).show();
-                        Activity_Utils.start_activity_with_finish(current_activity, to_switch_activity);
+                        switch (action_flag) {
+                            case 1: //finish
+                                Activity_Utils.start_activity_with_finish(current_activity, to_switch_activity);
+                                break;
+                            case 2: //clear fields
+                                Text_Clear_Utils.reset_fields(texts_to_clear);
+                                break;
+                        }
                         break;
                     case "1":
-                        Toast.makeText(current_activity, "Error : " + json.getString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "Error : " + json.getString("error"));
                         view_to_focus_on_error.requestFocus();
                         break;
                     default:
                         Toast.makeText(current_activity, "Error : Check json", Toast.LENGTH_LONG).show();
                 }
-
             } catch (JSONException e) {
-                Toast.makeText(current_activity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.getLocalizedMessage());
+                Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Error : " + e.getLocalizedMessage());
             }
-
-
         }
     }
 
@@ -116,36 +120,9 @@ public class Network_Utils {
 
     }
 
-    public static void handle_json_insertion_response_and_switch_with_finish_and_toggle_view(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, Context context, View view_to_focus_on_error,View view_to_toggle,String TAG) {
-        Log.d(TAG, network_action_response_array[0]);
-        Log.d(TAG, network_action_response_array[1]);
+    public static void handle_json_insertion_response_and_switch_with_finish_and_toggle_view(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, View view_to_focus_on_error, View view_to_toggle, String TAG) {
 
-        if (network_action_response_array[0].equals("1")) {
-            Toast.makeText(context, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
-            Log.d(TAG, network_action_response_array[1]);
-        } else {
-
-            try {
-                JSONObject json = new JSONObject(network_action_response_array[1]);
-                String response_code = json.getString("status");
-                switch (response_code) {
-                    case "0":
-                        Toast.makeText(context, "OK", Toast.LENGTH_LONG).show();
-                        Activity_Utils.start_activity_with_finish(current_activity,to_switch_activity);
-                        break;
-                    case "1":
-                        Toast.makeText(context, "Error : " + json.getString("error"), Toast.LENGTH_LONG).show();
-                        view_to_focus_on_error.requestFocus();
-                        break;
-                    default:
-                        Toast.makeText(context, "Error : Check json", Toast.LENGTH_LONG).show();
-                }
-
-            } catch (JSONException e) {
-                Toast.makeText(context, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.getLocalizedMessage());
-            }
-        }
+        handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, to_switch_activity, new EditText[]{}, view_to_focus_on_error, TAG, 1);
         view_to_toggle.setEnabled(true);
     }
 
@@ -165,48 +142,4 @@ public class Network_Utils {
         }
     }
 
-    public static void handle_json_insertion_response_and_clear_fields(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, EditText[] texts_to_clear, View view_to_focus_on_error, String TAG) {
-
-        Log.d(TAG, network_action_response_array[0]);
-        Log.d(TAG, network_action_response_array[1]);
-
-        if (network_action_response_array[0].equals("1")) {
-            Toast.makeText(current_activity, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
-            Log.d(TAG, network_action_response_array[1]);
-        } else {
-            try {
-                JSONObject json = new JSONObject(network_action_response_array[1]);
-                String response_code = json.getString("status");
-                byte var8 = -1;
-                switch (response_code.hashCode()) {
-                    case 48:
-                        if (response_code.equals("0")) {
-                            var8 = 0;
-                        }
-                        break;
-                    case 49:
-                        if (response_code.equals("1")) {
-                            var8 = 1;
-                        }
-                }
-
-                switch (var8) {
-                    case 0:
-                        Toast.makeText(current_activity, "OK", Toast.LENGTH_LONG).show();
-                        Text_Clear_Utils.reset_fields(texts_to_clear);
-                        break;
-                    case 1:
-                        Toast.makeText(current_activity, "Error : " + json.getString("error"), Toast.LENGTH_LONG).show();
-                        view_to_focus_on_error.requestFocus();
-                        break;
-                    default:
-                        Toast.makeText(current_activity, "Error : Check json", Toast.LENGTH_LONG).show();
-                }
-            } catch (JSONException var9) {
-                Toast.makeText(current_activity, "Error : " + var9.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, var9.getLocalizedMessage());
-            }
-        }
-
-    }
 }

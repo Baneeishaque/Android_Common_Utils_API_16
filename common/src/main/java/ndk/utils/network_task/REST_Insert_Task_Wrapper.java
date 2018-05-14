@@ -19,13 +19,11 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            REST_Insert_Task rest_insert_task = null;
-
             ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
 
-            rest_insert_task = new REST_Insert_Task(task_URL, rest_insert_task, current_activity, mProgressView, mLoginFormView, application_Name, name_value_pairs, view_to_focus_on_error, next_activity);
+            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, application_Name, name_value_pairs, view_to_focus_on_error, next_activity);
 
-            rest_insert_task.execute((Void) null);
+            rest_insert_task.execute();
         } else {
             Toast_Utils.longToast(context, "Internet is unavailable");
         }

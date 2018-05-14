@@ -20,7 +20,6 @@ import static ndk.utils.ProgressBar_Utils.showProgress;
 public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
 
     private String URL, TAG;
-    private REST_Select_Task rest_select_task;
     private Context context;
     private View progressBar, form;
 
@@ -34,11 +33,10 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
     private Async_Response async_response_delegate = null;
     private Async_Response_JSON_object async_response_json_object_delegate = null;
 
-    public REST_Select_Task(String URL, REST_Select_Task rest_select_task, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_array_with_error_status_delegate async_response_json_array_with_error_status_delegate
+    public REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_array_with_error_status_delegate async_response_json_array_with_error_status_delegate
     ) {
 
         this.URL = URL;
-        this.rest_select_task = rest_select_task;
         this.context = context;
         this.progressBar = progressBar;
         this.form = form;
@@ -137,22 +135,18 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
                     async_response_json_object_delegate.processFinish(json_object);
 
                 } catch (JSONException e) {
-                    Toast.makeText(context, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Log.d(TAG, e.getLocalizedMessage());
+                    Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Error : " + e.getLocalizedMessage());
                 }
             }
 
         } else {
 
-            if (splash_flag == 0) {
-                rest_select_task = null;
-            }
-
             Log.d(TAG, "Network Action Response Array 0 : " + network_action_response_array[0]);
             Log.d(TAG, "Network Action Response Array 1 : " + network_action_response_array[1]);
 
             if (network_action_response_array[0].equals("1")) {
-                Toast.makeText(context, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "Network Action Response Array 1 : " + network_action_response_array[1]);
 
                 if (splash_flag == 1) {
@@ -169,8 +163,8 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
                         async_response_json_array_with_error_status_delegate.processFinish(json_array_with_error_status);
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(context, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    Log.d(TAG, e.getLocalizedMessage());
+                    Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Error : " + e.getLocalizedMessage());
                 }
             }
         }
@@ -178,9 +172,6 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
 
     @Override
     protected void onCancelled() {
-        if (response_flag == 0) {
-            rest_select_task = null;
-        }
         if (progress_flag == 0) {
             showProgress(false, context, progressBar, form);
         }
