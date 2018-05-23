@@ -42,7 +42,7 @@ public class Spinner_Utils {
 
         if (isOnline(context)) {
             showProgress(true, context, progress_Bar, form);
-            REST_Select_Task REST_select_task = new REST_Select_Task(URL, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array_with_error_status_delegate() {
+            REST_Select_Task REST_select_task = new REST_Select_Task(URL, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array() {
 
                 @Override
                 public void processFinish(JSONArray json_array_with_error_status) {

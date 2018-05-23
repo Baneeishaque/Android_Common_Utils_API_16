@@ -29,11 +29,12 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
 
     private Pair[] name_value_pair;
 
-    private Async_Response_JSON_array_with_error_status_delegate async_response_json_array_with_error_status_delegate = null;
-    private Async_Response async_response_delegate = null;
-    private Async_Response_JSON_object async_response_json_object_delegate = null;
+    boolean error_flag;
+    private Async_Response_JSON_array async_response_json_array = null;
+    private Async_Response async_response = null;
+    private Async_Response_JSON_object async_response_json_object = null;
 
-    public REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_array_with_error_status_delegate async_response_json_array_with_error_status_delegate
+    public REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_array async_response_json_array
     ) {
 
         this.URL = URL;
@@ -42,10 +43,10 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
         this.form = form;
         this.TAG = TAG;
         this.name_value_pair = name_value_pair;
-        this.async_response_json_array_with_error_status_delegate = async_response_json_array_with_error_status_delegate;
+        this.async_response_json_array = async_response_json_array;
     }
 
-    REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response async_response_delegate) {
+    REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response async_response) {
 
         this.URL = URL;
         this.context = context;
@@ -53,11 +54,11 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
         this.form = form;
         this.TAG = TAG;
         this.name_value_pair = name_value_pair;
-        this.async_response_delegate = async_response_delegate;
+        this.async_response = async_response;
         response_flag = 1;
     }
 
-    REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_object async_response_json_object_delegate) {
+    REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_object async_response_json_object) {
 
         this.URL = URL;
         this.context = context;
@@ -65,30 +66,41 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
         this.form = form;
         this.TAG = TAG;
         this.name_value_pair = name_value_pair;
-        this.async_response_json_object_delegate = async_response_json_object_delegate;
+        this.async_response_json_object = async_response_json_object;
         response_flag = 2;
     }
 
-    public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response async_response_delegate) {
+    public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response async_response) {
 
         this.URL = URL;
         this.context = context;
         this.TAG = TAG;
         this.name_value_pair = name_value_pair;
-        this.async_response_delegate = async_response_delegate;
+        this.async_response = async_response;
         progress_flag = 1;
         response_flag = 1;
     }
 
-    public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response_JSON_array_with_error_status_delegate async_response_json_array_with_error_status_delegate) {
+    public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response_JSON_array async_response_json_array) {
 
         this.URL = URL;
         this.context = context;
         this.TAG = TAG;
         this.name_value_pair = name_value_pair;
-        this.async_response_json_array_with_error_status_delegate = async_response_json_array_with_error_status_delegate;
+        this.async_response_json_array = async_response_json_array;
         progress_flag = 1;
         splash_flag = 1;
+    }
+
+    public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response_JSON_array async_response_json_array, boolean error_flag) {
+
+        this.URL = URL;
+        this.context = context;
+        this.TAG = TAG;
+        this.name_value_pair = name_value_pair;
+        this.async_response_json_array = async_response_json_array;
+        progress_flag = 1;
+        this.error_flag = error_flag;
     }
 
     @Override
@@ -113,10 +125,10 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
 
                 Network_Utils.display_Friendly_Exception_Message(context, network_action_response_array[1]);
                 Log.d(TAG, "Network Action response is " + network_action_response_array[1]);
-                async_response_delegate.processFinish("exception");
+                async_response.processFinish("exception");
 
             } else {
-                async_response_delegate.processFinish(network_action_response_array[1]);
+                async_response.processFinish(network_action_response_array[1]);
             }
 
         } else if (response_flag == 2) {
@@ -132,7 +144,7 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
             } else {
                 try {
                     JSONObject json_object = new JSONObject(network_action_response_array[1]);
-                    async_response_json_object_delegate.processFinish(json_object);
+                    async_response_json_object.processFinish(json_object);
 
                 } catch (JSONException e) {
                     Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
@@ -156,11 +168,16 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
             } else {
 
                 try {
-                    JSONArray json_array_with_error_status = new JSONArray(network_action_response_array[1]);
-                    if (json_array_with_error_status.getJSONObject(0).getString("status").equals("1")) {
-                        Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
-                    } else if (json_array_with_error_status.getJSONObject(0).getString("status").equals("0")) {
-                        async_response_json_array_with_error_status_delegate.processFinish(json_array_with_error_status);
+                    JSONArray json_array = new JSONArray(network_action_response_array[1]);
+
+                    if ((splash_flag == 1) || (!error_flag)) {
+                        async_response_json_array.processFinish(json_array);
+                    } else {
+                        if (json_array.getJSONObject(0).getString("status").equals("1")) {
+                            Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                        } else if (json_array.getJSONObject(0).getString("status").equals("0")) {
+                            async_response_json_array.processFinish(json_array);
+                        }
                     }
                 } catch (JSONException e) {
                     Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
@@ -178,8 +195,8 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
     }
 
     // you may separate this or combined to caller class.
-    public interface Async_Response_JSON_array_with_error_status_delegate {
-        void processFinish(JSONArray json_array_with_error_status);
+    public interface Async_Response_JSON_array {
+        void processFinish(JSONArray json_array);
     }
 
     public interface Async_Response {
