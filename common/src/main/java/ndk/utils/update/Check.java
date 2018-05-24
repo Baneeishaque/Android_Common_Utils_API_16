@@ -21,7 +21,7 @@ public class Check {
         }
 
         if (Network_Utils.isOnline(current_activity)) {
-            Update_Task = new Update_Check_Task(application_name, current_activity, URL, application_name, Update_Task, update_URL, next_activity);
+            Update_Task = new Update_Check_Task(application_name, current_activity, URL, Update_Task, update_URL, next_activity);
             Update_Task.execute((Void) null);
         } else {
             final Update_Check_Task final_Update_Task = Update_Task;

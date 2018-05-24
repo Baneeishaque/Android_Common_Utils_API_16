@@ -39,11 +39,11 @@ public class Splash extends AppCompatActivity {
 
                 public void processFinish(JSONArray json_array_with_error_status) {
                     try {
-                        if (Server_Utils.check_system_status(getApplicationContext(), json_array_with_error_status.getJSONObject(1).getString("system_status"))) {
-                            if (Integer.parseInt(json_array_with_error_status.getJSONObject(1).getString("version_code")) != Update_Utils.getVersionCode(getApplicationContext())) {
-                                Update_Application.update_application(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Splash.this, Float.parseFloat(json_array_with_error_status.getJSONObject(0).getString("version_name")), ManifestMetadata.get(getApplicationContext()).getValue("APK_UPDATE_URL"), ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"));
-                            } else if (Float.parseFloat(json_array_with_error_status.getJSONObject(1).getString("version_name")) != Update_Utils.getVersionName(getApplicationContext())) {
-                                Update_Application.update_application(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Splash.this, Float.parseFloat(json_array_with_error_status.getJSONObject(0).getString("version_name")), ManifestMetadata.get(getApplicationContext()).getValue("APK_UPDATE_URL"), ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"));
+                        if (Server_Utils.check_system_status(getApplicationContext(), json_array_with_error_status.getJSONObject(0).getString("system_status"))) {
+                            if (Integer.parseInt(json_array_with_error_status.getJSONObject(0).getString("version_code")) != Update_Utils.getVersionCode(getApplicationContext())) {
+                                Update_Application.update_application(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Splash.this, Float.parseFloat(json_array_with_error_status.getJSONObject(0).getString("version_name")), ManifestMetadata.get(getApplicationContext()).getValue("APK_UPDATE_URL"));
+                            } else if (Float.parseFloat(json_array_with_error_status.getJSONObject(0).getString("version_name")) != Update_Utils.getVersionName(getApplicationContext())) {
+                                Update_Application.update_application(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Splash.this, Float.parseFloat(json_array_with_error_status.getJSONObject(0).getString("version_name")), ManifestMetadata.get(getApplicationContext()).getValue("APK_UPDATE_URL"));
                             } else {
                                 Toast_Utils.longToast(getApplicationContext(), "Latest Version...");
                                 launch_Next_Screen();
