@@ -3,8 +3,8 @@ package ndk.util.tests;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -18,9 +18,8 @@ public class Splash_URL_Test {
     @Rule
     public ActivityTestRule<Splash_URL> activity_Test_Rule = new ActivityTestRule<>(Splash_URL.class);
 
-    @Before
-    public void setUp() {
-
+    @Test
+    public void check_network_response() {
     }
 
 }

@@ -1,7 +1,6 @@
 package ndk.utils.activities;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.onehilltech.metadata.ManifestMetadata;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +29,10 @@ import ndk.utils.Validation_Utils;
 import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 
-public class Login extends AppCompatActivity {
+//TODO : Create bundle data initialization
+//TODO : Create Layout initialization
+
+public class Login_Base_Bundle extends AppCompatActivity {
 
     Context activity_context = this;
 
@@ -108,44 +108,29 @@ public class Login extends AppCompatActivity {
                         String user_count = json_object.getString("user_count");
                         switch (user_count) {
                             case "1":
-                                SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                                Activity_Utils.start_activity_with_finish(Login.this, Class.forName(ManifestMetadata.get(getApplicationContext()).getValue("NEXT_ACTIVITY_CLASS")));
+                                SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), getIntent().getStringExtra("APPLICATION_NAME"), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
+                                Activity_Utils.start_activity_with_finish(activity_context, Class.forName(getIntent().getStringExtra("NEXT_ACTIVITY_CLASS")));
                                 break;
 
                             case "0":
-                                Toast.makeText(Login.this, "Login Failure!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity_context, "Login Failure!", Toast.LENGTH_LONG).show();
                                 username.requestFocus();
                                 break;
 
                             default:
-                                Toast.makeText(Login.this, "Error : Check json", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity_context, "Error : Check json", Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         Toast_Utils.longToast(getApplicationContext(), "JSON Response Error");
-                        try {
-                            Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Exception_Utils.get_exception_details(e));
-                        } catch (PackageManager.NameNotFoundException exc) {
-                            Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error");
-                            Log.d("<meta-data> Error", Exception_Utils.get_exception_details(exc));
-                        }
-                    } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {
-                        Toast_Utils.longToast(getApplicationContext(), "Next Activity Error");
-                        try {
-                            Log.d(ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), Exception_Utils.get_exception_details(e));
-                        } catch (PackageManager.NameNotFoundException exc) {
-                            Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error");
-                            Log.d("<meta-data> Error", Exception_Utils.get_exception_details(exc));
-                        }
+                        Log.d(getIntent().getStringExtra("APPLICATION_NAME"), Exception_Utils.get_exception_details(e));
+                    } catch (ClassNotFoundException e) {
+                        Toast_Utils.longToast(getApplicationContext(), "Unknown Class Error");
+                        Log.d(getIntent().getStringExtra("APPLICATION_NAME"), Exception_Utils.get_exception_details(e));
                     }
                 }
             };
 
-            try {
-                REST_Select_Task_Wrapper.execute(ManifestMetadata.get(getApplicationContext()).getValue("SELECT_USER_URL"), activity_context, mProgressView, mLoginFormView, ManifestMetadata.get(getApplicationContext()).getValue("APPLICATION_NAME"), new Pair[]{new Pair<>("username", username.getText().toString()), new Pair<>("password", password.getText().toString())}, async_response_json_object_delegate);
-            } catch (PackageManager.NameNotFoundException e) {
-                Toast_Utils.longToast(getApplicationContext(), "<meta-data> Error");
-                Log.d("<meta-data> Error", Exception_Utils.get_exception_details(e));
-            }
+            REST_Select_Task_Wrapper.execute(getIntent().getStringExtra("SELECT_USER_URL"), activity_context, mProgressView, mLoginFormView, getIntent().getStringExtra("APPLICATION_NAME"), new Pair[]{new Pair<>("username", username.getText().toString()), new Pair<>("password", password.getText().toString())}, async_response_json_object_delegate);
         }
     }
 }

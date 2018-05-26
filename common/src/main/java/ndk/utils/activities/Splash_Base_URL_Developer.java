@@ -37,6 +37,8 @@ public abstract class Splash_Base_URL_Developer extends AppCompatActivity {
 
     protected abstract String configure_DEVELOPER();
 
+    protected abstract Pair[] configure_NEXT_ACTIVITY_CLASS_EXTRAS();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,8 @@ public abstract class Splash_Base_URL_Developer extends AppCompatActivity {
                             Update_Application.update_application(configure_APPLICATION_NAME(), current_activity, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
                         } else {
                             Toast_Utils.longToast(getApplicationContext(), "Latest Version...");
-                            launch_Next_Screen();
+                            Activity_Utils.start_activity_with_string_extras_and_finish(current_activity, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
+
                         }
                     }
                 } catch (JSONException exception) {
@@ -65,12 +68,5 @@ public abstract class Splash_Base_URL_Developer extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-    protected void launch_Next_Screen() {
-        Activity_Utils.start_activity_with_finish(current_activity, configure_NEXT_ACTIVITY_CLASS());
-    }
-
 }
