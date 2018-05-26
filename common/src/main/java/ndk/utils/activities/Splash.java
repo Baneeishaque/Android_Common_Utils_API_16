@@ -21,7 +21,11 @@ import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 import ndk.utils.update.Update_Application;
 
-//TODO:Full screen splash
+//TODO : Full screen splash
+//TODO : Remove meta-data usage due to additional library usage & meta-data maintenance difficulty
+//TODO : Implement Custom constructor to override fields - in case of app name & API URLs
+//TODO : Ensure Overriding of fields with appropriate messages
+//TODO : Implement hiding of fields - in case of layout
 
 public class Splash extends AppCompatActivity {
 
