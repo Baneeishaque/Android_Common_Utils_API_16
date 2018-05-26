@@ -11,6 +11,16 @@ import java.util.Objects;
 
 public class Activity_Utils {
 
+    public static Intent construct_Intent_With_String_Extras(Context context, Class activity, Pair[] extras) {
+        Intent intent = new Intent(context, activity);
+        if (extras.length != 0) {
+            for (Pair extra : extras) {
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, extra.second != null ? extra.second.toString() : null);
+            }
+        }
+        return intent;
+    }
+
     public static void start_activity(Context context, Class activity) {
         Intent intent = new Intent(context, activity);
         context.startActivity(intent);
@@ -19,8 +29,8 @@ public class Activity_Utils {
     public static void start_activity_with_integer_extras(Context context, Class activity, Pair[] extras) {
         Intent intent = new Intent(context, activity);
         if(extras.length!=0) {
-            for (Pair<String, Integer> extra : extras) {
-                intent.putExtra(extra.first,extra.second);
+            for (Pair extra : extras) {
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
             }
         }
         context.startActivity(intent);
@@ -29,8 +39,8 @@ public class Activity_Utils {
     public static void start_activity_with_string_extras(Context context, Class activity, Pair[] extras) {
         Intent intent = new Intent(context, activity);
         if(extras.length!=0) {
-            for (Pair<String, String> extra : extras) {
-                intent.putExtra(extra.first,extra.second);
+            for (Pair extra : extras) {
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, extra.second != null ? extra.second.toString() : null);
             }
         }
         context.startActivity(intent);
@@ -39,8 +49,8 @@ public class Activity_Utils {
     public static void start_activity_with_integer_extras_and_finish(Context context, Class activity, Pair[] extras) {
         Intent intent = new Intent(context, activity);
         if(extras.length!=0) {
-            for (Pair<String, Integer> extra : extras) {
-                intent.putExtra(extra.first,extra.second);
+            for (Pair extra : extras) {
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
             }
         }
         context.startActivity(intent);
@@ -76,8 +86,8 @@ public class Activity_Utils {
     public static void start_activity_with_object_push_and_integer_extras(Context context, Class activity, Pair[] extras,Object object_to_push) {
         Intent intent = new Intent(context, activity);
         if(extras.length!=0) {
-            for (Pair<String, Integer> extra : extras) {
-                intent.putExtra(extra.first,extra.second);
+            for (Pair extra : extras) {
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
             }
         }
         CachePot.getInstance().push(object_to_push);
@@ -87,8 +97,8 @@ public class Activity_Utils {
     public static void start_activity_with_object_push_and_integer_extras_and_finish(Context context, Class activity, Pair[] extras,Object object_to_push) {
         Intent intent = new Intent(context, activity);
         if(extras.length!=0) {
-            for (Pair<String, Integer> extra : extras) {
-                intent.putExtra(extra.first,extra.second);
+            for (Pair extra : extras) {
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
             }
         }
         CachePot.getInstance().push(object_to_push);

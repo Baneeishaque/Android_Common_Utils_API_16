@@ -29,7 +29,7 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
 
     private Pair[] name_value_pair;
 
-    boolean error_flag;
+    private boolean error_flag;
     private Async_Response_JSON_array async_response_json_array = null;
     private Async_Response async_response = null;
     private Async_Response_JSON_object async_response_json_object = null;
