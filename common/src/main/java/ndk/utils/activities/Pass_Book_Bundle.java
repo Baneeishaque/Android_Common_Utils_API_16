@@ -22,7 +22,7 @@ import static ndk.utils.Pass_Book_Utils.create_Pass_Book_Pdf;
 import static ndk.utils.Pdf_Utils.prompt_For_Next_Action_After_Creation;
 import static ndk.utils.ProgressBar_Utils.showProgress;
 
-//TODO: edit rest insert for extension
+//TODO: Use new code structure
 
 public class Pass_Book_Bundle extends AppCompatActivity {
 

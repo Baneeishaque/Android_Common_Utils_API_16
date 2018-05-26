@@ -19,10 +19,6 @@ import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 import ndk.utils.update.Update_Application;
 
-//TODO : Full screen splash
-//TODO : Implement hiding of fields - in case of layout
-//TODO : Develop tests
-
 public abstract class Splash_Base_URL_Developer extends AppCompatActivity {
 
     AppCompatActivity current_activity = this;

@@ -29,7 +29,6 @@ import ndk.utils.Validation_Utils;
 import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 
-//TODO : Create bundle data initialization
 //TODO : Create Layout initialization
 
 public abstract class Login_Base_URL extends AppCompatActivity {
