@@ -13,10 +13,10 @@ import org.junit.runner.RunWith;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class Splash_Base_Test {
+public class Splash_URL_Test {
 
     @Rule
-    public ActivityTestRule<Splash> activity_Test_Rule = new ActivityTestRule<>(Splash.class);
+    public ActivityTestRule<Splash_URL> activity_Test_Rule = new ActivityTestRule<>(Splash_URL.class);
 
     @Before
     public void setUp() {

@@ -22,7 +22,7 @@ import ndk.utils.update.Update_Application;
 //TODO : Implement hiding of fields - in case of layout
 //TODO : Develop tests
 
-public abstract class Splash_Base extends AppCompatActivity {
+public abstract class Splash_Base_URL extends AppCompatActivity {
 
     AppCompatActivity current_activity = this;
 

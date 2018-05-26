@@ -6,7 +6,7 @@
     <!--android:background="@drawable/gradient_background" >-->
 
     <ImageView
-        android:id="@+id/imgLogo"
+        android:id="@+id/img_Logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -16,6 +16,7 @@
         android:contentDescription="@string/application_logo" />
 
     <TextView
+        android:id="@+id/text_Developer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

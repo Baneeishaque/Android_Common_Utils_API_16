@@ -1,9 +1,9 @@
 package ndk.util.tests;
 
 import ndk.utils.activities.Login;
-import ndk.utils.activities.Splash_Base;
+import ndk.utils.activities.Splash_Base_URL;
 
-public class Splash extends Splash_Base {
+public class Splash_URL extends Splash_Base_URL {
 
     @Override
     protected String configure_GET_CONFIGURATION_URL() {
@@ -17,7 +17,7 @@ public class Splash extends Splash_Base {
 
     @Override
     protected String configure_APPLICATION_NAME() {
-        return "Splash Tests";
+        return "Splash_URL Tests";
     }
 
     @Override
