@@ -11,11 +11,11 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="ndk.utils.activities.Login"
+            android:name="ndk.utils.activities.Login_Bundle"
             android:label="@string/app_name" />
 
         <activity
-            android:name=".Splash_URL"
+            android:name=".Splash_Version_OK"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -32,7 +32,7 @@ import ndk.utils.network_task.REST_Select_Task_Wrapper;
 //TODO : Create bundle data initialization
 //TODO : Create Layout initialization
 
-public class Login_Base_Bundle extends AppCompatActivity {
+public class Login_Bundle extends AppCompatActivity {
 
     Context activity_context = this;
 

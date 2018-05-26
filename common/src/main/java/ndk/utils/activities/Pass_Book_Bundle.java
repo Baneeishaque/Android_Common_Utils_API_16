@@ -24,7 +24,7 @@ import static ndk.utils.ProgressBar_Utils.showProgress;
 
 //TODO: edit rest insert for extension
 
-public class Pass_Book extends AppCompatActivity {
+public class Pass_Book_Bundle extends AppCompatActivity {
 
     private ProgressBar mProgressView;
     private Pass_Book_TableView pass_book_tableView;
@@ -45,7 +45,7 @@ public class Pass_Book extends AppCompatActivity {
 //        String application_name = "";
 //        String user_id = "";
 //
-//        Intent intent = new Intent(getBaseContext(), Pass_Book.class);
+//        Intent intent = new Intent(getBaseContext(), Pass_Book_Bundle.class);
 //        intent.putExtra("URL", URL);
 //        intent.putExtra("application_name", application_name);
 //        intent.putExtra("user_id", user_id);
