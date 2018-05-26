@@ -1,7 +1,10 @@
 package ndk.util.tests;
 
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
@@ -11,5 +14,13 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AndroidJUnit4.class)
 public class Splash_Base_Test {
+
+    @Rule
+    public ActivityTestRule<Splash> activity_Test_Rule = new ActivityTestRule<>(Splash.class);
+
+    @Before
+    public void setUp() {
+
+    }
 
 }
