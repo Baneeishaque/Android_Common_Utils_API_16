@@ -41,7 +41,7 @@ public class Application_VCS_Utils {
         String url = update_URL;
 
         //set download manager
-        Log.d(TAG, url);
+        Log.d(TAG, "Build URL : "+url);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription("Downloading Update...");
         request.setTitle(application_name+" " + version_name);
