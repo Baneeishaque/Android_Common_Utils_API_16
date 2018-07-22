@@ -7,25 +7,25 @@ import com.google.firebase.messaging.FirebaseMessaging;
  */
 public class FCM_Utils {
 
-    public static void subscribe_for_topics(String[] topics, String TAG) {
+    public static void subscribe_for_topics(String[] topics, String TAG, boolean is_debug) {
 
         if (topics.length != 0) {
 
             for (String topic : topics) {
                 FirebaseMessaging.getInstance().subscribeToTopic(topic);
-                Log_Utils.getInstance(TAG).debug("Subscribed for topic " + topic);
+                Log_Utils.debug(TAG, "Subscribed for topic " + topic, is_debug);
             }
 
         }
     }
 
-    public static void unsubscribe_from_topics(String[] topics, String TAG) {
+    public static void unsubscribe_from_topics(String[] topics, String TAG, boolean is_debug) {
 
         if (topics.length != 0) {
 
             for (String topic : topics) {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
-                Log_Utils.getInstance(TAG).debug("Unsubscribed from topic " + topic);
+                Log_Utils.debug(TAG, "Unsubscribed from topic " + topic, is_debug);
             }
 
         }
