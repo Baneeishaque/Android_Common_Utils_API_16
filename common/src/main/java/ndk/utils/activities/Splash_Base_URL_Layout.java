@@ -17,6 +17,7 @@ import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 import ndk.utils.update.Update_Application;
 
+//TODO : Use fragment instead of layout
 public abstract class Splash_Base_URL_Layout extends AppCompatActivity {
 
     AppCompatActivity current_activity = this;

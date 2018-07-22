@@ -36,7 +36,6 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
     private Pass_Book_TableView_v2 pass_book_tableView_v2;
     private Pair[] name_value_pair;
     private boolean v2_flag;
-    private String current_account_id;
 
     public Load_Pass_Book_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView pass_book_tableView, Pair[] name_value_pair) {
 
@@ -49,6 +48,8 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
         this.name_value_pair = name_value_pair;
         this.v2_flag = false;
     }
+
+    private String current_account_id;
 
     public Load_Pass_Book_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView_v2 pass_book_tableView_v2, String current_account_id) {
 
