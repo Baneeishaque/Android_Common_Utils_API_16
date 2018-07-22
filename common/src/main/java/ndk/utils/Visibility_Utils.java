@@ -16,7 +16,7 @@ public class Visibility_Utils {
 
     public static void remove_from_parent_layout(View[] views) {
         for (View view : views) {
-            ((ViewGroup)view.getParent()).removeView(view);
+            ((ViewGroup) view.getParent()).removeView(view);
         }
 
     }

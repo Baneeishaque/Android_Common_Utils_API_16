@@ -39,6 +39,49 @@ import static ndk.utils.Pass_Book_Utils.email_Pass_Book;
 
 public class Pdf_Utils {
 
+    static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
+    }
+
+    public static void prompt_For_Next_Action_After_Creation(final Context context, String dialog_Title, final File pass_book_pdf, final String application_name, final String time_stamp, final String email_subject, final String email_text) {
+        final String[] options = {
+                "Preview It",
+                "Cancel"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setTitle("Pass Book Saved, What Next?");
+        builder.setTitle(dialog_Title);
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (options[which]) {
+                    case "Email It":
+                        email_Pass_Book(application_name, time_stamp, email_subject, email_text, pass_book_pdf, context);
+                        break;
+                    case "Preview It":
+                        viewPdf(pass_book_pdf, context);
+                        break;
+                    case "Cancel":
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        });
+
+        builder.show();
+
+    }
+
+    private static void viewPdf(File pass_book_pdf, Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(pass_book_pdf), "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        context.startActivity(intent);
+    }
+
     boolean createPdf(String TAG, Context context) {
 
         File docsFolder = new File(Environment.getExternalStorageDirectory() + "/Documents");
@@ -184,50 +227,6 @@ public class Pdf_Utils {
             Toast_Utils.longToast(context, "Folder fail");
         }
         return false;
-    }
-
-
-    static void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
-        }
-    }
-
-    public static void prompt_For_Next_Action_After_Creation(final Context context, String dialog_Title, final File pass_book_pdf, final String application_name, final String time_stamp, final String email_subject, final String email_text) {
-        final String[] options = {
-                "Preview It",
-                "Cancel"
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//        builder.setTitle("Pass Book Saved, What Next?");
-        builder.setTitle(dialog_Title);
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (options[which]) {
-                    case "Email It":
-                        email_Pass_Book(application_name, time_stamp, email_subject, email_text, pass_book_pdf, context);
-                        break;
-                    case "Preview It":
-                        viewPdf(pass_book_pdf, context);
-                        break;
-                    case "Cancel":
-                        dialog.dismiss();
-                        break;
-                }
-            }
-        });
-
-        builder.show();
-
-    }
-
-    private static void viewPdf(File pass_book_pdf, Context context) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(pass_book_pdf), "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        context.startActivity(intent);
     }
 
 }

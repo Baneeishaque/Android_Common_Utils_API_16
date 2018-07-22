@@ -14,8 +14,7 @@ public class Permission_Utils {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
-    void request_permision_with_explanation(Activity thisActivity)
-    {
+    void request_permision_with_explanation(Activity thisActivity) {
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(thisActivity,
                 Manifest.permission.READ_CONTACTS)
@@ -45,8 +44,7 @@ public class Permission_Utils {
     }
 
 
-    void request_permision(Activity thisActivity)
-    {
+    void request_permision(Activity thisActivity) {
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(thisActivity,
                 Manifest.permission.READ_CONTACTS)
@@ -75,7 +73,7 @@ public class Permission_Utils {
         }
     }
 
-//    @Override
+    //    @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {

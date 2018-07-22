@@ -12,11 +12,10 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class Install_Apk {
-    public static void install_apk(Uri uri, DownloadManager manager, long downloadId, Context context, BroadcastReceiver download_complete_trigger)
-    {
+    public static void install_apk(Uri uri, DownloadManager manager, long downloadId, Context context, BroadcastReceiver download_complete_trigger) {
         Intent install = new Intent(Intent.ACTION_VIEW);
         install.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        install.setDataAndType(uri,manager.getMimeTypeForDownloadedFile(downloadId));
+        install.setDataAndType(uri, manager.getMimeTypeForDownloadedFile(downloadId));
         context.startActivity(install);
         context.unregisterReceiver(download_complete_trigger);
         ((AppCompatActivity) context).finish();

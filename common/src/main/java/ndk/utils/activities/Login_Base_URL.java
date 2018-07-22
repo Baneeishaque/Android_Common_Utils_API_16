@@ -33,19 +33,18 @@ import ndk.utils.network_task.REST_Select_Task_Wrapper;
 
 public abstract class Login_Base_URL extends AppCompatActivity {
 
-    protected abstract String configure_SELECT_USER_URL();
-
-    protected abstract String configure_APPLICATION_NAME();
-
-    protected abstract Class configure_NEXT_ACTIVITY_CLASS();
-
     Context activity_context = this;
-
     // UI references.
     private EditText username;
     private EditText password;
     private View mProgressView;
     private View mLoginFormView;
+
+    protected abstract String configure_SELECT_USER_URL();
+
+    protected abstract String configure_APPLICATION_NAME();
+
+    protected abstract Class configure_NEXT_ACTIVITY_CLASS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public abstract class Login_Base_URL extends AppCompatActivity {
                         switch (user_count) {
                             case "1":
                                 SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                                Activity_Utils.start_activity_with_finish(activity_context, configure_NEXT_ACTIVITY_CLASS());
+                                Activity_Utils.start_activity_with_finish(activity_context, configure_NEXT_ACTIVITY_CLASS(), configure_APPLICATION_NAME());
                                 break;
 
                             case "0":

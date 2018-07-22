@@ -26,9 +26,9 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
         this.current_activity = current_activity;
         this.URL = URL;
         this.Update_Task = Update_Task;
-        this.application_name=application_name;
-        this.update_URL=update_URL;
-        this.next_activity=next_activity;
+        this.application_name = application_name;
+        this.update_URL = update_URL;
+        this.next_activity = next_activity;
     }
 
     @Override

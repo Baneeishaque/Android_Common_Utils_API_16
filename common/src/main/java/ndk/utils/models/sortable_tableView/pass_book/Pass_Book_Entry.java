@@ -10,20 +10,20 @@ public class Pass_Book_Entry {
     private double credit_amount;
     private double balance;
 
-    public double getCredit_amount() {
-        return credit_amount;
-    }
-
-    public void setCredit_amount(double credit_amount) {
-        this.credit_amount = credit_amount;
-    }
-
     public Pass_Book_Entry(Date insertion_date, String particulars, double debit_amount, double credit_amount, double balance) {
         this.insertion_date = insertion_date;
         this.particulars = particulars;
         this.debit_amount = debit_amount;
         this.credit_amount = credit_amount;
         this.balance = balance;
+    }
+
+    public double getCredit_amount() {
+        return credit_amount;
+    }
+
+    public void setCredit_amount(double credit_amount) {
+        this.credit_amount = credit_amount;
     }
 
     public double getBalance() {
@@ -33,7 +33,6 @@ public class Pass_Book_Entry {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
 
 
     public String getParticulars() {
@@ -60,5 +59,14 @@ public class Pass_Book_Entry {
         this.insertion_date = insertion_date;
     }
 
-
+    @Override
+    public String toString() {
+        return "Pass_Book_Entry{" +
+                "insertion_date=" + insertion_date +
+                ", particulars='" + particulars + '\'' +
+                ", debit_amount=" + debit_amount +
+                ", credit_amount=" + credit_amount +
+                ", balance=" + balance +
+                '}';
+    }
 }

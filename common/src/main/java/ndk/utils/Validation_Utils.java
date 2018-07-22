@@ -1,16 +1,8 @@
 package ndk.utils;
 
-import android.content.Context;
 import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created on 30-11-2017 20:13 under Caventa_Android.
@@ -84,8 +76,6 @@ public class Validation_Utils {
         }
         return new Pair<>(false, null);
     }
-
-
 
 
 }

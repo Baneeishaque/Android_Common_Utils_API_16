@@ -20,12 +20,12 @@ import ndk.utils.Toast_Utils;
 
 public class Application_VCS_Utils {
 
-    public static void download_and_install_apk(String application_name, float version_name,String update_URL, final Context context,String TAG) {
+    public static void download_and_install_apk(String application_name, float version_name, String update_URL, final Context context, String TAG) {
 
         //get destination to update file and set Uri.
         //Download directory in external storage.
         String destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-        String fileName = application_name+"_" + version_name + ".apk";
+        String fileName = application_name + "_" + version_name + ".apk";
         destination += fileName;
         final Uri uri = Uri.parse("file://" + destination);
 
@@ -41,10 +41,10 @@ public class Application_VCS_Utils {
         String url = update_URL;
 
         //set download manager
-        Log.d(TAG, "Build URL : "+url);
+        Log.d(TAG, url);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription("Downloading Update...");
-        request.setTitle(application_name+" " + version_name);
+        request.setTitle(application_name + " " + version_name);
 
         //set destination
         request.setDestinationUri(uri);

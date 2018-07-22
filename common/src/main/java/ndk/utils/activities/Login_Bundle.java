@@ -107,7 +107,8 @@ public class Login_Bundle extends AppCompatActivity {
                         switch (user_count) {
                             case "1":
                                 SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), getIntent().getStringExtra("APPLICATION_NAME"), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                                Activity_Utils.start_activity_with_finish(activity_context, Class.forName(getIntent().getStringExtra("NEXT_ACTIVITY_CLASS")));
+                                Log.d(getIntent().getStringExtra("APPLICATION_NAME"), "Next Activity : " + getIntent().getStringExtra("NEXT_ACTIVITY_CLASS"));
+                                Activity_Utils.start_activity_with_finish(activity_context, Class.forName(getIntent().getStringExtra("NEXT_ACTIVITY_CLASS")), getIntent().getStringExtra("APPLICATION_NAME"));
                                 break;
 
                             case "0":

@@ -26,10 +26,11 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
     private int progress_flag = 0;
     private int response_flag = 0;
     private int splash_flag = 0;
+    private boolean background_flag = false;
 
     private Pair[] name_value_pair;
 
-    private boolean error_flag;
+    private boolean error_flag = true;
     private Async_Response_JSON_array async_response_json_array = null;
     private Async_Response async_response = null;
     private Async_Response_JSON_object async_response_json_object = null;
@@ -92,6 +93,18 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
         splash_flag = 1;
     }
 
+    public REST_Select_Task(String URL, Context context, View progressBar, View form, String TAG, Pair[] name_value_pair, Async_Response_JSON_array async_response_json_array, boolean error_flag) {
+
+        this.URL = URL;
+        this.context = context;
+        this.TAG = TAG;
+        this.name_value_pair = name_value_pair;
+        this.async_response_json_array = async_response_json_array;
+        this.progressBar = progressBar;
+        this.form = form;
+        this.error_flag = error_flag;
+    }
+
     public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response_JSON_array async_response_json_array, boolean error_flag) {
 
         this.URL = URL;
@@ -99,8 +112,20 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
         this.TAG = TAG;
         this.name_value_pair = name_value_pair;
         this.async_response_json_array = async_response_json_array;
-        progress_flag = 1;
+        this.progress_flag = 1;
         this.error_flag = error_flag;
+    }
+
+    public REST_Select_Task(String URL, Context context, String TAG, Pair[] name_value_pair, Async_Response_JSON_array async_response_json_array, boolean error_flag, boolean background_flag) {
+
+        this.URL = URL;
+        this.context = context;
+        this.TAG = TAG;
+        this.name_value_pair = name_value_pair;
+        this.async_response_json_array = async_response_json_array;
+        this.progress_flag = 1;
+        this.error_flag = error_flag;
+        this.background_flag = background_flag;
     }
 
     @Override
@@ -158,7 +183,13 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
             Log.d(TAG, "Network Action Response Array 1 : " + network_action_response_array[1]);
 
             if (network_action_response_array[0].equals("1")) {
-                Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+
+                if (background_flag) {
+                    Log.d(TAG, "Error...");
+                } else {
+                    Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                }
+
                 Log.d(TAG, "Network Action Response Array 1 : " + network_action_response_array[1]);
 
                 if (splash_flag == 1) {
@@ -174,7 +205,11 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
                         async_response_json_array.processFinish(json_array);
                     } else {
                         if (json_array.getJSONObject(0).getString("status").equals("1")) {
-                            Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                            if (background_flag) {
+                                Log.d(TAG, "No Entries...");
+                            } else {
+                                Toast.makeText(context, "No Entries...", Toast.LENGTH_LONG).show();
+                            }
                         } else if (json_array.getJSONObject(0).getString("status").equals("0")) {
                             async_response_json_array.processFinish(json_array);
                         }
@@ -194,7 +229,6 @@ public class REST_Select_Task extends AsyncTask<Void, Void, String[]> {
         }
     }
 
-    // you may separate this or combined to caller class.
     public interface Async_Response_JSON_array {
         void processFinish(JSONArray json_array);
     }
