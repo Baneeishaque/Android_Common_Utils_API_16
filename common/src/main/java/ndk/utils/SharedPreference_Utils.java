@@ -17,4 +17,22 @@ public class SharedPreference_Utils {
             editor.apply();
         }
     }
+
+    public static boolean is_first_run(Context context, String application_name) {
+        SharedPreferences settings = context.getSharedPreferences(application_name, Context.MODE_PRIVATE);
+        if (settings.getString("first_run", String.valueOf(true)).equals(String.valueOf(true))) {
+            // Do first run stuff here then set 'firstrun' as false
+            //TODO : Implement this interface
+//            first_run_actions.on_first_run();
+
+            // using the following line to edit/commit prefs
+            commit_Shared_Preferences(context, application_name, new Pair[]{new Pair<>("first_run", String.valueOf(false))});
+            return true;
+        }
+        return false;
+    }
+
+    public interface first_run_actions {
+        void on_first_run();
+    }
 }
