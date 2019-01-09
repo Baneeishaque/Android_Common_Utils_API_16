@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.google.gms:google-services:4.0.2'
+        classpath 'com.google.gms:google-services:4.2.0'
 
 //        classpath "gradle.plugin.com.greensopinion.gradle-android-eclipse:android-eclipse:1.0"
 
@@ -19,7 +19,7 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenLocal()
+//        mavenLocal()
         google()
         jcenter()
         maven { url "https://jitpack.io" }
