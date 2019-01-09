@@ -167,23 +167,30 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
     private void enter_transactions(JSONArray json_array, ArrayList<Pass_Book_Entry_v2> pass_book_entries_v2, int json_array_start_index) {
 
         float balance = 0;
-        try {
 
+        try {
             for (int i = json_array_start_index; i < json_array.length(); i++) {
 
-                if (json_array.getJSONObject(i).getString("from_account_id").equals(current_account_id)) {
+                if (json_array_start_index == 0) {
+                    if (json_array.getJSONObject(i).getString("from_account_id").equals(json_array.getJSONObject(i).getString("parent_account_id"))) {
 
-                    balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+                        pass_book_entries_v2 = enter_debit_transaction(balance, json_array, i, pass_book_entries_v2);
 
-                    Log.d(TAG, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
+                    } else {
 
-                    pass_book_entries_v2.add(new Pass_Book_Entry_v2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("to_account_name"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
+                        pass_book_entries_v2 = enter_credit_transaction(balance, json_array, i, pass_book_entries_v2);
+                    }
 
                 } else {
 
-                    balance = balance + Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+                    if (json_array.getJSONObject(i).getString("from_account_id").equals(current_account_id)) {
 
-                    pass_book_entries_v2.add(new Pass_Book_Entry_v2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("from_account_name"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
+                        pass_book_entries_v2 = enter_debit_transaction(balance, json_array, i, pass_book_entries_v2);
+
+                    } else {
+
+                        pass_book_entries_v2 = enter_credit_transaction(balance, json_array, i, pass_book_entries_v2);
+                    }
                 }
             }
 
@@ -192,10 +199,40 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
         } catch (JSONException e) {
             Toast.makeText(current_activity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             Log.d(TAG, e.getLocalizedMessage());
+        }
+    }
+
+    private ArrayList<Pass_Book_Entry_v2> enter_credit_transaction(float balance, JSONArray json_array, int i, ArrayList<Pass_Book_Entry_v2> pass_book_entries_v2) {
+        try {
+            balance = balance + Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+
+            pass_book_entries_v2.add(new Pass_Book_Entry_v2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("from_account_name"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
+        } catch (JSONException e) {
+            Toast.makeText(current_activity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Log.d(TAG, e.getLocalizedMessage());
         } catch (ParseException e) {
             Toast.makeText(current_activity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             Log.d(TAG, e.getLocalizedMessage());
         }
+        return pass_book_entries_v2;
+    }
+
+    private ArrayList<Pass_Book_Entry_v2> enter_debit_transaction(float balance, JSONArray json_array, int i, ArrayList<Pass_Book_Entry_v2> pass_book_entries_v2) {
+        try {
+            balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+
+            Log.d(TAG, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
+
+            pass_book_entries_v2.add(new Pass_Book_Entry_v2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("to_account_name"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
+
+        } catch (JSONException e) {
+            Toast.makeText(current_activity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Log.d(TAG, e.getLocalizedMessage());
+        } catch (ParseException e) {
+            Toast.makeText(current_activity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Log.d(TAG, e.getLocalizedMessage());
+        }
+        return pass_book_entries_v2;
     }
 
     @Override
