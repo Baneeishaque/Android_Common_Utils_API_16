@@ -18,10 +18,19 @@ import ndk.utils.network_task.REST_Select_Task;
 import static ndk.utils.Network_Utils.isOnline;
 import static ndk.utils.ProgressBar_Utils.showProgress;
 
+/**
+ * Created on 20-09-2018 14:16 under VLottery.
+ */
 public class Spinner_Utils {
 
     public static void attach_items_to_simple_spinner(Context context, Spinner spinner, ArrayList<String> items) {
         ArrayAdapter<String> spinner_adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, items);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinner_adapter);
+    }
+
+    public static void attach_items_to_custom_spinner_item_spinner(Context context, Spinner spinner, ArrayList<String> items, int custom_spinner_item) {
+        ArrayAdapter<String> spinner_adapter = new ArrayAdapter<>(context, custom_spinner_item, items);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinner_adapter);
     }
@@ -35,7 +44,7 @@ public class Spinner_Utils {
                 Log.d(application_name, e.getLocalizedMessage());
             }
         }
-        Spinner_Utils.attach_items_to_simple_spinner(context, spinner, spinner_items);
+        attach_items_to_simple_spinner(context, spinner, spinner_items);
     }
 
     public static void get_json_from_network_and_populate(final Context context, View progress_Bar, View form, String URL, final String application_name, final int start_index, final Spinner spinner, final ArrayList<String> spinner_items, final String key) {
@@ -55,4 +64,5 @@ public class Spinner_Utils {
             Toast_Utils.longToast(context, "Internet is unavailable");
         }
     }
+
 }
