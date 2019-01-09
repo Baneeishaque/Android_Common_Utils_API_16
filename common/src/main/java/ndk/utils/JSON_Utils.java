@@ -13,7 +13,7 @@ import java.util.Arrays;
 /**
  * Created on 25-08-2018 01:50 under VLottery.
  */
-public class JSON_Utils {
+public class JSON_Utils extends ndk.utils_j2se.JSON_Utils {
 
     public static void JSON_Object_Fields_to_Shared_Preferences(JSONObject json_Object, String[] fields_to_ignore, Context application_context, String APPLICATION_NAME, boolean is_debug) {
 
