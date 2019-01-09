@@ -117,7 +117,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
                     } else {
 
                         //TODO : Use Direct Pattern
-                        enter_transactions(JSON_Utils.sort_JSON_array_by_date_field(network_action_response_array[1], Date_Utils.normal_date_time_short_year_format.toPattern(), "event_date_time"), pass_book_entries_v2, 0);
+                        enter_transactions(JSON_Utils.sort_JSON_array_by_date_field(network_action_response_array[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), pass_book_entries_v2, 0);
                     }
                 } else {
                     JSONArray json_array = new JSONArray(network_action_response_array[1]);
@@ -172,6 +172,21 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
             for (int i = json_array_start_index; i < json_array.length(); i++) {
 
                 if (json_array_start_index == 0) {
+
+                    if (json_array.getJSONObject(i).getString("from_account_id").equals(json_array.getJSONObject(i).getString("parent_account_id"))) {
+
+                        balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+
+                        Log.d(TAG, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
+
+                        pass_book_entries_v2.add(new Pass_Book_Entry_v2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("to_account_name"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
+
+                    } else {
+
+                        balance = balance + Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+
+                        pass_book_entries_v2.add(new Pass_Book_Entry_v2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("from_account_name"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
+                    }
 
                 } else {
                     if (json_array.getJSONObject(i).getString("from_account_id").equals(current_account_id)) {
