@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.github.kimkevin.cachepot.CachePot;
 
@@ -12,7 +11,17 @@ import java.util.Objects;
 
 public class Activity_Utils {
 
-    public static Intent construct_Intent_With_String_Extras(Context context, Class activity, Pair[] extras) {
+    Context context;
+    private String APPLICATION_NAME;
+    private boolean is_debug;
+
+    Activity_Utils(Context context, String APPLICATION_NAME, boolean is_debug) {
+        this.context = context;
+        this.APPLICATION_NAME = APPLICATION_NAME;
+        this.is_debug = is_debug;
+    }
+
+    private Intent construct_Intent_With_String_Extras(Class activity, Pair[] extras) {
         Intent intent = new Intent(context, activity);
         if (extras.length != 0) {
             for (Pair extra : extras) {
@@ -22,28 +31,26 @@ public class Activity_Utils {
         return intent;
     }
 
-    public static void start_activity(Context context, Class activity) {
-        Intent intent = new Intent(context, activity);
-        context.startActivity(intent);
-    }
-
-    public static void start_activity_with_integer_extras(Context context, Class activity, Pair[] extras) {
+    private Intent construct_Intent_With_Integer_Extras(Class activity, Pair[] extras) {
         Intent intent = new Intent(context, activity);
         if (extras.length != 0) {
             for (Pair extra : extras) {
-                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
+                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(Objects.requireNonNull(extra.second != null ? extra.second.toString() : null)));
             }
         }
-        context.startActivity(intent);
+        return intent;
     }
 
-    public static void start_activity_with_string_extras(Context context, Class activity, Pair[] extras, boolean for_result_flag, int request_code) {
-        Intent intent = new Intent(context, activity);
-        if (extras.length != 0) {
-            for (Pair extra : extras) {
-                intent.putExtra(extra.first != null ? extra.first.toString() : null, extra.second != null ? extra.second.toString() : null);
-            }
-        }
+    void start_activity(Class activity) {
+        context.startActivity(new Intent(context, activity));
+    }
+
+    private void start_activity_with_integer_extras(Class activity, Pair[] extras) {
+        context.startActivity(construct_Intent_With_Integer_Extras(activity, extras));
+    }
+
+    void start_activity_with_string_extras(Class activity, Pair[] extras, boolean for_result_flag, int request_code) {
+        Intent intent = construct_Intent_With_String_Extras(activity, extras);
         if (for_result_flag) {
             ((AppCompatActivity) context).startActivityForResult(intent, request_code);
         } else {
@@ -51,95 +58,59 @@ public class Activity_Utils {
         }
     }
 
-    public static void start_activity_with_integer_extras_and_finish(Context context, Class activity, Pair[] extras) {
-        Intent intent = new Intent(context, activity);
-        if (extras.length != 0) {
-            for (Pair extra : extras) {
-                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
-            }
-        }
-        context.startActivity(intent);
+    void start_activity_with_integer_extras_and_finish(Class activity, Pair[] extras) {
+        start_activity_with_integer_extras(activity, extras);
         ((AppCompatActivity) context).finish();
     }
 
-    public static void start_activity_with_finish(Context context, Class activity, String APPLICATION_NAME) {
+    void start_activity_with_finish(Class activity) {
 
-        Log.d(APPLICATION_NAME, "Next Activity : " + activity.getCanonicalName());
-        Log.d(APPLICATION_NAME, "Next Activity : " + activity.getName());
-        Log.d(APPLICATION_NAME, "Next Activity : " + activity.getSimpleName());
+        Log_Utils log_utils = new Log_Utils(is_debug, APPLICATION_NAME);
+        log_utils.debug("Next Activity : " + activity.getCanonicalName());
+        log_utils.debug("Next Activity : " + activity.getName());
+        log_utils.debug("Next Activity : " + activity.getSimpleName());
 
-        Intent intent = new Intent(context, activity);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, activity));
         ((AppCompatActivity) context).finish();
     }
 
-    public static void start_activity_with_finish_and_tab_index(Context context, Class activity, int tab_index) {
-        Intent intent = new Intent(context, activity);
-        intent.putExtra("tab_index", tab_index);
-        context.startActivity(intent);
+    void start_activity_with_finish_and_tab_index(Class activity, int tab_index) {
+        context.startActivity(new Intent(context, activity).putExtra("tab_index", tab_index));
         ((AppCompatActivity) context).finish();
     }
 
-    public static void start_activity_with_object_push_and_finish(Context context, Class activity, Object object_to_push) {
-        Intent intent = new Intent(context, activity);
+    private void start_activity_with_object_push(Class activity, Object object_to_push) {
         CachePot.getInstance().push(object_to_push);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, activity));
+    }
+
+    void start_activity_with_object_push_and_finish(Class activity, Object object_to_push) {
+        start_activity_with_object_push(activity, object_to_push);
         ((AppCompatActivity) context).finish();
     }
 
-    public static void start_activity_with_object_push(Context context, Class activity, Object object_to_push) {
-        Intent intent = new Intent(context, activity);
+    private void start_activity_with_object_push_and_integer_extras(Class activity, Pair[] extras, Object object_to_push) {
         CachePot.getInstance().push(object_to_push);
-        context.startActivity(intent);
+        context.startActivity(construct_Intent_With_Integer_Extras(activity, extras));
     }
 
-    public static void start_activity_with_object_push_and_integer_extras(Context context, Class activity, Pair[] extras, Object object_to_push) {
-        Intent intent = new Intent(context, activity);
-        if (extras.length != 0) {
-            for (Pair extra : extras) {
-                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
-            }
-        }
-        CachePot.getInstance().push(object_to_push);
-        context.startActivity(intent);
-    }
-
-    public static void start_activity_with_object_push_and_integer_extras_and_finish(Context context, Class activity, Pair[] extras, Object object_to_push) {
-        Intent intent = new Intent(context, activity);
-        if (extras.length != 0) {
-            for (Pair extra : extras) {
-                intent.putExtra(extra.first != null ? extra.first.toString() : null, Integer.parseInt(extra.second != null ? extra.second.toString() : null));
-            }
-        }
-        CachePot.getInstance().push(object_to_push);
-        context.startActivity(intent);
+    void start_activity_with_object_push_and_integer_extras_and_finish(Class activity, Pair[] extras, Object object_to_push) {
+        start_activity_with_object_push_and_integer_extras(activity, extras, object_to_push);
         ((AppCompatActivity) context).finish();
     }
 
-    public static void start_activity_with_object_push_and_origin(Context context, Class activity, Object object_to_push, String origin) {
-        Intent intent = new Intent(context, activity);
-        intent.putExtra("origin", origin);
+    private void start_activity_with_object_push_and_origin(Class activity, Object object_to_push, String origin) {
         CachePot.getInstance().push(object_to_push);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, activity).putExtra("origin", origin));
     }
 
-    public static void start_activity_with_object_push_and_finish_and_origin(Context context, Class activity, Object object_to_push, String origin) {
-        Intent intent = new Intent(context, activity);
-        intent.putExtra("origin", origin);
-        CachePot.getInstance().push(object_to_push);
-        context.startActivity(intent);
+    void start_activity_with_object_push_and_finish_and_origin(Class activity, Object object_to_push, String origin) {
+        start_activity_with_object_push_and_origin(activity, object_to_push, origin);
         ((AppCompatActivity) context).finish();
     }
 
-    public static void start_activity_with_string_extras_and_finish(Context context, Class activity, Pair[] extras) {
-        Intent intent = new Intent(context, activity);
-        if (extras.length != 0) {
-
-            for (Pair extra : extras) {
-                intent.putExtra(Objects.requireNonNull(extra.first).toString(), Objects.requireNonNull(extra.second).toString());
-            }
-        }
-        context.startActivity(intent);
+    void start_activity_with_string_extras_and_finish(Class activity, Pair[] extras) {
+        start_activity_with_integer_extras(activity, extras);
         ((AppCompatActivity) context).finish();
     }
 

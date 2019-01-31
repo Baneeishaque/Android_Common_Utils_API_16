@@ -2,14 +2,25 @@ package ndk.utils;
 
 import android.util.Log;
 
-/**
- * Created on 18-07-2018 20:31 under DStock.
- */
-public class Log_Utils {
+class Log_Utils {
 
-    public static void debug(String tag, String message, boolean is_debug) {
+    private boolean is_debug;
+    private String APPLICATION_NAME;
+
+    Log_Utils(boolean is_debug, String APPLICATION_NAME) {
+        this.is_debug = is_debug;
+        this.APPLICATION_NAME = APPLICATION_NAME;
+    }
+
+//    void debug(String tag, String message) {
+//        if (is_debug) {
+//            Log.d(tag, message);
+//        }
+//    }
+
+    void debug(String message) {
         if (is_debug) {
-            Log.d(tag, message);
+            Log.d(APPLICATION_NAME, message);
         }
     }
 
