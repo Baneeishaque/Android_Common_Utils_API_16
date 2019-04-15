@@ -72,5 +72,7 @@ public abstract class Splash_Base_URL extends Context_Activity {
 
     }
 
+    protected abstract String configure_APPLICATION_NAME();
+
     protected abstract boolean configure_is_debug();
 }
