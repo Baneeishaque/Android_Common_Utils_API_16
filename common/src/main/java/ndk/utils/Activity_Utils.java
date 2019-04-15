@@ -15,7 +15,7 @@ public class Activity_Utils {
     private String APPLICATION_NAME;
     private boolean is_debug;
 
-    Activity_Utils(Context context, String APPLICATION_NAME, boolean is_debug) {
+    public Activity_Utils(Context context, String APPLICATION_NAME, boolean is_debug) {
         this.context = context;
         this.APPLICATION_NAME = APPLICATION_NAME;
         this.is_debug = is_debug;
@@ -63,7 +63,7 @@ public class Activity_Utils {
         ((AppCompatActivity) context).finish();
     }
 
-    void start_activity_with_finish(Class activity) {
+    public void start_activity_with_finish(Class activity) {
 
         Log_Utils log_utils = new Log_Utils(is_debug, APPLICATION_NAME);
         log_utils.debug("Next Activity : " + activity.getCanonicalName());
@@ -74,7 +74,7 @@ public class Activity_Utils {
         ((AppCompatActivity) context).finish();
     }
 
-    void start_activity_with_finish_and_tab_index(Class activity, int tab_index) {
+    public void start_activity_with_finish_and_tab_index(Class activity, int tab_index) {
         context.startActivity(new Intent(context, activity).putExtra("tab_index", tab_index));
         ((AppCompatActivity) context).finish();
     }
@@ -109,9 +109,18 @@ public class Activity_Utils {
         ((AppCompatActivity) context).finish();
     }
 
-    void start_activity_with_string_extras_and_finish(Class activity, Pair[] extras) {
+    public void start_activity_with_string_extras_and_finish(Class activity, Pair[] extras) {
         start_activity_with_integer_extras(activity, extras);
         ((AppCompatActivity) context).finish();
+    }
+
+    void close_activity() {
+        ((AppCompatActivity) context).finish();
+    }
+
+    void close_activity_with_message(String message) {
+        Toast_Utils.longToast(context, "System is in Maintenance, Try Again later...");
+        close_activity();
     }
 
 }

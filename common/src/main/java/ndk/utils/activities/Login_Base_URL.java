@@ -3,7 +3,6 @@ package ndk.utils.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,9 +30,8 @@ import ndk.utils.network_task.REST_Select_Task_Wrapper;
 
 //TODO : Create Layout initialization
 
-public abstract class Login_Base_URL extends AppCompatActivity {
+public abstract class Login_Base_URL extends Context_Activity {
 
-    Context activity_context = this;
     // UI references.
     private EditText username;
     private EditText password;
@@ -41,10 +39,10 @@ public abstract class Login_Base_URL extends AppCompatActivity {
     private View mLoginFormView;
 
     protected abstract String configure_SELECT_USER_URL();
-
     protected abstract String configure_APPLICATION_NAME();
-
     protected abstract Class configure_NEXT_ACTIVITY_CLASS();
+
+    protected abstract boolean configure_IS_DEBUG();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +86,7 @@ public abstract class Login_Base_URL extends AppCompatActivity {
 
         Pair<Boolean, EditText> empty_check_result = Validation_Utils.empty_check(new Pair[]{new Pair<>(username, "Please Enter Username..."), new Pair<>(password, "Please Enter Passcode...")});
 
-        if (empty_check_result.first) {
+        if (empty_check_result.first != null && empty_check_result.first) {
             // There was an error; don't attempt login and focus the first form field with an error.
             if (empty_check_result.second != null) {
                 empty_check_result.second.requestFocus();
@@ -113,7 +111,8 @@ public abstract class Login_Base_URL extends AppCompatActivity {
                         switch (user_count) {
                             case "1":
                                 SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                                Activity_Utils.start_activity_with_finish(activity_context, configure_NEXT_ACTIVITY_CLASS(), configure_APPLICATION_NAME());
+                                Activity_Utils activity_utils = new Activity_Utils(activity_context, configure_APPLICATION_NAME(), configure_IS_DEBUG());
+                                activity_utils.start_activity_with_finish(configure_NEXT_ACTIVITY_CLASS());
                                 break;
 
                             case "0":
@@ -122,7 +121,7 @@ public abstract class Login_Base_URL extends AppCompatActivity {
                                 break;
 
                             default:
-                                Toast.makeText(activity_context, "Error : Check json", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity_context, "Error : Application_Utils json", Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         Toast_Utils.longToast(getApplicationContext(), "JSON Response Error");
@@ -134,5 +133,6 @@ public abstract class Login_Base_URL extends AppCompatActivity {
             REST_Select_Task_Wrapper.execute(configure_SELECT_USER_URL(), activity_context, mProgressView, mLoginFormView, configure_APPLICATION_NAME(), new Pair[]{new Pair<>("username", username.getText().toString()), new Pair<>("password", password.getText().toString())}, async_response_json_object_delegate);
         }
     }
+
 }
 

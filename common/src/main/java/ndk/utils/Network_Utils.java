@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,9 +29,21 @@ import static android.graphics.Color.RED;
 
 public class Network_Utils {
 
-    static further_Actions further_actions;
+    private static further_Actions further_actions;
 
-    public static void display_Long_no_FAB_no_network_bottom_SnackBar(View view, View.OnClickListener network_function) {
+    Context context;
+    private String APPLICATION_NAME;
+    private boolean is_debug;
+    private Activity_Utils activity_utils;
+
+    public Network_Utils(Context context, String APPLICATION_NAME, boolean is_debug) {
+        this.context = context;
+        this.APPLICATION_NAME = APPLICATION_NAME;
+        this.is_debug = is_debug;
+        this.activity_utils = new Activity_Utils(context, APPLICATION_NAME, is_debug);
+    }
+
+    public void display_Long_no_FAB_no_network_bottom_SnackBar(View view, View.OnClickListener network_function) {
         Snackbar snackbar = Snackbar
                 .make(view, "Internet unavailable!", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Retry", network_function);
@@ -40,9 +51,12 @@ public class Network_Utils {
         snackbar.show();
     }
 
-    public static boolean isOnline(Context context) {
+    public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm != null ? cm.getActiveNetworkInfo() : null;
+        if (!(netInfo != null && netInfo.isConnectedOrConnecting())) {
+            Toast_Utils.longToast(context, "Internet is unavailable");
+        }
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
@@ -76,16 +90,17 @@ public class Network_Utils {
         }
     }
 
-    public static void handle_json_insertion_response_and_switch_with_finish_or_clear_fields(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, EditText[] texts_to_clear, View view_to_focus_on_error, String TAG, int action_flag, Pair[] next_class_extras, further_Actions further_actions) {
+    private void handle_json_insertion_response_and_switch_with_finish_or_clear_fields(String[] network_action_response_array, Class to_switch_activity, EditText[] texts_to_clear, View view_to_focus_on_error, int action_flag, Pair[] next_class_extras, further_Actions further_actions) {
 
         Network_Utils.further_actions = further_actions;
 
-        Log.d(TAG, "Network Action Response Index 0 : " + network_action_response_array[0]);
-        Log.d(TAG, "Network Action Response Index 1 : " + network_action_response_array[1]);
+        Log_Utils log_utils = new Log_Utils(is_debug, APPLICATION_NAME);
+        log_utils.debug("Network Action Response Index 0 : " + network_action_response_array[0]);
+        log_utils.debug("Network Action Response Index 1 : " + network_action_response_array[1]);
 
         if (network_action_response_array[0].equals("1")) {
-            Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "Error, Network Action Response Index 1 : " + network_action_response_array[1]);
+            Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+            log_utils.debug("Error, Network Action Response Index 1 : " + network_action_response_array[1]);
         } else {
             try {
 
@@ -95,12 +110,12 @@ public class Network_Utils {
 
                     case "0":
 
-                        Toast.makeText(current_activity, "OK", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "OK", Toast.LENGTH_LONG).show();
 
                         switch (action_flag) {
 
                             case 1: //finish and switch
-                                Activity_Utils.start_activity_with_finish(current_activity, to_switch_activity, TAG);
+                                activity_utils.start_activity_with_finish(to_switch_activity);
                                 break;
 
                             case 2: //clear fields
@@ -108,20 +123,20 @@ public class Network_Utils {
                                 break;
 
                             case 3: //self finish
-                                current_activity.finish();
+                                ((AppCompatActivity) context).finish();
                                 break;
 
                             case 4: //finish and switch with extras
-                                Activity_Utils.start_activity_with_string_extras_and_finish(current_activity, to_switch_activity, next_class_extras);
+                                activity_utils.start_activity_with_string_extras_and_finish(to_switch_activity, next_class_extras);
                                 break;
 
                             case 5: //No Action
-                                Log.d(TAG, "Further Action...");
+                                log_utils.debug("Further Action...");
                                 further_actions.onSuccess();
                                 break;
 
                             case 6: //clear fields & further actions
-                                Log.d(TAG, "Further Action...");
+                                log_utils.debug("Further Action...");
                                 Text_Clear_Utils.reset_fields(texts_to_clear);
                                 further_actions.onSuccess();
                                 break;
@@ -129,48 +144,45 @@ public class Network_Utils {
                         break;
 
                     case "1":
-                        Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
-                        Log.d(TAG, "Error : " + json.getString("error"));
+                        Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                        log_utils.debug("Error : " + json.getString("error"));
                         view_to_focus_on_error.requestFocus();
                         break;
 
                     default:
-                        Toast.makeText(current_activity, "Error : Check json", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                        log_utils.debug("Error : Application_Utils json");
                 }
             } catch (JSONException e) {
-                Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "Error : " + e.getLocalizedMessage());
+                Toast.makeText(context, "Error...", Toast.LENGTH_LONG).show();
+                log_utils.debug("Error : " + e.getLocalizedMessage());
             }
         }
     }
 
     //TODO : Improve to handle exception objects
-    public static void display_Friendly_Exception_Message(Context context, String network_exception_message) {
+    public void display_Friendly_Exception_Message(String network_exception_message) {
         if (network_exception_message.contains("IOException")) {
-            Toast_Utils.longToast(context, "Check your network connection");
+            Toast_Utils.longToast(context, "Application_Utils your network connection");
         }
 
     }
 
-    public static void handle_json_insertion_response_and_switch_with_finish_and_toggle_view(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, View view_to_focus_on_error, View view_to_toggle, String TAG) {
+    void handle_json_insertion_response_and_switch_with_finish_and_toggle_view(String[] network_action_response_array, Class to_switch_activity, View view_to_focus_on_error, View view_to_toggle) {
 
-        handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, to_switch_activity, new EditText[]{}, view_to_focus_on_error, TAG, 1, new Pair[]{}, further_actions);
+        handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, to_switch_activity, new EditText[]{}, view_to_focus_on_error, 1, new Pair[]{}, further_actions);
         view_to_toggle.setEnabled(true);
     }
 
-    public static void check_network_then_start_activity_with_string_extras(Context context, Class activity, Pair[] extras, boolean for_result_flag, int request_code) {
-        if (isOnline(context)) {
-            Activity_Utils.start_activity_with_string_extras(context, activity, extras, for_result_flag, request_code);
-        } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+    void check_network_then_start_activity_with_string_extras(Class activity, Pair[] extras, boolean for_result_flag, int request_code) {
+        if (isOnline()) {
+            activity_utils.start_activity_with_string_extras(activity, extras, for_result_flag, request_code);
         }
     }
 
-    public static void check_network_then_start_activity(Context context, Class activity) {
-        if (isOnline(context)) {
-            Activity_Utils.start_activity(context, activity);
-        } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+    void check_network_then_start_activity(Context context, Class activity) {
+        if (isOnline()) {
+            activity_utils.start_activity(activity);
         }
     }
 

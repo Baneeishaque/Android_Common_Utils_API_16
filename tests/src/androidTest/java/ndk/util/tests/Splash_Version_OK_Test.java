@@ -15,10 +15,10 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class Splash_Version_OK_Test {
 
-    //TODO : Check Network Response
-    //TODO : Check Next Screen
-    //TODO : Check Alert Screen
-    //TODO : Check Download Request
+    //TODO : Application_Utils Network Response
+    //TODO : Application_Utils Next Screen
+    //TODO : Application_Utils Alert Screen
+    //TODO : Application_Utils Download Request
 
     @Rule
     public ActivityTestRule<Splash_Version_OK> activity_Test_Rule = new ActivityTestRule<>(Splash_Version_OK.class);

@@ -117,7 +117,7 @@ public class Login_Bundle extends AppCompatActivity {
                                 break;
 
                             default:
-                                Toast.makeText(activity_context, "Error : Check json", Toast.LENGTH_LONG).show();
+                                Toast.makeText(activity_context, "Error : Application_Utils json", Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         Toast_Utils.longToast(getApplicationContext(), "JSON Response Error...");

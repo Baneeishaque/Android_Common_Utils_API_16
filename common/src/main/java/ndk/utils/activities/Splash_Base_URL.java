@@ -8,11 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import ndk.utils.Activity_Utils;
+import ndk.utils.Application_Utils;
 import ndk.utils.Error_Utils;
 import ndk.utils.R;
 import ndk.utils.Server_Utils;
 import ndk.utils.Toast_Utils;
-import ndk.utils.Update_Utils;
 import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 import ndk.utils.update.Update_Application;
@@ -31,11 +31,24 @@ public abstract class Splash_Base_URL extends Context_Activity {
 
     protected abstract Pair[] configure_NEXT_ACTIVITY_CLASS_EXTRAS();
 
+    protected abstract boolean configure_IS_DEBUG();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        perform_customization();
+
+        perform_splash();
+
+    }
+
+    void perform_customization() {
         setContentView(R.layout.splash);
+    }
+
+    void perform_splash() {
 
         REST_Select_Task_Wrapper.execute_splash(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array() {
 
@@ -45,32 +58,31 @@ public abstract class Splash_Base_URL extends Context_Activity {
 
                     if (Server_Utils.check_system_status(getApplicationContext(), json_array.getJSONObject(0).getString("system_status"))) {
 
-                        if (Integer.parseInt(json_array.getJSONObject(0).getString("version_code")) != Update_Utils.getVersionCode(getApplicationContext())) {
+                        if (Integer.parseInt(json_array.getJSONObject(0).getString("version_code")) != Application_Utils.getVersionCode(getApplicationContext())) {
 
                             Update_Application.update_application(configure_APPLICATION_NAME(), (AppCompatActivity) activity_context, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
 
-                        } else if (Float.parseFloat(json_array.getJSONObject(0).getString("version_name")) != Update_Utils.getVersionName(getApplicationContext())) {
+                        } else if (Float.parseFloat(json_array.getJSONObject(0).getString("version_name")) != Application_Utils.getVersionName(getApplicationContext())) {
 
                             Update_Application.update_application(configure_APPLICATION_NAME(), (AppCompatActivity) activity_context, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
 
                         } else {
 
                             Toast_Utils.longToast(getApplicationContext(), "Latest Version...");
-                            Activity_Utils.start_activity_with_string_extras_and_finish(activity_context, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
+                            Activity_Utils activity_utils = new Activity_Utils(activity_context, configure_APPLICATION_NAME(), configure_IS_DEBUG());
+                            activity_utils.start_activity_with_string_extras_and_finish(configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
 
                         }
                     }
 
                 } catch (JSONException json_exception) {
 
-                    Error_Utils.display_Exception(getApplicationContext(), json_exception, configure_APPLICATION_NAME(), configure_is_debug());
+                    Error_Utils error_utils = new Error_Utils(activity_context, configure_APPLICATION_NAME(), configure_IS_DEBUG());
+                    error_utils.display_Exception(json_exception);
 
                 }
             }
         });
 
-
     }
-
-    protected abstract boolean configure_is_debug();
 }

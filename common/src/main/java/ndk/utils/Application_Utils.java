@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-public class Update_Utils {
+public class Application_Utils {
 
     public static int getVersionCode(Context context) {
         PackageManager pm = context.getPackageManager();

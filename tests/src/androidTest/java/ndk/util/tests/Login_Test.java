@@ -27,8 +27,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class Login_Test {
 
-    //TODO : Check Network Response
-    //TODO : Check Next Screen
+    //TODO : Application_Utils Network Response
+    //TODO : Application_Utils Next Screen
 
     @Rule
     public ActivityTestRule<Login_Bundle> mActivityRule =
