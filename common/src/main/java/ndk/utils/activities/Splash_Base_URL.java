@@ -16,6 +16,7 @@ import ndk.utils.Update_Utils;
 import ndk.utils.network_task.REST_Select_Task;
 import ndk.utils.network_task.REST_Select_Task_Wrapper;
 import ndk.utils.update.Update_Application;
+import ndk.utils_android1.Context_Activity;
 
 //TODO : Full screen splash
 //TODO : Implement hiding of fields - in case of layout

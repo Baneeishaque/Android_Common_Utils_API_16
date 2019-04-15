@@ -66,6 +66,8 @@ public abstract class Login_Base_Custom_URL_Return_JSON_Object extends Login_Bas
 
     }
 
+    protected abstract String configure_APPLICATION_NAME();
+
     protected abstract boolean configure_is_debug();
 
     protected abstract Class configure_NEXT_ACTIVITY_CLASS();
