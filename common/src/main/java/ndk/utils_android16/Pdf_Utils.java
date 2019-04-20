@@ -12,13 +12,9 @@ import java.io.File;
 
 import static ndk.utils_android16.Pass_Book_Utils.email_Pass_Book;
 
-/**
- * Created by Nabeel on 23-01-2018.
- */
-
 public class Pdf_Utils {
 
-    static void addEmptyLine(Paragraph paragraph, int number) {
+    public static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));
         }

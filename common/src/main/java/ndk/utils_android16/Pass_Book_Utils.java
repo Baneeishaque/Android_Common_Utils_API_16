@@ -14,10 +14,10 @@ import ndk.utils_android16.widgets.pass_book.Pass_Book_TableView_v2;
 
 public class Pass_Book_Utils {
 
-    private static ArrayList<Pass_Book_Entry> current_pass_book_entries;
-    private static ArrayList<Pass_Book_Entry_v2> current_pass_book_entries_v2;
+    public static ArrayList<Pass_Book_Entry> current_pass_book_entries;
+    public static ArrayList<Pass_Book_Entry_v2> current_pass_book_entries_v2;
 
-    private static boolean v2_flag;
+    public static boolean v2_flag;
 
     public static void bind(Pass_Book_TableView pass_book_tableView, Context context, ArrayList<Pass_Book_Entry> pass_book_entries) {
         if (pass_book_tableView != null) {
