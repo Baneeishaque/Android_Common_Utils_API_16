@@ -7,16 +7,13 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        //noinspection MinSdkTooLow
-        minSdkVersion 3
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
         useLibrary 'org.apache.http.legacy'
-
         vectorDrawables.useSupportLibrary = true
 
     }
@@ -54,7 +51,8 @@ dependencies {
     //    implementation 'com.github.baneeishaque:utils_j2se:1.0'
 //    implementation files('libs/common_utils_j2se-1.0.jar')
 
-    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_1:f8df882bfb'
+    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:a69a4e1e36'
+    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_1:7359adffb3'
 }
 //
 //eclipse {

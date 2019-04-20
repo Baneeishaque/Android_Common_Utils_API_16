@@ -2,8 +2,8 @@ package ndk.util.tests;
 
 import android.support.v4.util.Pair;
 
-import ndk.utils.activities.Login_Bundle;
-import ndk.utils.activities.Splash_Base_URL;
+import ndk.utils_android16.activities.Login_Bundle;
+import ndk.utils_android16.activities.Splash_Base_URL;
 
 //TODO : Develop Backend - Single Method with operation variants
 //TODO : Add Mismatch version URL
