@@ -151,7 +151,6 @@ public class Network_Utils {
         if (network_exception_message.contains("IOException")) {
             Toast_Utils.longToast(context, "Check your network connection");
         }
-
     }
 
     public static void handle_json_insertion_response_and_switch_with_finish_and_toggle_view(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, View view_to_focus_on_error, View view_to_toggle, String TAG) {
