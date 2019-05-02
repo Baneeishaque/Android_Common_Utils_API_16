@@ -1,12 +1,13 @@
 package ndk.utils_android16;
 
 import android.content.Context;
-import android.support.v4.util.Pair;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.core.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;

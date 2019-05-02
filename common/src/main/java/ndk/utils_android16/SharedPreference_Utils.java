@@ -2,7 +2,8 @@ package ndk.utils_android16;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.util.Pair;
+
+import androidx.core.util.Pair;
 
 public class SharedPreference_Utils {
 

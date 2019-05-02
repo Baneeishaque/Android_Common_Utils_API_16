@@ -2,7 +2,6 @@ package ndk.utils_android16.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.core.util.Pair;
 
 import java.util.Objects;
 

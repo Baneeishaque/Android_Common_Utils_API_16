@@ -1,7 +1,7 @@
 package ndk.util.tests;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
 import org.junit.Test;

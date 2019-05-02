@@ -1,7 +1,8 @@
 package ndk.utils_android16.activities;
 
-import android.support.v4.util.Pair;
 import android.widget.Toast;
+
+import androidx.core.util.Pair;
 
 import org.json.JSONException;
 import org.json.JSONObject;

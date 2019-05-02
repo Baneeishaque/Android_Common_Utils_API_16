@@ -1,7 +1,8 @@
 package ndk.utils_android16.update;
 
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import ndk.utils_android16.Network_Utils;
 import ndk.utils_android16.network_task.update.Update_Check_Task;

@@ -1,6 +1,6 @@
 package ndk.utils_android16;
 
-import android.support.design.widget.TabLayout;
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * Created on 02-12-2017 17:00 under Caventa_Android.

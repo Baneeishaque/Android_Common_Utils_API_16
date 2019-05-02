@@ -1,10 +1,11 @@
 package ndk.utils_android16.network_task;
 
 import android.os.AsyncTask;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
 import ndk.utils_android16.Network_Utils;
 import ndk.utils_android16.Network_Utils.further_Actions;

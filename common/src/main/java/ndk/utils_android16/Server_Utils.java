@@ -1,8 +1,9 @@
 package ndk.utils_android16;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created on 24-08-2018 21:48 under VLottery.

@@ -1,9 +1,10 @@
 package ndk.utils_android16.widgets.pass_book;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.ListView;
+
+import androidx.core.content.ContextCompat;
 
 import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.listeners.OnScrollListener;

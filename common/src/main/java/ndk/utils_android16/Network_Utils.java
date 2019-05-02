@@ -3,13 +3,15 @@ package ndk.utils_android16;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.design.widget.Snackbar;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;

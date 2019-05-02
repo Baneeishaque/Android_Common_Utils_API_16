@@ -1,6 +1,6 @@
 package ndk.utils_android16;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

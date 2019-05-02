@@ -1,10 +1,11 @@
 package ndk.utils_android16.network_task;
 
 import android.content.Context;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
 import ndk.utils_android16.Network_Utils;
 import ndk.utils_android16.ProgressBar_Utils;

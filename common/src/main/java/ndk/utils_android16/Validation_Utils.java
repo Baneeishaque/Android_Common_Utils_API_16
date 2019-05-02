@@ -1,8 +1,9 @@
 package ndk.utils_android16;
 
-import android.support.v4.util.Pair;
 import android.text.TextUtils;
 import android.widget.EditText;
+
+import androidx.core.util.Pair;
 
 /**
  * Created on 30-11-2017 20:13 under Caventa_Android.

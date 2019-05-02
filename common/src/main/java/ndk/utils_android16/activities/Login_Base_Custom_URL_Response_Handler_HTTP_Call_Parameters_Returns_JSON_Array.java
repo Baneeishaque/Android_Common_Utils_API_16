@@ -1,6 +1,6 @@
 package ndk.utils_android16.activities;
 
-import android.support.v4.util.Pair;
+import androidx.core.util.Pair;
 
 /**
  * Created on 24-08-2018 21:16 under VLottery.

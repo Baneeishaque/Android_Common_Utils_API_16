@@ -1,9 +1,10 @@
 package ndk.utils_android16.network_task.update;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

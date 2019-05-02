@@ -1,6 +1,6 @@
 package ndk.util.tests;
 
-import android.support.v4.util.Pair;
+import androidx.core.util.Pair;
 
 import ndk.utils_android16.activities.Login_Bundle;
 import ndk.utils_android16.activities.Splash_Base_URL;

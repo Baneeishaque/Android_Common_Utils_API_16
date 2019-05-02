@@ -1,7 +1,7 @@
 package ndk.utils_android16;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 public class Fragment_Utils {
 

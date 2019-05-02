@@ -2,7 +2,8 @@ package ndk.utils_android16.update;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import ndk.utils_android16.network_task.update.Application_VCS_Utils;
 
