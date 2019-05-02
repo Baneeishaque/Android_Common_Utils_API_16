@@ -5,10 +5,12 @@ buildscript {
         jcenter()
 //        maven { url "https://plugins.gradle.org/m2/" }
         google()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.0'
         classpath 'com.google.gms:google-services:4.2.0'
+        classpath "com.github.plnice:canidropjetifier:0.4"
 
 //        classpath "gradle.plugin.com.greensopinion.gradle-android-eclipse:android-eclipse:1.0"
 
@@ -29,3 +31,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply plugin: "com.github.plnice.canidropjetifier"
