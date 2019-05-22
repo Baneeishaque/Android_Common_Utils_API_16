@@ -12,7 +12,7 @@ public abstract class Login_Base_Custom_URL_Response_Handler_Return_JSON_Array e
     protected void configure_FURTHER_PROCESSING() {
 
         //Example Response : [{"user_count":"1","id":"125"},{"time_status":"1"}]
-        REST_Select_Task_Wrapper.execute(configure_SELECT_USER_URL(), activity_context, mProgressView, mLoginFormView, configure_APPLICATION_NAME(), configure_http_call_parameters(), configure_JSON_ARRAY_RESPONSE_HANDLER(), false);
+        REST_Select_Task_Wrapper.execute(configure_SELECT_USER_URL(), activityContext, mProgressView, mLoginFormView, configure_APPLICATION_NAME(), configure_http_call_parameters(), configure_JSON_ARRAY_RESPONSE_HANDLER(), false);
     }
 
     protected abstract String configure_APPLICATION_NAME();

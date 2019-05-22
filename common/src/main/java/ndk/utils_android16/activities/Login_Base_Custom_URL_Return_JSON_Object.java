@@ -24,7 +24,7 @@ public abstract class Login_Base_Custom_URL_Return_JSON_Object extends Login_Bas
     protected void configure_FURTHER_PROCESSING() {
 
         //Example Response : {"user_count":"1","id":"125"}
-        REST_Select_Task_Wrapper.execute(configure_SELECT_USER_URL(), activity_context, mProgressView, mLoginFormView, configure_APPLICATION_NAME(), configure_http_call_parameters(), configure_JSON_object_handler());
+        REST_Select_Task_Wrapper.execute(configure_SELECT_USER_URL(), activityContext, mProgressView, mLoginFormView, configure_APPLICATION_NAME(), configure_http_call_parameters(), configure_JSON_object_handler());
     }
 
     protected abstract String configure_SELECT_USER_URL();
@@ -44,11 +44,11 @@ public abstract class Login_Base_Custom_URL_Return_JSON_Object extends Login_Bas
 
                         case "1":
                             SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                            ActivityUtils.start_activity_with_finish(activity_context, configure_NEXT_ACTIVITY_CLASS(), configure_APPLICATION_NAME());
+                            ActivityUtils.start_activity_with_finish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_APPLICATION_NAME());
                             break;
 
                         case "0":
-                            Toast.makeText(activity_context, "Login Failure!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activityContext, "Login Failure!", Toast.LENGTH_LONG).show();
                             username.requestFocus();
                             break;
 

@@ -49,16 +49,16 @@ public abstract class Splash_Base_URL extends ContextActivity {
 
                         if (Integer.parseInt(json_array.getJSONObject(0).getString("version_code")) != Update_Utils.getVersionCode(getApplicationContext())) {
 
-                            Update_Application.update_application(configure_APPLICATION_NAME(), (AppCompatActivity) activity_context, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
+                            Update_Application.update_application(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
 
                         } else if (Float.parseFloat(json_array.getJSONObject(0).getString("version_name")) != Update_Utils.getVersionName(getApplicationContext())) {
 
-                            Update_Application.update_application(configure_APPLICATION_NAME(), (AppCompatActivity) activity_context, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
+                            Update_Application.update_application(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
 
                         } else {
 
                             Toast_Utils.longToast(getApplicationContext(), "Latest Version...");
-                            ActivityUtils.start_activity_with_string_extras_and_finish(activity_context, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
+                            ActivityUtils.start_activity_with_string_extras_and_finish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
 
                         }
                     }
