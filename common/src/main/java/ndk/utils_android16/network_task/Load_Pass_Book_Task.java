@@ -118,7 +118,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
                     } else {
 
                         //TODO : Use Direct Pattern
-                        enter_transactions(JSON_Utils.sort_JSON_array_by_date_field(network_action_response_array[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), pass_book_entries_v2, 0);
+                        enterTransactions(JSON_Utils.sort_JSON_array_by_date_field(network_action_response_array[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), pass_book_entries_v2, 0);
                     }
                 } else {
                     JSONArray json_array = new JSONArray(network_action_response_array[1]);
@@ -128,7 +128,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
 
                         if (v2_flag) {
 
-                            enter_transactions(json_array, pass_book_entries_v2, 1);
+                            enterTransactions(json_array, pass_book_entries_v2, 1);
 
                         } else {
 
@@ -165,7 +165,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
         }
     }
 
-    private void enter_transactions(JSONArray json_array, ArrayList<Pass_Book_Entry_v2> pass_book_entries_v2, int json_array_start_index) {
+    private void enterTransactions(JSONArray json_array, ArrayList<Pass_Book_Entry_v2> pass_book_entries_v2, int json_array_start_index) {
 
         float balance = 0;
 
