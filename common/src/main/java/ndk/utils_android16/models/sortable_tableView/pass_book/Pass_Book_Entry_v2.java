@@ -6,6 +6,7 @@ public class Pass_Book_Entry_v2 {
 
     private Date insertion_date;
     private String particulars;
+    private String firstAccountName;
     private String second_account_name;
     private double credit_amount;
     private double debit_amount;
@@ -16,9 +17,24 @@ public class Pass_Book_Entry_v2 {
     private String from_account_full_name;
     private String to_account_full_name;
 
-    public Pass_Book_Entry_v2(Date insertion_date, String particulars, String second_account_name, double credit_amount, double debit_amount, double balance, int from_account_id, int to_account_id, int id, String from_account_full_name, String to_account_full_name) {
+//    public Pass_Book_Entry_v2(Date insertion_date, String particulars, String second_account_name, double credit_amount, double debit_amount, double balance, int from_account_id, int to_account_id, int id, String from_account_full_name, String to_account_full_name) {
+//        this.insertion_date = insertion_date;
+//        this.particulars = particulars;
+//        this.second_account_name = second_account_name;
+//        this.credit_amount = credit_amount;
+//        this.debit_amount = debit_amount;
+//        this.balance = balance;
+//        this.from_account_id = from_account_id;
+//        this.to_account_id = to_account_id;
+//        this.id = id;
+//        this.from_account_full_name = from_account_full_name;
+//        this.to_account_full_name = to_account_full_name;
+//    }
+
+    public Pass_Book_Entry_v2(Date insertion_date, String particulars, String firstAccountName, String second_account_name, double credit_amount, double debit_amount, double balance, int from_account_id, int to_account_id, int id, String from_account_full_name, String to_account_full_name) {
         this.insertion_date = insertion_date;
         this.particulars = particulars;
+        this.firstAccountName = firstAccountName;
         this.second_account_name = second_account_name;
         this.credit_amount = credit_amount;
         this.debit_amount = debit_amount;
@@ -28,6 +44,14 @@ public class Pass_Book_Entry_v2 {
         this.id = id;
         this.from_account_full_name = from_account_full_name;
         this.to_account_full_name = to_account_full_name;
+    }
+
+    public String getFirstAccountName() {
+        return firstAccountName;
+    }
+
+    public void setFirstAccountName(String firstAccountName) {
+        this.firstAccountName = firstAccountName;
     }
 
     public String getSecond_account_name() {
@@ -123,6 +147,7 @@ public class Pass_Book_Entry_v2 {
         return "Pass_Book_Entry_v2{" +
                 "insertion_date=" + insertion_date +
                 ", particulars='" + particulars + '\'' +
+                ", firstAccountName='" + firstAccountName + '\'' +
                 ", second_account_name='" + second_account_name + '\'' +
                 ", credit_amount=" + credit_amount +
                 ", debit_amount=" + debit_amount +
