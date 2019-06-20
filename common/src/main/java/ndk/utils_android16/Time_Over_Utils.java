@@ -20,7 +20,7 @@ public class Time_Over_Utils {
 
     }
 
-    public void check_Time_Status(AppCompatActivity activity, JSONArray json_array, String APPLICATION_NAME, boolean is_debug) {
+    public void check_Time_Status(AppCompatActivity activity, JSONArray json_array) {
         try {
 
             //Example Response : [{"user_count":"1","id":"125"},{"time_status":"1"}]
@@ -34,13 +34,13 @@ public class Time_Over_Utils {
                     break;
 
                 case "-1": //Close Application
-                    Server_Utils.close_application(activity);
+                    ServerUtils.onMaintenanceClose(activity);
                     break;
             }
 
         } catch (JSONException json_exception) {
 
-            Error_Utils.display_Exception(activity, json_exception, APPLICATION_NAME, is_debug);
+            ErrorUtilsWrapperBase.displayException(activity, json_exception);
 
         }
     }

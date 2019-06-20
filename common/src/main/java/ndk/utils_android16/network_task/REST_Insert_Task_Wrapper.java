@@ -8,11 +8,11 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-import ndk.utils_android16.ProgressBar_Utils;
-import ndk.utils_android16.Toast_Utils;
+import ndk.utils_android16.ProgressBarUtils;
+import ndk.utils_android16.ToastUtils;
 
-import static ndk.utils_android16.Network_Utils.further_Actions;
-import static ndk.utils_android16.Network_Utils.isOnline;
+import static ndk.utils_android16.NetworkUtils.further_Actions;
+import static ndk.utils_android16.NetworkUtils.isOnline;
 
 public class REST_Insert_Task_Wrapper {
 
@@ -22,13 +22,13 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
 
             REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, next_activity);
 
             rest_insert_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -38,13 +38,13 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
 
             REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, next_activity, next_class_extras);
 
             rest_insert_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -54,13 +54,13 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
 
             REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, texts_to_clear);
 
             rest_insert_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -70,13 +70,13 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
 
             REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, texts_to_clear, further_actions);
 
             rest_insert_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -86,13 +86,13 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
 
             REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error);
 
             rest_insert_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -102,13 +102,13 @@ public class REST_Insert_Task_Wrapper {
 
         if (isOnline(context)) {
 
-            ProgressBar_Utils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
 
             REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, further_actions);
 
             rest_insert_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 }

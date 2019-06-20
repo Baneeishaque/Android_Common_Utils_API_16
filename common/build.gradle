@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.greensopinion.gradle-android-eclipse'
-//apply plugin: 'eclipse'
 
 android {
     compileSdkVersion 28
@@ -46,15 +44,12 @@ dependencies {
     implementation 'com.itextpdf:itext-pdfa:5.5.5'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'org.apache.commons:commons-lang3:3.7'
-    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.0'
 
-    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_1:f6cd92707d'
-    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:8de3adcf21'
+//    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:b6e02380a5'
+//    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:6d0190ab01'
+//    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:bc651f4dec'
+//    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:a2df11af5a'
+    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:cd3ec212c4'
+    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_1:2c7a22dbca'
 }
-//
-//eclipse {
-//  classpath {
-//    plusConfigurations += [ configurations.compile, configurations.testCompile ]
-//    downloadSources = true
-//  }
-//}

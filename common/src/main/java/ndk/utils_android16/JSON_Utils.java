@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ndk.utils_android14.LogUtils;
+
 /**
  * Created on 25-08-2018 01:50 under VLottery.
  */
@@ -22,18 +24,18 @@ public class JSON_Utils extends ndk.utils_j2se.JSON_Utils {
 
             try {
 
-                Log_Utils.debug(APPLICATION_NAME, "key = " + json_Object.names().getString(i) + " value = " + json_Object.get(json_Object.names().getString(i)), is_debug);
+                LogUtils.debug(APPLICATION_NAME, "key = " + json_Object.names().getString(i) + " value = " + json_Object.get(json_Object.names().getString(i)), is_debug);
 
                 String key = json_Object.names().getString(i);
                 if (Arrays.asList(fields_to_ignore).contains(key)) {
                     continue;
                 }
 
-                SharedPreference_Utils.commit_Shared_Preferences(application_context, APPLICATION_NAME, new Pair[]{new Pair<>(key, json_Object.get(key))});
+                SharedPreferenceUtils.commitSharedPreferences(application_context, APPLICATION_NAME, new Pair[]{new Pair<>(key, json_Object.get(key))});
 
             } catch (JSONException json_exception) {
 
-                Error_Utils.display_Exception(application_context, json_exception, APPLICATION_NAME, is_debug);
+                ErrorUtilsWrapperBase.displayException(application_context, json_exception);
 
             }
 
@@ -50,13 +52,13 @@ public class JSON_Utils extends ndk.utils_j2se.JSON_Utils {
 
             } catch (JSONException json_exception) {
 
-                Error_Utils.display_Exception(application_context, json_exception, APPLICATION_NAME, is_debug);
+                ErrorUtilsWrapperBase.displayException(application_context, json_exception);
             }
 
         }
     }
 
-    public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context, String APPLICATION_NAME, boolean is_debug) {
+    public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context) {
 
         for (int i = start_position; i < jsonArray.length(); i++) {
 
@@ -66,7 +68,7 @@ public class JSON_Utils extends ndk.utils_j2se.JSON_Utils {
 
             } catch (JSONException e) {
 
-                Error_Utils.display_Exception(context, e, APPLICATION_NAME, is_debug);
+                ErrorUtilsWrapperBase.displayException(context, e);
 
             }
         }

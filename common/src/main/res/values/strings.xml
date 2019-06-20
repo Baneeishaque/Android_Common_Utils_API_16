@@ -3,6 +3,6 @@
     <string name="application_logo">Application Logo</string>
     <string name="ndk_solutions_pvt_ltd">NDK Solutions Pvt. Ltd.</string>
     <string name="username">Username</string>
-    <string name="passcode">Passcode</string>
+    <string name="password">Password</string>
     <string name="sign_in">Sign in…</string>
 </resources>
