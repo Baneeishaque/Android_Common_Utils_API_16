@@ -2,7 +2,8 @@ package ndk.utils_android16.network_task;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
@@ -12,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ndk.utils_android14.LogUtilsWrapperBase;
-import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ExceptionUtils;
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.ToastUtils;
@@ -24,7 +24,8 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
     private String url, tag;
     private Context context;
-    private View progressBar, scrollView;
+    private ProgressBar progressBar;
+    private ScrollView scrollView;
 
     private int progressFlag = 0;
     private int responseFlag = 0;
@@ -38,7 +39,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     private AsyncResponse asyncResponse = null;
     private AsyncResponseJSONObject asyncResponseJSONObject = null;
 
-    public HttpApiSelectTask(String url, Context context, View progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray
+    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, ScrollView scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray
     ) {
         this.url = url;
         this.context = context;
@@ -49,7 +50,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         this.asyncResponseJSONArray = asyncResponseJSONArray;
     }
 
-    HttpApiSelectTask(String url, Context context, View progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponse asyncResponse) {
+    HttpApiSelectTask(String url, Context context, ProgressBar progressBar, ScrollView scrollView, String tag, Pair[] nameValuePairs, AsyncResponse asyncResponse) {
 
         this.url = url;
         this.context = context;
@@ -61,7 +62,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         responseFlag = 1;
     }
 
-    HttpApiSelectTask(String url, Context context, View progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONObject asyncResponseJSONObject) {
+    HttpApiSelectTask(String url, Context context, ProgressBar progressBar, ScrollView scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONObject asyncResponseJSONObject) {
 
         this.url = url;
         this.context = context;
@@ -95,7 +96,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         splashFlag = 1;
     }
 
-    public HttpApiSelectTask(String url, Context context, View progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, ScrollView scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
 
         this.url = url;
         this.context = context;
@@ -201,9 +202,8 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                         JSONObject tempJsonObject = jsonArray.getJSONObject(0);
                         switch (tempJsonObject.getString("status")) {
                             case "2":
-                                if (backgroundFlag) {
-                                    LogUtilsWrapper.debug("No Entries...");
-                                } else {
+                                LogUtilsWrapper.debug("No Entries...");
+                                if (!backgroundFlag) {
                                     ToastUtils.longToast(context, "No Entries...");
                                 }
                                 break;
@@ -245,7 +245,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
     private class LogUtilsWrapper extends LogUtilsWrapperBase {
         private LogUtilsWrapper() {
-            super(tag, BuildConfig.DEBUG);
+            super(tag);
         }
     }
 }

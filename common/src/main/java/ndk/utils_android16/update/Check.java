@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ndk.utils_android16.NetworkUtils;
-import ndk.utils_android16.network_task.update.Update_Check_Task;
+import ndk.utils_android16.network_task.update.CheckAndUpdateTask;
 
 import static ndk.utils_android16.NetworkUtils.displayOfflineLongNoFabBottomSnackBar;
 
@@ -15,17 +15,17 @@ import static ndk.utils_android16.NetworkUtils.displayOfflineLongNoFabBottomSnac
 
 public class Check {
 
-    public static void attempt_Update_Check(final String application_name, final AppCompatActivity current_activity, final String URL, Update_Check_Task Update_Task, final String update_URL, final Class next_activity) {
+    public static void attempt_Update_Check(final String application_name, final AppCompatActivity current_activity, final String URL, CheckAndUpdateTask Update_Task, final String update_URL, final Class next_activity) {
 
         if (Update_Task != null) {
             return;
         }
 
         if (NetworkUtils.isOnline(current_activity)) {
-            Update_Task = new Update_Check_Task(application_name, current_activity, URL, Update_Task, update_URL, next_activity);
+            Update_Task = new CheckAndUpdateTask(application_name, current_activity, URL, update_URL, next_activity);
             Update_Task.execute((Void) null);
         } else {
-            final Update_Check_Task final_Update_Task = Update_Task;
+            final CheckAndUpdateTask final_Update_Task = Update_Task;
             View.OnClickListener retry_Failed_Network_Task = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

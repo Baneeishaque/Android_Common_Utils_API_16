@@ -2,7 +2,8 @@ package ndk.utils_android16.network_task;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,119 +17,114 @@ import java.util.ArrayList;
 
 import ndk.utils_android16.Date_Utils;
 import ndk.utils_android16.Float_Utils;
-import ndk.utils_android16.JSON_Utils;
+import ndk.utils_android16.JsonUtils;
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.Pass_Book_Utils;
 import ndk.utils_android16.ToastUtils;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntry;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
-import ndk.utils_android16.widgets.pass_book.Pass_Book_TableView;
-import ndk.utils_android16.widgets.pass_book.Pass_Book_TableView_v2;
+import ndk.utils_android16.widgets.pass_book.PassBookTableView;
+import ndk.utils_android16.widgets.pass_book.PassBookTableViewV2;
 
 import static ndk.utils_android16.Date_Utils.mysql_date_time_format;
 import static ndk.utils_android16.ProgressBarUtils.showProgress;
 
-/**
- * Created by Nabeel on 23-01-2018.
- */
+public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
-public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
+    private String url, tag;
+    private AppCompatActivity currentActivity;
+    private ProgressBar progressBar;
+    private ScrollView scrollView;
+    private PassBookTableView passBookTableView;
+    private PassBookTableViewV2 passBookTableViewV2;
+    private Pair[] nameValuePair;
+    private boolean v2Flag, sortFlag;
+    private String currentAccountId;
 
-    private String URL, TAG;
-    private AppCompatActivity current_activity;
-    private View progressBar, form;
-    private Pass_Book_TableView pass_book_tableView;
-    private Pass_Book_TableView_v2 pass_book_tableView_v2;
-    private Pair[] name_value_pair;
-    private boolean v2_flag, sort_flag;
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, ScrollView scrollView, String tag, PassBookTableView passBookTableView, Pair[] nameValuePair) {
 
-    public Load_Pass_Book_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView pass_book_tableView, Pair[] name_value_pair) {
-
-        this.URL = URL;
-        this.current_activity = current_activity;
+        this.url = url;
+        this.currentActivity = currentActivity;
         this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.pass_book_tableView = pass_book_tableView;
-        this.name_value_pair = name_value_pair;
-        this.v2_flag = false;
-        this.sort_flag = false;
+        this.scrollView = scrollView;
+        this.tag = tag;
+        this.passBookTableView = passBookTableView;
+        this.nameValuePair = nameValuePair;
+        this.v2Flag = false;
+        this.sortFlag = false;
     }
 
-    private String current_account_id;
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, ScrollView scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId) {
 
-    public Load_Pass_Book_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView_v2 pass_book_tableView_v2, String current_account_id) {
-
-        this.URL = URL;
-        this.current_activity = current_activity;
+        this.url = url;
+        this.currentActivity = currentActivity;
         this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.pass_book_tableView_v2 = pass_book_tableView_v2;
-        this.current_account_id = current_account_id;
-        this.v2_flag = true;
-        this.sort_flag = false;
+        this.scrollView = scrollView;
+        this.tag = tag;
+        this.passBookTableViewV2 = passBookTableViewV2;
+        this.currentAccountId = currentAccountId;
+        this.v2Flag = true;
+        this.sortFlag = false;
     }
 
-    public Load_Pass_Book_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pass_Book_TableView_v2 pass_book_tableView_v2, String current_account_id, boolean sort_flag) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, ScrollView scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId, boolean sortFlag) {
 
-        this.URL = URL;
-        this.current_activity = current_activity;
+        this.url = url;
+        this.currentActivity = currentActivity;
         this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.pass_book_tableView_v2 = pass_book_tableView_v2;
-        this.current_account_id = current_account_id;
-        this.v2_flag = true;
+        this.scrollView = scrollView;
+        this.tag = tag;
+        this.passBookTableViewV2 = passBookTableViewV2;
+        this.currentAccountId = currentAccountId;
+        this.v2Flag = true;
+        //TODO : Implement Sort Option
         //Sort flag always true
-        this.sort_flag = sort_flag;
+        this.sortFlag = sortFlag;
     }
 
     @Override
     protected String[] doInBackground(Void... params) {
 
-        if (v2_flag) {
-            return NetworkUtils.performHttpClientPostTask(URL, new Pair[]{});
+        if (v2Flag) {
+            return NetworkUtils.performHttpClientPostTask(url, new Pair[]{});
         } else {
-            return NetworkUtils.performHttpClientPostTask(URL, name_value_pair);
+            return NetworkUtils.performHttpClientPostTask(url, nameValuePair);
         }
     }
 
 
     @Override
-    protected void onPostExecute(final String[] network_action_response_array) {
+    protected void onPostExecute(final String[] networkActionResponseArray) {
 
-        showProgress(false, current_activity, progressBar, form);
+        showProgress(false, currentActivity, progressBar, scrollView);
 
-        Log.d(TAG, network_action_response_array[0]);
-        Log.d(TAG, network_action_response_array[1]);
+        NetworkUtils.displayNetworkActionResponse(tag, networkActionResponseArray);
 
-        ArrayList<PassBookEntry> pass_book_entries = new ArrayList<>();
-        ArrayList<PassBookEntryV2> pass_book_entries_v2 = new ArrayList<>();
+        ArrayList<PassBookEntry> passBookEntries = new ArrayList<>();
+        ArrayList<PassBookEntryV2> passBookEntryV2s = new ArrayList<>();
 
-        if (network_action_response_array[0].equals("1")) {
-            Toast.makeText(current_activity, "Error : " + network_action_response_array[1], Toast.LENGTH_LONG).show();
-            Log.d(TAG, network_action_response_array[1]);
+        if (networkActionResponseArray[0].equals("1")) {
+            ToastUtils.errorToast(currentActivity);
         } else {
 
             try {
-                if (sort_flag) {
-                    if (network_action_response_array[1].equals("[]")) {
-                        ToastUtils.longToast(current_activity, "No Entries...");
+                if (sortFlag) {
+                    if (networkActionResponseArray[1].equals("[]")) {
+                        ToastUtils.noEntriesToast(currentActivity);
                     } else {
 
                         //TODO : Use Direct Pattern
-                        enterTransactions(JSON_Utils.sort_JSON_array_by_date_field(network_action_response_array[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), pass_book_entries_v2, 0);
+                        enterTransactions(JsonUtils.sort_JSON_array_by_date_field(networkActionResponseArray[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), passBookEntryV2s, 0);
                     }
                 } else {
-                    JSONArray json_array = new JSONArray(network_action_response_array[1]);
+                    JSONArray json_array = new JSONArray(networkActionResponseArray[1]);
                     if (json_array.getJSONObject(0).getString("status").equals("2")) {
-                        Toast.makeText(current_activity, "No Entries...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, "No Entries...", Toast.LENGTH_LONG).show();
                     } else if (json_array.getJSONObject(0).getString("status").equals("0")) {
 
-                        if (v2_flag) {
+                        if (v2Flag) {
 
-                            enterTransactions(json_array, pass_book_entries_v2, 1);
+                            enterTransactions(json_array, passBookEntryV2s, 1);
 
                         } else {
 
@@ -139,28 +135,28 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
 
                                     balance = balance + Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
 
-                                    pass_book_entries.add(new PassBookEntry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
-                                    Log.d(TAG, String.valueOf(balance));
+                                    passBookEntries.add(new PassBookEntry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
+                                    Log.d(tag, String.valueOf(balance));
                                 }
                                 if (json_array.getJSONObject(i).getString("particulars").contains("Debit")) {
 
                                     balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
 
-                                    pass_book_entries.add(new PassBookEntry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance)));
-                                    Log.d(TAG, String.valueOf(balance));
+                                    passBookEntries.add(new PassBookEntry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance)));
+                                    Log.d(tag, String.valueOf(balance));
                                 }
                             }
 
-                            Pass_Book_Utils.bind(pass_book_tableView, current_activity, pass_book_entries);
+                            Pass_Book_Utils.bind(passBookTableView, currentActivity, passBookEntries);
                         }
                     }
                 }
             } catch (JSONException e) {
-                Toast.makeText(current_activity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.getLocalizedMessage());
+                Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Log.d(tag, e.getLocalizedMessage());
             } catch (ParseException e) {
-                Toast.makeText(current_activity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.getLocalizedMessage());
+                Toast.makeText(currentActivity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Log.d(tag, e.getLocalizedMessage());
             }
         }
     }
@@ -178,7 +174,7 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
 
                         balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
 
-                        Log.d(TAG, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
+                        Log.d(tag, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
 
                         pass_book_entries_v2.add(new PassBookEntryV2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), "", json_array.getJSONObject(i).getString("to_account_name"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
 
@@ -190,11 +186,11 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
                     }
 
                 } else {
-                    if (json_array.getJSONObject(i).getString("from_account_id").equals(current_account_id)) {
+                    if (json_array.getJSONObject(i).getString("from_account_id").equals(currentAccountId)) {
 
                         balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
 
-                        Log.d(TAG, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
+                        Log.d(tag, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
 
                         pass_book_entries_v2.add(new PassBookEntryV2(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), json_array.getJSONObject(i).getString("to_account_name"), "", 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), json_array.getJSONObject(i).getInt("from_account_id"), json_array.getJSONObject(i).getInt("to_account_id"), json_array.getJSONObject(i).getInt("id"), json_array.getJSONObject(i).getString("from_account_full_name"), json_array.getJSONObject(i).getString("to_account_full_name")));
 
@@ -207,19 +203,19 @@ public class Load_Pass_Book_Task extends AsyncTask<Void, Void, String[]> {
                 }
             }
 
-            Pass_Book_Utils.bindv2(pass_book_tableView_v2, current_activity, pass_book_entries_v2);
+            Pass_Book_Utils.bindv2(passBookTableViewV2, currentActivity, pass_book_entries_v2);
 
         } catch (JSONException e) {
-            Toast.makeText(current_activity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            Log.d(TAG, e.getLocalizedMessage());
+            Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Log.d(tag, e.getLocalizedMessage());
         } catch (ParseException e) {
-            Toast.makeText(current_activity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            Log.d(TAG, e.getLocalizedMessage());
+            Toast.makeText(currentActivity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Log.d(tag, e.getLocalizedMessage());
         }
     }
 
     @Override
     protected void onCancelled() {
-        showProgress(false, current_activity, progressBar, form);
+        showProgress(false, currentActivity, progressBar, scrollView);
     }
 }

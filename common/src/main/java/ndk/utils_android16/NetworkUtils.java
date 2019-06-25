@@ -27,8 +27,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ndk.utils_android14.ActivityUtils;
+import ndk.utils_android14.LogUtilsWrapperBase;
 
 import static android.graphics.Color.RED;
 
@@ -173,11 +175,22 @@ public class NetworkUtils {
         if (isOnline(context)) {
             ActivityUtils.startActivity(context, activity);
         } else {
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils.offlineToast(context);
         }
     }
 
     public interface further_Actions {
         void onSuccess();
+    }
+
+    public static void displayNetworkActionResponse(String tag, String[] networkActionResponseArray) {
+
+        class LogUtilsWrapper extends LogUtilsWrapperBase {
+            private LogUtilsWrapper() {
+                super(tag);
+            }
+        }
+
+        LogUtilsWrapper.debug("Network Action Response Array : " + Arrays.toString(networkActionResponseArray));
     }
 }
