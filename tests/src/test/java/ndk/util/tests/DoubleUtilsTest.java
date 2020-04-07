@@ -13,11 +13,13 @@ public class DoubleUtilsTest {
 
     @Test
     public void testDoubleArrayToIntegerArrayConversionSuccess() {
+
         assertThat(DoubleUtils.doubleArrayToIntegerArray(new double[]{0.6, 1.3, 2.5, 3.0, 4, 5}), is(equalTo(new int[]{0, 1, 2, 3, 4, 5})));
     }
 
     @Test
     public void testDoubleArrayToIntegerArrayConversionFailure() {
+
         assertThat(DoubleUtils.doubleArrayToIntegerArray(new double[]{0.6, 1.3, 2.5, 3.0, 4, 5}), is(not(equalTo(new int[]{5, 4, 3, 2, 1, 0}))));
     }
 }

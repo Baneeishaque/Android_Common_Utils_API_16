@@ -104,22 +104,33 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
         ArrayList<PassBookEntryV2> passBookEntryV2s = new ArrayList<>();
 
         if (networkActionResponseArray[0].equals("1")) {
+
             ToastUtils.errorToast(currentActivity);
+
         } else {
 
             try {
+
                 if (sortFlag) {
+
                     if (networkActionResponseArray[1].equals("[]")) {
+
                         ToastUtils.noEntriesToast(currentActivity);
+
                     } else {
 
                         //TODO : Use Direct Pattern
                         enterTransactions(JsonUtils.sort_JSON_array_by_date_field(networkActionResponseArray[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), passBookEntryV2s, 0);
                     }
+
                 } else {
+
                     JSONArray json_array = new JSONArray(networkActionResponseArray[1]);
+
                     if (json_array.getJSONObject(0).getString("status").equals("2")) {
+
                         Toast.makeText(currentActivity, "No Entries...", Toast.LENGTH_LONG).show();
+
                     } else if (json_array.getJSONObject(0).getString("status").equals("0")) {
 
                         if (v2Flag) {
@@ -129,6 +140,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                         } else {
 
                             float balance = 0;
+
                             for (int i = 1; i < json_array.length(); i++) {
 
                                 if (json_array.getJSONObject(i).getString("particulars").contains("Credit")) {
@@ -138,6 +150,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                                     passBookEntries.add(new PassBookEntry(mysql_date_time_format.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
                                     Log.d(tag, String.valueOf(balance));
                                 }
+
                                 if (json_array.getJSONObject(i).getString("particulars").contains("Debit")) {
 
                                     balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
@@ -152,9 +165,12 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                     }
                 }
             } catch (JSONException e) {
+
                 Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(tag, e.getLocalizedMessage());
+
             } catch (ParseException e) {
+
                 Toast.makeText(currentActivity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 Log.d(tag, e.getLocalizedMessage());
             }
@@ -186,6 +202,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                     }
 
                 } else {
+
                     if (json_array.getJSONObject(i).getString("from_account_id").equals(currentAccountId)) {
 
                         balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
@@ -204,11 +221,14 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
             }
 
             Pass_Book_Utils.bindv2(passBookTableViewV2, currentActivity, pass_book_entries_v2);
-
+            
         } catch (JSONException e) {
+
             Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             Log.d(tag, e.getLocalizedMessage());
+
         } catch (ParseException e) {
+
             Toast.makeText(currentActivity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             Log.d(tag, e.getLocalizedMessage());
         }

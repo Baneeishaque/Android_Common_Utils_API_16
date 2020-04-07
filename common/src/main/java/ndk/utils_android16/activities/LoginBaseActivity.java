@@ -31,6 +31,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     ProgressBar progressBar;
     ScrollView scrollView;
+
     // UI references.
     private EditText editTextUsername;
     private EditText editTextPassword;
@@ -53,7 +54,9 @@ public abstract class LoginBaseActivity extends ContextActivity {
         editTextUsername = findViewById(R.id.editText_username);
         editTextPassword = findViewById(R.id.editText_password);
         editTextPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
+
             if (id == EditorInfo.IME_ACTION_DONE) {
+
                 attemptLogin();
                 return true;
             }
@@ -78,13 +81,19 @@ public abstract class LoginBaseActivity extends ContextActivity {
         Pair<Boolean, EditText> emptyCheckEditTextPairsResult = ValidationUtils.emptyCheckEditTextPairs(new Pair[]{new Pair<>(editTextUsername, "Please Enter Username..."), new Pair<>(editTextPassword, "Please Enter Password...")});
 
         if (!Objects.requireNonNull(emptyCheckEditTextPairsResult.first)) {
+
             // There was an error; don't attempt login and focus the first form field with an error.
             if (emptyCheckEditTextPairsResult.second != null) {
+
                 emptyCheckEditTextPairsResult.second.requestFocus();
             }
+
         } else {
+
             InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
             if (inputManager != null) {
+
                 inputManager.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
@@ -94,13 +103,14 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     public void performHttpApiSelectTask() {
 
-        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), activityContext, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
+        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
     }
 
     public HttpApiSelectTask.AsyncResponseJSONObject handleJsonObject() {
         return jsonObject -> {
 
             class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
+
                 private ErrorUtilsWrapper() {
                     super(configure_APPLICATION_NAME());
                 }
@@ -108,27 +118,32 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
             try {
                 String userCount = jsonObject.getString("user_count");
+
                 switch (userCount) {
+
                     case "1":
                         SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                        ActivityUtils.startActivityWithFinish(activityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                        ActivityUtils.startActivityWithFinish(this, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
                         break;
 
                     case "0":
-                        ToastUtils.longToast(activityContext, "Login Failure!");
+                        ToastUtils.longToast(this, "Login Failure!");
                         editTextUsername.requestFocus();
                         break;
 
                     default:
-                        ErrorUtilsWrapper.displayJSONFieldMiss(activityContext, jsonObject);
+                        ErrorUtilsWrapper.displayJSONFieldMiss(this, jsonObject);
                 }
+
             } catch (JSONException e) {
-                ErrorUtilsWrapper.displayException(activityContext, e);
+
+                ErrorUtilsWrapper.displayException(this, e);
             }
         };
     }
 
     public Pair[] configureHttpApiCallParameters() {
+
         return new Pair[]{new Pair<>("username", editTextUsername.getText().toString()), new Pair<>("password", editTextPassword.getText().toString())};
     }
 }
