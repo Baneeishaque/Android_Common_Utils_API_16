@@ -17,10 +17,10 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import ndk.utils_android16.network_task.REST_Select_Task;
+import ndk.utils_android16.network_task.HttpApiSelectTask;
 
-import static ndk.utils_android16.Network_Utils.isOnline;
-import static ndk.utils_android16.ProgressBar_Utils.showProgress;
+import static ndk.utils_android16.NetworkUtils.isOnline;
+import static ndk.utils_android16.ProgressBarUtils.showProgress;
 
 /**
  * Created on 20-09-2018 14:16 under VLottery.
@@ -55,17 +55,17 @@ public class Spinner_Utils {
 
         if (isOnline(context)) {
             showProgress(true, context, progress_Bar, form);
-            REST_Select_Task REST_select_task = new REST_Select_Task(URL, context, progress_Bar, form, application_name, new Pair[]{}, new REST_Select_Task.Async_Response_JSON_array() {
+            HttpApiSelectTask REST_select_task = new HttpApiSelectTask(URL, context, progress_Bar, form, application_name, new Pair[]{}, new HttpApiSelectTask.AsyncResponseJSONArray() {
 
                 @Override
-                public void processFinish(JSONArray json_array_with_error_status) {
-                    populate_spinner_from_json_array(start_index, json_array_with_error_status, context, application_name, spinner, spinner_items, key);
+                public void processFinish(JSONArray jsonArray) {
+                    populate_spinner_from_json_array(start_index, jsonArray, context, application_name, spinner, spinner_items, key);
                 }
 
             });
             REST_select_task.execute();
         } else {
-            Toast_Utils.longToast(context, "Internet is unavailable");
+            ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 

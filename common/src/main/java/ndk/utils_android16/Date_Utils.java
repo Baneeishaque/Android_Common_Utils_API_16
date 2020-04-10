@@ -90,7 +90,7 @@ public class Date_Utils {
             Log.d(APPLICATION_NAME, mysql_Date_Format.parse(mysql_date).toString());
             return mysql_Date_Format.parse(mysql_date);
         } catch (ParseException e) {
-            Toast_Utils.longToast(context, "Date Conversion Error");
+            ToastUtils.longToast(context, "Date Conversion Error");
             return new Date();
         }
     }
@@ -100,7 +100,7 @@ public class Date_Utils {
             Log.d(APPLICATION_NAME, normal_Date_Format.parse(normal_date).toString());
             return normal_Date_Format.parse(normal_date);
         } catch (ParseException e) {
-            Toast_Utils.longToast(context, "Date Conversion Error");
+            ToastUtils.longToast(context, "Date Conversion Error");
             return new Date();
         }
     }

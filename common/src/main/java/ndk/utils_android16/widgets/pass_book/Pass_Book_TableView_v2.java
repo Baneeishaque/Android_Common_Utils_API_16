@@ -21,16 +21,16 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 import ndk.utils_android16.R;
-import ndk.utils_android16.Toast_Utils;
-import ndk.utils_android16.models.sortable_tableView.pass_book.Pass_Book_Entry_v2;
+import ndk.utils_android16.ToastUtils;
+import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 
 
 /**
- * An extension of the {@link SortableTableView} that handles {@link Pass_Book_Entry_v2}s.
+ * An extension of the {@link SortableTableView} that handles {@link PassBookEntryV2}s.
  *
  * @author ISchwarz
  */
-public class Pass_Book_TableView_v2 extends SortableTableView<Pass_Book_Entry_v2> {
+public class Pass_Book_TableView_v2 extends SortableTableView<PassBookEntryV2> {
 
     private OnRowLongClickListener rowLongClickListener;
 
@@ -93,23 +93,23 @@ public class Pass_Book_TableView_v2 extends SortableTableView<Pass_Book_Entry_v2
 
 //        setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(ContextCompat.getColor(context, R.color.table_data_row_even), ContextCompat.getColor(context, R.color.table_data_row_odd)));
 
-        setDataRowBackgroundProvider(new TableDataRowBackgroundProvider<Pass_Book_Entry_v2>() {
+        setDataRowBackgroundProvider(new TableDataRowBackgroundProvider<PassBookEntryV2>() {
             @Override
-            public Drawable getRowBackground(int rowIndex, Pass_Book_Entry_v2 rowData) {
+            public Drawable getRowBackground(int rowIndex, PassBookEntryV2 rowData) {
 
                 int rowColor;
 
-                if ((rowData.getCredit_amount() >= 100) && (rowData.getCredit_amount() < 500)) {
+                if ((rowData.getCreditAmount() >= 100) && (rowData.getCreditAmount() < 500)) {
                     rowColor = Color.WHITE;
-                } else if ((rowData.getCredit_amount() >= 500) && (rowData.getCredit_amount() < 1000)) {
+                } else if ((rowData.getCreditAmount() >= 500) && (rowData.getCreditAmount() < 1000)) {
                     rowColor = Color.CYAN;
-                } else if (rowData.getCredit_amount() >= 1000) {
+                } else if (rowData.getCreditAmount() >= 1000) {
                     rowColor = Color.GRAY;
-                } else if ((rowData.getDebit_amount() >= 100) && (rowData.getDebit_amount() < 500)) {
+                } else if ((rowData.getDebitAmount() >= 100) && (rowData.getDebitAmount() < 500)) {
                     rowColor = Color.MAGENTA;
-                } else if ((rowData.getDebit_amount() >= 500) && (rowData.getDebit_amount() < 1000)) {
+                } else if ((rowData.getDebitAmount() >= 500) && (rowData.getDebitAmount() < 1000)) {
                     rowColor = Color.YELLOW;
-                } else if (rowData.getDebit_amount() >= 1000) {
+                } else if (rowData.getDebitAmount() >= 1000) {
                     rowColor = Color.GREEN;
                 } else if ((rowIndex == 0) || (rowIndex % 2 == 0)) {
                     rowColor = ContextCompat.getColor(context, R.color.table_data_row_even);
@@ -125,7 +125,7 @@ public class Pass_Book_TableView_v2 extends SortableTableView<Pass_Book_Entry_v2
         setSwipeToRefreshListener(new SwipeToRefreshListener() {
             @Override
             public void onRefresh(RefreshIndicator refreshIndicator) {
-                Toast_Utils.longToast(context, "Refresh View...");
+                ToastUtils.longToast(context, "Refresh View...");
             }
         });
 
@@ -135,19 +135,19 @@ public class Pass_Book_TableView_v2 extends SortableTableView<Pass_Book_Entry_v2
 //        setHeaderVisible( true );
 //        setHeaderVisible( true,100 );
 
-        addDataClickListener(new TableDataClickListener<Pass_Book_Entry_v2>() {
+        addDataClickListener(new TableDataClickListener<PassBookEntryV2>() {
             @Override
-            public void onDataClicked(int rowIndex, Pass_Book_Entry_v2 clickedData) {
+            public void onDataClicked(int rowIndex, PassBookEntryV2 clickedData) {
 
                 Log.d("Clicked On : ", clickedData.toString());
-                Toast_Utils.longToast(context, clickedData.toString());
+                ToastUtils.longToast(context, clickedData.toString());
 
             }
         });
 
-        addDataLongClickListener(new TableDataLongClickListener<Pass_Book_Entry_v2>() {
+        addDataLongClickListener(new TableDataLongClickListener<PassBookEntryV2>() {
             @Override
-            public boolean onDataLongClicked(int rowIndex, Pass_Book_Entry_v2 clickedData) {
+            public boolean onDataLongClicked(int rowIndex, PassBookEntryV2 clickedData) {
 
                 Log.d("Clicked On : ", clickedData.toString());
                 rowLongClickListener.onRowLongClick(clickedData);
@@ -158,14 +158,14 @@ public class Pass_Book_TableView_v2 extends SortableTableView<Pass_Book_Entry_v2
         addHeaderClickListener(new TableHeaderClickListener() {
             @Override
             public void onHeaderClicked(int columnIndex) {
-                Toast_Utils.longToast(context, "Column : " + columnIndex);
+                ToastUtils.longToast(context, "Column : " + columnIndex);
             }
         });
 
         addOnScrollListener(new EndlessOnScrollListener() {
             @Override
             public void onReloadingTriggered(int firstRowItem, int visibleRowCount, int totalRowCount) {
-                Toast_Utils.longToast(context, "Endless");
+                ToastUtils.longToast(context, "Endless");
             }
         });
     }
@@ -175,7 +175,7 @@ public class Pass_Book_TableView_v2 extends SortableTableView<Pass_Book_Entry_v2
     }
 
     public interface OnRowLongClickListener {
-        void onRowLongClick(Pass_Book_Entry_v2 clickedData);
+        void onRowLongClick(PassBookEntryV2 clickedData);
     }
 
 }

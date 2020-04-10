@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.greensopinion.gradle-android-eclipse'
-//apply plugin: 'eclipse'
 
 android {
 

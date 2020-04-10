@@ -10,11 +10,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import ndk.utils_android14.ActivityUtils;
-import ndk.utils_android16.Server_Utils;
-import ndk.utils_android16.Update_Utils;
+import ndk.utils_android16.ServerUtils;
+import ndk.utils_android16.UpdateUtils;
 
-import static ndk.utils_android16.Network_Utils.display_Friendly_Exception_Message;
-import static ndk.utils_android16.update.Update_Application.update_application;
+import static ndk.utils_android16.NetworkUtils.displayFriendlyExceptionMessage;
+import static ndk.utils_android16.update.UpdateApplication.updateApplication;
 
 public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
 
@@ -35,7 +35,7 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
     @Override
     protected String[] doInBackground(Void... params) {
 
-        return Update_Utils.get_server_version(URL);
+        return UpdateUtils.getServerVersion(URL, applicationName);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
         Log.d(application_name, network_action_response_array[1]);
 
         if (network_action_response_array[0].equals("1")) {
-            display_Friendly_Exception_Message(current_activity, network_action_response_array[1]);
+            displayFriendlyExceptionMessage(current_activity, network_action_response_array[1]);
             Log.d(application_name, network_action_response_array[1]);
             current_activity.finish();
         } else {
@@ -54,19 +54,18 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
             try {
                 JSONArray json_Array = new JSONArray(network_action_response_array[1]);
 
-                if (Server_Utils.check_system_status(current_activity, json_Array.getJSONObject(0).getString("system_status"))) {
+                if (ServerUtils.checkSystemStatus(current_activity, json_Array.getJSONObject(0).getString("system_status"), applicationName)) {
 
-                    if (Integer.parseInt(json_Array.getJSONObject(0).getString("version_code")) != Update_Utils.getVersionCode(current_activity)) {
-                        update_application(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL);
+                    if (Integer.parseInt(json_Array.getJSONObject(0).getString("version_code")) != UpdateUtils.getVersionCode(current_activity)) {
+                        updateApplication(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL);
 
                     } else {
-                        if (Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")) != Update_Utils.getVersionName(current_activity)) {
-                            update_application(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL);
+                        if (Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")) != UpdateUtils.getVersionName(current_activity)) {
+                            updateApplication(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL);
                         } else {
                             Toast.makeText(current_activity, "Latest Version...", Toast.LENGTH_SHORT).show();
                             // After completing http call will close this activity and launch main activity
                             ActivityUtils.startActivityWithFinishAndTabIndex(current_activity, next_activity, 0);
-//                                Activity_Utils.start_activity_with_finish(current_activity,Dashboard_Page.class);
                         }
                     }
                 }

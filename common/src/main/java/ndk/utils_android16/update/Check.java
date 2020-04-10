@@ -4,10 +4,10 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ndk.utils_android16.Network_Utils;
+import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.network_task.update.Update_Check_Task;
 
-import static ndk.utils_android16.Network_Utils.display_Long_no_FAB_no_network_bottom_SnackBar;
+import static ndk.utils_android16.NetworkUtils.displayOfflineLongNoFabBottomSnackBar;
 
 /**
  * Created by Nabeel on 21-01-2018.
@@ -21,7 +21,7 @@ public class Check {
             return;
         }
 
-        if (Network_Utils.isOnline(current_activity)) {
+        if (NetworkUtils.isOnline(current_activity)) {
             Update_Task = new Update_Check_Task(application_name, current_activity, URL, Update_Task, update_URL, next_activity);
             Update_Task.execute((Void) null);
         } else {
@@ -32,7 +32,7 @@ public class Check {
                     attempt_Update_Check(application_name, current_activity, URL, final_Update_Task, update_URL, next_activity);
                 }
             };
-            display_Long_no_FAB_no_network_bottom_SnackBar(current_activity.getWindow().getDecorView(), retry_Failed_Network_Task);
+            displayOfflineLongNoFabBottomSnackBar(current_activity.getWindow().getDecorView(), retry_Failed_Network_Task);
         }
 
     }

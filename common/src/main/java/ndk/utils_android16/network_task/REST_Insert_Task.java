@@ -7,11 +7,11 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-import ndk.utils_android16.Network_Utils;
-import ndk.utils_android16.Network_Utils.further_Actions;
+import ndk.utils_android16.NetworkUtils;
+import ndk.utils_android16.NetworkUtils.further_Actions;
 
-import static ndk.utils_android16.Network_Utils.perform_http_client_network_task;
-import static ndk.utils_android16.ProgressBar_Utils.showProgress;
+import static ndk.utils_android16.NetworkUtils.performHttpClientPostTask;
+import static ndk.utils_android16.ProgressBarUtils.showProgress;
 
 public class REST_Insert_Task extends AsyncTask<Void, Void, String[]> {
 
@@ -126,24 +126,24 @@ public class REST_Insert_Task extends AsyncTask<Void, Void, String[]> {
 
     @Override
     protected String[] doInBackground(Void... params) {
-        return perform_http_client_network_task(URL, name_value_pair);
+        return performHttpClientPostTask(URL, name_value_pair);
     }
 
     @Override
     protected void onPostExecute(final String[] network_action_response_array) {
         showProgress(false, current_activity, progressBar, form);
         if (finish_flag) {
-            Network_Utils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 1, new Pair[]{}, further_actions);
+            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 1, new Pair[]{}, further_actions);
         } else if (self_finish_flag) {
-            Network_Utils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 3, new Pair[]{}, further_actions);
+            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 3, new Pair[]{}, further_actions);
         } else if (clear_fields_flag) {
-            Network_Utils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, texts_to_clear, focus_on_error, TAG, 2, new Pair[]{}, further_actions);
+            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, texts_to_clear, focus_on_error, TAG, 2, new Pair[]{}, further_actions);
         } else if (further_actions_flag) {
-            Network_Utils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 5, new Pair[]{}, further_actions);
+            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 5, new Pair[]{}, further_actions);
         } else if (clear_and_further_actions_flag) {
-            Network_Utils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, texts_to_clear, focus_on_error, TAG, 6, new Pair[]{}, further_actions);
+            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, texts_to_clear, focus_on_error, TAG, 6, new Pair[]{}, further_actions);
         } else {
-            Network_Utils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 4, next_class_extras, further_actions);
+            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 4, next_class_extras, further_actions);
         }
     }
 

@@ -15,16 +15,16 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 import ndk.utils_android16.R;
-import ndk.utils_android16.Toast_Utils;
-import ndk.utils_android16.models.sortable_tableView.pass_book.Pass_Book_Entry;
+import ndk.utils_android16.ToastUtils;
+import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntry;
 
 
 /**
- * An extension of the {@link SortableTableView} that handles {@link Pass_Book_Entry}s.
+ * An extension of the {@link SortableTableView} that handles {@link PassBookEntry}s.
  *
  * @author ISchwarz
  */
-public class Pass_Book_TableView extends SortableTableView<Pass_Book_Entry> {
+public class Pass_Book_TableView extends SortableTableView<PassBookEntry> {
 
     public Pass_Book_TableView(final Context context) {
         this(context, null);
@@ -60,19 +60,19 @@ public class Pass_Book_TableView extends SortableTableView<Pass_Book_Entry> {
         setColumnComparator(3, Pass_Book_TableView_Comparators.get_Credit_Amount_Comparator());
         setColumnComparator(4, Pass_Book_TableView_Comparators.get_Balance_Comparator());
 
-        addDataClickListener(new TableDataClickListener<Pass_Book_Entry>() {
+        addDataClickListener(new TableDataClickListener<PassBookEntry>() {
             @Override
-            public void onDataClicked(int rowIndex, Pass_Book_Entry clickedData) {
+            public void onDataClicked(int rowIndex, PassBookEntry clickedData) {
 
-                Toast_Utils.longToast(context, clickedData.toString());
+                ToastUtils.longToast(context, clickedData.toString());
             }
         });
 
-        addDataLongClickListener(new TableDataLongClickListener<Pass_Book_Entry>() {
+        addDataLongClickListener(new TableDataLongClickListener<PassBookEntry>() {
             @Override
-            public boolean onDataLongClicked(int rowIndex, Pass_Book_Entry clickedData) {
+            public boolean onDataLongClicked(int rowIndex, PassBookEntry clickedData) {
 
-                Toast_Utils.longToast(context, clickedData.toString());
+                ToastUtils.longToast(context, clickedData.toString());
                 return false;
             }
         });
@@ -80,12 +80,12 @@ public class Pass_Book_TableView extends SortableTableView<Pass_Book_Entry> {
         addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScroll(ListView tableDataView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Toast_Utils.longToast(context, "Contents : First Visible Item - " + firstVisibleItem + ", Visible Item Count - " + visibleItemCount + ", Total Item Count - " + totalItemCount);
+                ToastUtils.longToast(context, "Contents : First Visible Item - " + firstVisibleItem + ", Visible Item Count - " + visibleItemCount + ", Total Item Count - " + totalItemCount);
             }
 
             @Override
             public void onScrollStateChanged(ListView tableDateView, ScrollState scrollState) {
-                Toast_Utils.longToast(context, "Scroll State " + scrollState.getValue());
+                ToastUtils.longToast(context, "Scroll State " + scrollState.getValue());
             }
         });
 
