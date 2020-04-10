@@ -3,7 +3,9 @@ package ndk.utils_android16.update;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTask;
 
@@ -22,7 +24,7 @@ public class Check {
         }
 
         if (NetworkUtils.isOnline(current_activity)) {
-            Update_Task = new CheckAndUpdateTask(application_name, current_activity, URL, update_URL, next_activity);
+            Update_Task = new CheckAndUpdateTask(application_name, current_activity, URL, update_URL, next_activity, BuildConfig.DEBUG, false, 0, new Pair[]{});
             Update_Task.execute((Void) null);
         } else {
             final CheckAndUpdateTask final_Update_Task = Update_Task;
