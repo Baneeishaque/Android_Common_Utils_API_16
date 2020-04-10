@@ -9,7 +9,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.core.util.Pair;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

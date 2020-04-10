@@ -17,13 +17,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD:common/src/main/java/ndk/utils_android16/UpdateUtils.java
 import ndk.utils_android14.LogUtilsWrapperBase;
 
 public class UpdateUtils {
-=======
-public class Application_Utils {
->>>>>>> master:common/src/main/java/ndk/utils_android16/Application_Utils.java
 
     public static int getVersionCode(Context context) {
         PackageManager pm = context.getPackageManager();
