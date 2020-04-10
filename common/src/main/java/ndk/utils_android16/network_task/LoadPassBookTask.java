@@ -2,6 +2,7 @@ package ndk.utils_android16.network_task;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -34,14 +35,14 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
     private String url, tag;
     private AppCompatActivity currentActivity;
     private ProgressBar progressBar;
-    private ScrollView scrollView;
+    private View scrollView;
     private PassBookTableView passBookTableView;
     private PassBookTableViewV2 passBookTableViewV2;
     private Pair[] nameValuePair;
     private boolean v2Flag, sortFlag;
     private String currentAccountId;
 
-    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, ScrollView scrollView, String tag, PassBookTableView passBookTableView, Pair[] nameValuePair) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String tag, PassBookTableView passBookTableView, Pair[] nameValuePair) {
 
         this.url = url;
         this.currentActivity = currentActivity;
@@ -54,7 +55,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
         this.sortFlag = false;
     }
 
-    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, ScrollView scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId) {
 
         this.url = url;
         this.currentActivity = currentActivity;
@@ -67,7 +68,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
         this.sortFlag = false;
     }
 
-    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, ScrollView scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId, boolean sortFlag) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId, boolean sortFlag) {
 
         this.url = url;
         this.currentActivity = currentActivity;
@@ -221,7 +222,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
             }
 
             Pass_Book_Utils.bindv2(passBookTableViewV2, currentActivity, pass_book_entries_v2);
-            
+
         } catch (JSONException e) {
 
             Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
