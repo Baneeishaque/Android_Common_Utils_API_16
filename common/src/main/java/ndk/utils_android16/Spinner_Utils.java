@@ -4,10 +4,13 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.core.util.Pair;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +51,7 @@ public class Spinner_Utils {
         attach_items_to_simple_spinner(context, spinner, spinner_items);
     }
 
-    public static void get_json_from_network_and_populate(final Context context, View progress_Bar, View form, String URL, final String application_name, final int start_index, final Spinner spinner, final ArrayList<String> spinner_items, final String key) {
+    public static void get_json_from_network_and_populate(final Context context, ProgressBar progress_Bar, ScrollView form, String URL, final String application_name, final int start_index, final Spinner spinner, final ArrayList<String> spinner_items, final String key) {
 
         if (isOnline(context)) {
             showProgress(true, context, progress_Bar, form);
