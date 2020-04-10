@@ -14,8 +14,8 @@ import ndk.utils_android16.widgets.pass_book.Pass_Book_TableView_v2;
 
 public class Pass_Book_Utils {
 
-    public static ArrayList<Pass_Book_Entry> current_pass_book_entries;
-    public static ArrayList<Pass_Book_Entry_v2> current_pass_book_entries_v2;
+    public static ArrayList<Pass_Book_Entry> current_pass_book_entries = new ArrayList<>();
+    public static ArrayList<Pass_Book_Entry_v2> current_pass_book_entries_v2 = new ArrayList<>();
 
     public static boolean v2_flag;
 
@@ -32,7 +32,7 @@ public class Pass_Book_Utils {
         if (pass_book_tableView_v2 != null) {
             final Pass_Book_TableView_Data_Adapter_v2 pass_book_tableView_data_adapter_v2 = new Pass_Book_TableView_Data_Adapter_v2(context, pass_book_entries_v2, pass_book_tableView_v2);
             pass_book_tableView_v2.setDataAdapter(pass_book_tableView_data_adapter_v2);
-            pass_book_tableView_v2.setScrollY(pass_book_tableView_v2.getBottom());
+//            pass_book_tableView_v2.setScrollY(pass_book_tableView_v2.getBottom());
             current_pass_book_entries_v2 = pass_book_entries_v2;
             v2_flag = true;
         }
@@ -46,5 +46,10 @@ public class Pass_Book_Utils {
         } else {
             Email_Utils.email_attachment(email_subject, email_text + "\nSee attachment...", pass_book_pdf, context);
         }
+    }
+
+    public static void addItemToPassBookFirstV2(ArrayList<Pass_Book_Entry_v2> passBookEntriesV2, Pass_Book_Entry_v2 passBookEntryV2) {
+
+        passBookEntriesV2.add(0, passBookEntryV2);
     }
 }

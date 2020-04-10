@@ -114,7 +114,7 @@ public abstract class Login_Base_URL extends AppCompatActivity {
                         switch (user_count) {
                             case "1":
                                 SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                                ActivityUtils.start_activity_with_finish(activity_context, configure_NEXT_ACTIVITY_CLASS(), configure_APPLICATION_NAME());
+                                ActivityUtils.startActivityWithFinish(activity_context, configure_NEXT_ACTIVITY_CLASS());
                                 break;
 
                             case "0":

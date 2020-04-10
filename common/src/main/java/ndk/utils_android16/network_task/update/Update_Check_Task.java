@@ -65,7 +65,7 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
                         } else {
                             Toast.makeText(current_activity, "Latest Version...", Toast.LENGTH_SHORT).show();
                             // After completing http call will close this activity and launch main activity
-                            ActivityUtils.start_activity_with_finish_and_tab_index(current_activity, next_activity, 0);
+                            ActivityUtils.startActivityWithFinishAndTabIndex(current_activity, next_activity, 0);
 //                                Activity_Utils.start_activity_with_finish(current_activity,Dashboard_Page.class);
                         }
                     }
