@@ -94,7 +94,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
             if (inputManager != null) {
 
-                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
             performHttpApiSelectTask();
@@ -122,8 +122,8 @@ public abstract class LoginBaseActivity extends ContextActivity {
                 switch (userCount) {
 
                     case "1":
-                        SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                        ActivityUtils.startActivityWithFinish(this, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                        SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                        ActivityUtils.startActivityWithFinish(this, configure_NEXT_ACTIVITY_CLASS());
                         break;
 
                     case "0":

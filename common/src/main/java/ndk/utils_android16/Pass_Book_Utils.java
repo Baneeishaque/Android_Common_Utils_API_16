@@ -14,8 +14,8 @@ import ndk.utils_android16.widgets.pass_book.Pass_Book_TableView_Data_Adapter_v2
 
 public class Pass_Book_Utils {
 
-    public static ArrayList<Pass_Book_Entry> current_pass_book_entries = new ArrayList<>();
-    public static ArrayList<Pass_Book_Entry_v2> current_pass_book_entries_v2 = new ArrayList<>();
+    public static ArrayList<PassBookEntry> current_pass_book_entries = new ArrayList<>();
+    public static ArrayList<PassBookEntryV2> current_pass_book_entries_v2 = new ArrayList<>();
 
     public static boolean v2_flag;
 
@@ -50,7 +50,7 @@ public class Pass_Book_Utils {
         }
     }
 
-    public static void addItemToPassBookFirstV2(ArrayList<Pass_Book_Entry_v2> passBookEntriesV2, Pass_Book_Entry_v2 passBookEntryV2) {
+    public static void addItemToPassBookFirstV2(ArrayList<PassBookEntryV2> passBookEntriesV2, PassBookEntryV2 passBookEntryV2) {
 
         passBookEntriesV2.add(0, passBookEntryV2);
     }
