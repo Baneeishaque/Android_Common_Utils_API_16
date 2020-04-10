@@ -12,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ndk.utils_android14.LogUtilsWrapperBase;
-import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ExceptionUtils;
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.ToastUtils;
@@ -245,7 +244,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
     private class LogUtilsWrapper extends LogUtilsWrapperBase {
         private LogUtilsWrapper() {
-            super(tag, BuildConfig.DEBUG);
+            super(tag);
         }
     }
 }

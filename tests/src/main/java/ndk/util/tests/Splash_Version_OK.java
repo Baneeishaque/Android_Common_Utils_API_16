@@ -37,4 +37,9 @@ public class Splash_Version_OK extends SplashWithAutomatedUpdateActivity {
         return new Pair[]{new Pair<>("APPLICATION_NAME", Application_Specification.APPLICATION_NAME), new Pair<>("NEXT_ACTIVITY_CLASS", "Splash_Version_OK"), new Pair<>("SELECT_USER_URL", "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")};
     }
 
+    @Override
+    protected boolean configure_SECURITY_FLAG() {
+        return BuildConfig.DEBUG;
+    }
+
 }

@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import androidx.core.util.Pair;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     ProgressBar progressBar;
     ScrollView scrollView;
+
     // UI references.
     private EditText editTextUsername;
     private EditText editTextPassword;
@@ -53,7 +55,9 @@ public abstract class LoginBaseActivity extends ContextActivity {
         editTextUsername = findViewById(R.id.editText_username);
         editTextPassword = findViewById(R.id.editText_password);
         editTextPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
+
             if (id == EditorInfo.IME_ACTION_DONE) {
+
                 attemptLogin();
                 return true;
             }
@@ -80,11 +84,15 @@ public abstract class LoginBaseActivity extends ContextActivity {
         if (!Objects.requireNonNull(emptyCheckEditTextPairsResult.first)) {
             // There was an error; don't attempt login and focus the first form field with an error.
             if (emptyCheckEditTextPairsResult.second != null) {
+
                 emptyCheckEditTextPairsResult.second.requestFocus();
             }
+
         } else {
+
             InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (inputManager != null) {
+
                 inputManager.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
@@ -98,37 +106,46 @@ public abstract class LoginBaseActivity extends ContextActivity {
     }
 
     public HttpApiSelectTask.AsyncResponseJSONObject handleJsonObject() {
-        return jsonObject -> {
 
-            class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
-                private ErrorUtilsWrapper() {
-                    super(configure_APPLICATION_NAME());
+        return new HttpApiSelectTask.AsyncResponseJSONObject() {
+
+            @Override
+            public void processFinish(JSONObject jsonObject) {
+
+                class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
+
+                    private ErrorUtilsWrapper() {
+
+                        super(configure_APPLICATION_NAME());
+                    }
                 }
-            }
 
-            try {
-                String userCount = jsonObject.getString("user_count");
-                switch (userCount) {
-                    case "1":
-                        SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                        ActivityUtils.startActivityWithFinish(activityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
-                        break;
+                try {
+                    String userCount = jsonObject.getString("user_count");
+                    switch (userCount) {
+                        case "1":
+                            SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                            ActivityUtils.startActivityWithFinish(activityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                            break;
 
-                    case "0":
-                        ToastUtils.longToast(activityContext, "Login Failure!");
-                        editTextUsername.requestFocus();
-                        break;
+                        case "0":
+                            ToastUtils.longToast(activityContext, "Login Failure!");
+                            editTextUsername.requestFocus();
+                            break;
 
-                    default:
-                        ErrorUtilsWrapper.displayJSONFieldMiss(activityContext, jsonObject);
+                        default:
+                            ErrorUtilsWrapper.displayJSONFieldMiss(activityContext, jsonObject);
+                    }
+                } catch (JSONException e) {
+
+                    ErrorUtilsWrapper.displayException(activityContext, e);
                 }
-            } catch (JSONException e) {
-                ErrorUtilsWrapper.displayException(activityContext, e);
             }
         };
     }
 
     public Pair[] configureHttpApiCallParameters() {
+
         return new Pair[]{new Pair<>("username", editTextUsername.getText().toString()), new Pair<>("password", editTextPassword.getText().toString())};
     }
 }

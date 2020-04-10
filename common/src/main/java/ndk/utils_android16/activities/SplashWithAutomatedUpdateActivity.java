@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +17,7 @@ import ndk.utils_android16.R;
 import ndk.utils_android16.ServerUtils;
 import ndk.utils_android16.ToastUtils;
 import ndk.utils_android16.UpdateUtils;
+import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 import ndk.utils_android16.update.UpdateApplication;
 
@@ -39,47 +41,51 @@ public abstract class SplashWithAutomatedUpdateActivity extends ContextActivity 
         super.onCreate(savedInstanceState);
         initializeScreen();
 
-        HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), new Pair[]{}, jsonArray -> {
+        HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), new Pair[]{}, new HttpApiSelectTask.AsyncResponseJSONArray() {
 
-            try {
+            @Override
+            public void processFinish(JSONArray jsonArray) {
 
-                JSONObject tempJsonObject = jsonArray.getJSONObject(0);
-                if (ServerUtils.checkSystemStatus(getApplicationContext(), tempJsonObject.getString("system_status"), configure_APPLICATION_NAME())) {
+                try {
 
-                    if (Integer.parseInt(tempJsonObject.getString("version_code")) != UpdateUtils.getVersionCode(getApplicationContext())) {
+                    JSONObject tempJsonObject = jsonArray.getJSONObject(0);
+                    if (ServerUtils.checkSystemStatus(getApplicationContext(), tempJsonObject.getString("system_status"), configure_APPLICATION_NAME())) {
 
-                        UpdateApplication.updateApplication(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, Float.parseFloat(tempJsonObject.getString("version_name")), configure_UPDATE_URL(), configure_SECURITY_FLAG());
+                        if (Integer.parseInt(tempJsonObject.getString("version_code")) != UpdateUtils.getVersionCode(getApplicationContext())) {
 
-                    } else if (Float.parseFloat(tempJsonObject.getString("version_name")) != UpdateUtils.getVersionName(getApplicationContext())) {
+                            UpdateApplication.updateApplication(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, Float.parseFloat(tempJsonObject.getString("version_name")), configure_UPDATE_URL(), configure_SECURITY_FLAG());
 
-                        UpdateApplication.updateApplication(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, Float.parseFloat(tempJsonObject.getString("version_name")), configure_UPDATE_URL(), configure_SECURITY_FLAG());
+                        } else if (Float.parseFloat(tempJsonObject.getString("version_name")) != UpdateUtils.getVersionName(getApplicationContext())) {
 
-                    } else {
+                            UpdateApplication.updateApplication(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, Float.parseFloat(tempJsonObject.getString("version_name")), configure_UPDATE_URL(), configure_SECURITY_FLAG());
 
-                        class LogUtilsWrapper extends LogUtilsWrapperBase {
-                            private LogUtilsWrapper() {
-                                super(configure_APPLICATION_NAME());
+                        } else {
+
+                            class LogUtilsWrapper extends LogUtilsWrapperBase {
+                                private LogUtilsWrapper() {
+                                    super(configure_APPLICATION_NAME());
+                                }
                             }
+
+                            LogUtilsWrapper.debug("Latest Version...");
+                            if (!configure_SECURITY_FLAG()) {
+                                ToastUtils.longToast(getApplicationContext(), "Latest Version...");
+                            }
+
+                            ActivityUtils.startActivityWithStringExtrasAndFinish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
                         }
+                    }
 
-                        LogUtilsWrapper.debug("Latest Version...");
-                        if (!configure_SECURITY_FLAG()) {
-                            ToastUtils.longToast(getApplicationContext(), "Latest Version...");
+                } catch (JSONException json_exception) {
+
+                    class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
+                        private ErrorUtilsWrapper() {
+                            super(configure_APPLICATION_NAME());
                         }
-
-                        ActivityUtils.startActivityWithStringExtrasAndFinish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
                     }
+
+                    ErrorUtilsWrapper.displayException(getApplicationContext(), json_exception);
                 }
-
-            } catch (JSONException json_exception) {
-
-                class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
-                    private ErrorUtilsWrapper() {
-                        super(configure_APPLICATION_NAME());
-                    }
-                }
-
-                ErrorUtilsWrapper.displayException(getApplicationContext(), json_exception);
             }
         });
     }

@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import ndk.utils_android14.ActivityUtils;
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ServerUtils;
 import ndk.utils_android16.UpdateUtils;
 
@@ -35,7 +36,7 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
     @Override
     protected String[] doInBackground(Void... params) {
 
-        return UpdateUtils.getServerVersion(URL, applicationName);
+        return UpdateUtils.getServerVersion(URL, application_name);
     }
 
     @Override
@@ -54,14 +55,14 @@ public class Update_Check_Task extends AsyncTask<Void, Void, String[]> {
             try {
                 JSONArray json_Array = new JSONArray(network_action_response_array[1]);
 
-                if (ServerUtils.checkSystemStatus(current_activity, json_Array.getJSONObject(0).getString("system_status"), applicationName)) {
+                if (ServerUtils.checkSystemStatus(current_activity, json_Array.getJSONObject(0).getString("system_status"), application_name)) {
 
                     if (Integer.parseInt(json_Array.getJSONObject(0).getString("version_code")) != UpdateUtils.getVersionCode(current_activity)) {
-                        updateApplication(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL);
+                        updateApplication(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL, BuildConfig.DEBUG);
 
                     } else {
                         if (Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")) != UpdateUtils.getVersionName(current_activity)) {
-                            updateApplication(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL);
+                            updateApplication(application_name, current_activity, Float.parseFloat(json_Array.getJSONObject(0).getString("version_name")), update_URL, BuildConfig.DEBUG);
                         } else {
                             Toast.makeText(current_activity, "Latest Version...", Toast.LENGTH_SHORT).show();
                             // After completing http call will close this activity and launch main activity
