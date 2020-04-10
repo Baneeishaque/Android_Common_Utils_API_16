@@ -122,28 +122,29 @@ public abstract class LoginBaseActivity extends ContextActivity {
                     }
                 }
 
-            try {
-                String userCount = jsonObject.getString("user_count");
+                try {
+                    String userCount = jsonObject.getString("user_count");
 
-                switch (userCount) {
+                    switch (userCount) {
 
-                    case "1":
-                        SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                        ActivityUtils.startActivityWithFinish(this, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
-                        break;
+                        case "1":
+                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                            ActivityUtils.startActivityWithFinish(LoginBaseActivity.this, configure_NEXT_ACTIVITY_CLASS());
+                            break;
 
-                    case "0":
-                        ToastUtils.longToast(this, "Login Failure!");
-                        editTextUsername.requestFocus();
-                        break;
+                        case "0":
+                            ToastUtils.longToast(LoginBaseActivity.this, "Login Failure!");
+                            editTextUsername.requestFocus();
+                            break;
 
-                    default:
-                        ErrorUtilsWrapper.displayJSONFieldMiss(this, jsonObject);
+                        default:
+                            ErrorUtilsWrapper.displayJSONFieldMiss(LoginBaseActivity.this, jsonObject);
+                    }
+
+                } catch (JSONException e) {
+
+                    ErrorUtilsWrapper.displayException(LoginBaseActivity.this, e);
                 }
-
-            } catch (JSONException e) {
-
-                ErrorUtilsWrapper.displayException(this, e);
             }
         };
     }
