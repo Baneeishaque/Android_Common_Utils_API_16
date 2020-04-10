@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
@@ -17,7 +16,7 @@ import static ndk.utils_android16.NetworkUtils.isOnline;
 
 public class HttpApiSelectTaskWrapper {
 
-    public static void executePostThenReturnResponse(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponse asyncResponse) {
+    public static void executePostThenReturnResponse(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponse asyncResponse) {
 
         if (isOnline(context)) {
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
@@ -29,7 +28,7 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonObject(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONObject asyncResponseJSONObject) {
+    public static void executePostThenReturnJsonObject(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONObject asyncResponseJSONObject) {
 
         if (isOnline(context)) {
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
@@ -40,7 +39,7 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArray(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArray(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
 
         if (isOnline(context)) {
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
@@ -52,7 +51,7 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatus(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+    public static void executePostThenReturnJsonArrayWithErrorStatus(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
 
         if (isOnline(context)) {
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
@@ -63,12 +62,12 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
 
         executePostThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, false);
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
 
         executePostThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, true);
     }
