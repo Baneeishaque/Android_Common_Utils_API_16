@@ -26,7 +26,7 @@ public class LoginBundleActivity extends LoginBaseActivity {
                 }
             }
 
-            ErrorUtilsWrapper.displayException(activityContext, e);
+            ErrorUtilsWrapper.displayException(this, e);
             return null;
         }
     }
