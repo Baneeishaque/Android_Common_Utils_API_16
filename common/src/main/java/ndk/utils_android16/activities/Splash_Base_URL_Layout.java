@@ -51,7 +51,7 @@ public abstract class Splash_Base_URL_Layout extends AppCompatActivity {
                             Update_Application.update_application(configure_APPLICATION_NAME(), current_activity, Float.parseFloat(json_array.getJSONObject(0).getString("version_name")), configure_UPDATE_URL());
                         } else {
                             Toast_Utils.longToast(getApplicationContext(), "Latest Version...");
-                            ActivityUtils.start_activity_with_string_extras_and_finish(current_activity, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
+                            ActivityUtils.startActivityWithStringExtrasAndFinish(current_activity, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
 
                         }
                     }

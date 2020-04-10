@@ -58,7 +58,7 @@ public abstract class Splash_Base_URL extends ContextActivity {
                         } else {
 
                             Toast_Utils.longToast(getApplicationContext(), "Latest Version...");
-                            ActivityUtils.start_activity_with_string_extras_and_finish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
+                            ActivityUtils.startActivityWithIntegerExtrasAndFinish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
 
                         }
                     }

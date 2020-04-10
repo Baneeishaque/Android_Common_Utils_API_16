@@ -104,7 +104,7 @@ public class Network_Utils {
                         switch (action_flag) {
 
                             case 1: //finish and switch
-                                ActivityUtils.start_activity_with_finish(current_activity, to_switch_activity, TAG);
+                                ActivityUtils.startActivityWithFinish(current_activity, to_switch_activity);
                                 break;
 
                             case 2: //clear fields
@@ -116,7 +116,7 @@ public class Network_Utils {
                                 break;
 
                             case 4: //finish and switch with extras
-                                ActivityUtils.start_activity_with_string_extras_and_finish(current_activity, to_switch_activity, next_class_extras);
+                                ActivityUtils.startActivityWithIntegerExtrasAndFinish(current_activity, to_switch_activity, next_class_extras);
                                 break;
 
                             case 5: //No Action
@@ -163,7 +163,7 @@ public class Network_Utils {
 
     public static void check_network_then_start_activity_with_string_extras(Context context, Class activity, Pair[] extras, boolean for_result_flag, int request_code) {
         if (isOnline(context)) {
-            ActivityUtils.start_activity_with_string_extras(context, activity, extras, for_result_flag, request_code);
+            ActivityUtils.startActivityWithStringExtras(context, activity, extras);
         } else {
             Toast_Utils.longToast(context, "Internet is unavailable");
         }
@@ -171,7 +171,7 @@ public class Network_Utils {
 
     public static void check_network_then_start_activity(Context context, Class activity) {
         if (isOnline(context)) {
-            ActivityUtils.start_activity(context, activity);
+            ActivityUtils.startActivity(context, activity);
         } else {
             Toast_Utils.longToast(context, "Internet is unavailable");
         }

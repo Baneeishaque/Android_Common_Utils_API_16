@@ -44,7 +44,7 @@ public abstract class Login_Base_Custom_URL_Return_JSON_Object extends Login_Bas
 
                         case "1":
                             SharedPreference_Utils.commit_Shared_Preferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", json_object.getString("id"))});
-                            ActivityUtils.start_activity_with_finish(activityContext, configure_NEXT_ACTIVITY_CLASS(), configure_APPLICATION_NAME());
+                            ActivityUtils.startActivityWithFinish(activityContext, configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":
