@@ -24,7 +24,7 @@ android {
 
         release {
 
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -58,10 +58,8 @@ dependencies {
     implementation 'com.itextpdf:itext-pdfa:5.5.5'
     implementation 'de.codecrafters.tableview:tableview:2.8.1'
 
-    //TODO : Replace API 14 with that transitively including API 1
-//    api 'com.github.Baneeishaque:Android_Common_Utils_API_14:6086aac5fe'
-    api 'com.github.Baneeishaque:Android_Common_Utils_API_14:cd3ec212c4'
-    api 'com.github.Baneeishaque:Android_Common_Utils_API_1:2c7a22dbca'
+    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:c1762751c7'
+    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_1:0726486cb3'
 
     implementation 'com.github.kimkevin:cachepot:1.2.0'
     implementation 'com.chootdev:csnackbar:1.4.2'
