@@ -82,6 +82,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
         Pair<Boolean, EditText> emptyCheckEditTextPairsResult = ValidationUtils.emptyCheckEditTextPairs(new Pair[]{new Pair<>(editTextUsername, "Please Enter Username..."), new Pair<>(editTextPassword, "Please Enter Password...")});
 
         if (!Objects.requireNonNull(emptyCheckEditTextPairsResult.first)) {
+
             // There was an error; don't attempt login and focus the first form field with an error.
             if (emptyCheckEditTextPairsResult.second != null) {
 
@@ -91,6 +92,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
         } else {
 
             InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
             if (inputManager != null) {
 
                 inputManager.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -102,7 +104,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     public void performHttpApiSelectTask() {
 
-        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), activityContext, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
+        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
     }
 
     public HttpApiSelectTask.AsyncResponseJSONObject handleJsonObject() {
@@ -120,26 +122,28 @@ public abstract class LoginBaseActivity extends ContextActivity {
                     }
                 }
 
-                try {
-                    String userCount = jsonObject.getString("user_count");
-                    switch (userCount) {
-                        case "1":
-                            SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils.startActivityWithFinish(activityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
-                            break;
+            try {
+                String userCount = jsonObject.getString("user_count");
 
-                        case "0":
-                            ToastUtils.longToast(activityContext, "Login Failure!");
-                            editTextUsername.requestFocus();
-                            break;
+                switch (userCount) {
 
-                        default:
-                            ErrorUtilsWrapper.displayJSONFieldMiss(activityContext, jsonObject);
-                    }
-                } catch (JSONException e) {
+                    case "1":
+                        SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                        ActivityUtils.startActivityWithFinish(this, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                        break;
 
-                    ErrorUtilsWrapper.displayException(activityContext, e);
+                    case "0":
+                        ToastUtils.longToast(this, "Login Failure!");
+                        editTextUsername.requestFocus();
+                        break;
+
+                    default:
+                        ErrorUtilsWrapper.displayJSONFieldMiss(this, jsonObject);
                 }
+
+            } catch (JSONException e) {
+
+                ErrorUtilsWrapper.displayException(this, e);
             }
         };
     }

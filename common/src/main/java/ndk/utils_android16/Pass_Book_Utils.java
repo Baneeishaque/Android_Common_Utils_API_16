@@ -29,7 +29,9 @@ public class Pass_Book_Utils {
     }
 
     public static void bindv2(PassBookTableViewV2 pass_book_tableView_v2, Context context, ArrayList<PassBookEntryV2> pass_book_entries_v2) {
+
         if (pass_book_tableView_v2 != null) {
+
             final Pass_Book_TableView_Data_Adapter_v2 pass_book_tableView_data_adapter_v2 = new Pass_Book_TableView_Data_Adapter_v2(context, pass_book_entries_v2, pass_book_tableView_v2);
             pass_book_tableView_v2.setDataAdapter(pass_book_tableView_data_adapter_v2);
 //            pass_book_tableView_v2.setScrollY(pass_book_tableView_v2.getBottom());

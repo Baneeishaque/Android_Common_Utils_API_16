@@ -5,7 +5,6 @@ buildscript {
     repositories {
 
         jcenter()
-//        maven { url "https://plugins.gradle.org/m2/" }
         google()
         gradlePluginPortal()
     }
@@ -26,7 +25,6 @@ allprojects {
 
     repositories {
 
-//        mavenLocal()
         google()
         jcenter()
         maven { url "https://jitpack.io" }
@@ -34,7 +32,6 @@ allprojects {
 }
 
 task clean(type: Delete) {
-    
     delete rootProject.buildDir
 }
 

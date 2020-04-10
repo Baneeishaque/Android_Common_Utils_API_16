@@ -2,7 +2,6 @@ package ndk.utils_android16;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -54,19 +53,16 @@ public class Spinner_Utils {
     public static void get_json_from_network_and_populate(final Context context, ProgressBar progress_Bar, ScrollView form, String URL, final String application_name, final int start_index, final Spinner spinner, final ArrayList<String> spinner_items, final String key) {
 
         if (isOnline(context)) {
+
             showProgress(true, context, progress_Bar, form);
-            HttpApiSelectTask REST_select_task = new HttpApiSelectTask(URL, context, progress_Bar, form, application_name, new Pair[]{}, new HttpApiSelectTask.AsyncResponseJSONArray() {
 
-                @Override
-                public void processFinish(JSONArray jsonArray) {
-                    populate_spinner_from_json_array(start_index, jsonArray, context, application_name, spinner, spinner_items, key);
-                }
+            HttpApiSelectTask REST_select_task = new HttpApiSelectTask(URL, context, progress_Bar, form, application_name, new Pair[]{}, jsonArray -> populate_spinner_from_json_array(start_index, jsonArray, context, application_name, spinner, spinner_items, key));
 
-            });
             REST_select_task.execute();
+
         } else {
-            ToastUtils.longToast(context, "Internet is unavailable");
+
+            ToastUtils.longToast(context, "Internet is unavailable...");
         }
     }
-
 }

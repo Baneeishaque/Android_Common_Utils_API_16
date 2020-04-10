@@ -30,6 +30,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
     private Pair[] nextClassExtras;
 
     public CheckAndUpdateTask(String applicationName, AppCompatActivity currentActivity, String URL, String updateUrl, Class nextActivity, boolean securityFlag, boolean tabIndexFlag, int tabIndex, Pair[] nextClassExtras) {
+
         this.currentActivity = currentActivity;
         this.URL = URL;
         this.applicationName = applicationName;
