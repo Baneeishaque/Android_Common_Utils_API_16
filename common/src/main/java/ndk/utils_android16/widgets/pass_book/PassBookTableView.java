@@ -24,17 +24,17 @@ import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntry;
  *
  * @author ISchwarz
  */
-public class Pass_Book_TableView extends SortableTableView<PassBookEntry> {
+public class PassBookTableView extends SortableTableView<PassBookEntry> {
 
-    public Pass_Book_TableView(final Context context) {
+    public PassBookTableView(final Context context) {
         this(context, null);
     }
 
-    public Pass_Book_TableView(final Context context, final AttributeSet attributes) {
+    public PassBookTableView(final Context context, final AttributeSet attributes) {
         this(context, attributes, android.R.attr.listViewStyle);
     }
 
-    public Pass_Book_TableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
+    public PassBookTableView(final Context context, final AttributeSet attributes, final int styleAttributes) {
         super(context, attributes, styleAttributes);
 
         final SimpleTableHeaderAdapter simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(context, "#", "Par.", "Deb.", "Cre.", "Bal.");

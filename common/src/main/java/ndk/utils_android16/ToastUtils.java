@@ -20,4 +20,8 @@ public class ToastUtils {
     public static void offlineToast(Context context) {
         longToast(context, "Internet is unavailable...");
     }
+
+    public static void noEntriesToast(Context context) {
+        longToast(context, "No Entries...");
+    }
 }

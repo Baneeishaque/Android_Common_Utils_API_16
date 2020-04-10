@@ -17,13 +17,13 @@ import static ndk.utils_android16.NetworkUtils.isOnline;
 
 public class HttpApiSelectTaskWrapper {
 
-    public static void execute(String task_URL, Context context, View mProgressView, View mLoginFormView, String application_Name, Pair[] name_value_pairs, HttpApiSelectTask.AsyncResponse async_response) {
+    public static void executePostThenReturnResponse(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponse asyncResponse) {
 
         if (isOnline(context)) {
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
-            HttpApiSelectTask rest_select_task = new HttpApiSelectTask(task_URL, context, mProgressView, mLoginFormView, application_Name, name_value_pairs, async_response);
+            ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
+            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponse);
 
-            rest_select_task.execute();
+            httpApiSelectTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
@@ -40,19 +40,19 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void execute(String task_URL, Context context, View mProgressView, View mLoginFormView, String application_Name, Pair[] name_value_pairs, HttpApiSelectTask.AsyncResponseJSONArray async_response_json_array) {
+    public static void executePostThenReturnJsonArray(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
 
         if (isOnline(context)) {
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
-            HttpApiSelectTask rest_select_task = new HttpApiSelectTask(task_URL, context, mProgressView, mLoginFormView, application_Name, name_value_pairs, async_response_json_array);
+            ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
+            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray);
 
-            rest_select_task.execute();
+            httpApiSelectTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
-    public static void executePostThenReturnJsonArray(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+    public static void executePostThenReturnJsonArrayWithErrorStatus(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
 
         if (isOnline(context)) {
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
@@ -65,28 +65,67 @@ public class HttpApiSelectTaskWrapper {
 
     public static void executePostThenReturnJsonArrayWithoutErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArray(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, false);
+        executePostThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, false);
     }
 
     public static void executePostThenReturnJsonArrayWithErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, ScrollView scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArray(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, true);
+        executePostThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, true);
     }
 
-    public static void execute(String task_URL, Context context, String application_Name, Pair[] name_value_pairs, HttpApiSelectTask.AsyncResponseJSONArray async_response_json_array, boolean error_flag, boolean background_flag) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
 
         if (isOnline(context)) {
+            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag, backgroundFlag);
 
-            HttpApiSelectTask rest_select_task = new HttpApiSelectTask(task_URL, context, application_Name, name_value_pairs, async_response_json_array, error_flag, background_flag);
-
-            rest_select_task.execute();
+            httpApiSelectTask.execute();
         } else {
-            if (background_flag) {
-                Log.d(application_Name, "Internet is unavailable");
+            if (backgroundFlag) {
+                Log.d(applicationName, "Internet is unavailable");
             } else {
                 ToastUtils.longToast(context, "Internet is unavailable");
             }
         }
+    }
+
+    public static void executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean backgroundFlag) {
+
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, true, backgroundFlag);
+    }
+
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean backgroundFlag) {
+
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, false, backgroundFlag);
+    }
+
+    public static void executePostThenReturnJsonArrayWithBackgroundWorkStatusAndErrorStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag, true);
+    }
+
+    public static void executePostThenReturnJsonArrayWithoutBackgroundWorkStatusAndErrorStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag, false);
+    }
+
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheckAndWithoutBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+
+        executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, false);
+    }
+
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheckAndWithBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+
+        executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, true);
+    }
+
+    public static void executePostThenReturnJsonArrayWithErrorStatusCheckAndWithoutBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, false);
+    }
+
+    public static void executePostThenReturnJsonArrayWithErrorStatusCheckAndWithBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {
+
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, true);
     }
 
     public static void performSplashScreenThenReturnJsonArray(final Context context, final String taskUrl, final String applicationName, final Pair[] nameValuePairs, final HttpApiSelectTask.AsyncResponseJSONArray asyncResponseJSONArray) {

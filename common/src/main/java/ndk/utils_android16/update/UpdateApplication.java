@@ -1,7 +1,6 @@
 package ndk.utils_android16.update;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,12 +12,7 @@ public class UpdateApplication {
 
         //TODO : Use Alert Dialog Utils
         AlertDialog.Builder builder1 = new AlertDialog.Builder(appCompatActivity);
-        builder1.setMessage("New version is available, please update...").setCancelable(false)
-                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        ApplicationVCSUtils.downloadAndInstallApk(applicationName, versionName, updateUrl, appCompatActivity, securityFlag);
-                    }
-                });
+        builder1.setMessage("New version is available, please update...").setCancelable(false).setPositiveButton("Update", (dialog, id) -> ApplicationVCSUtils.downloadAndInstallApk(applicationName, versionName, updateUrl, appCompatActivity, securityFlag));
         AlertDialog alert = builder1.create();
         alert.setTitle("Warning!");
         alert.show();
