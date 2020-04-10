@@ -69,21 +69,24 @@ public abstract class LoginBaseActivity extends ContextActivity {
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * Attempts to sign in or register the account specified by the login form. If
+     * there are form errors (missing fields, etc.), the errors are presented and no
+     * actual login attempt is made.
      */
     private void attemptLogin() {
 
         // Reset errors.
-        ValidationUtils.resetErrors(new EditText[]{editTextUsername, editTextPassword});
+        ValidationUtils.resetErrors(new EditText[] { editTextUsername, editTextPassword });
 
         // TODO : Check Warning, Use org.javatuples
-        Pair<Boolean, EditText> emptyCheckEditTextPairsResult = ValidationUtils.emptyCheckEditTextPairs(new Pair[]{new Pair<>(editTextUsername, "Please Enter Username..."), new Pair<>(editTextPassword, "Please Enter Password...")});
+        Pair<Boolean, EditText> emptyCheckEditTextPairsResult = ValidationUtils
+                .emptyCheckEditTextPairs(new Pair[] { new Pair<>(editTextUsername, "Please Enter Username..."),
+                        new Pair<>(editTextPassword, "Please Enter Password...") });
 
         if (!Objects.requireNonNull(emptyCheckEditTextPairsResult.first)) {
 
-            // There was an error; don't attempt login and focus the first form field with an error.
+            // There was an error; don't attempt login and focus the first form field with
+            // an error.
             if (emptyCheckEditTextPairsResult.second != null) {
 
                 emptyCheckEditTextPairsResult.second.requestFocus();
@@ -91,11 +94,13 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
         } else {
 
-            InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager inputManager = (InputMethodManager) getApplicationContext()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
 
             if (inputManager != null) {
 
-                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
             performHttpApiSelectTask();
@@ -104,7 +109,8 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     public void performHttpApiSelectTask() {
 
-        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
+        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar,
+                scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
     }
 
     public HttpApiSelectTask.AsyncResponseJSONObject handleJsonObject() {
@@ -128,8 +134,11 @@ public abstract class LoginBaseActivity extends ContextActivity {
                     switch (userCount) {
 
                         case "1":
-                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils.startActivityWithFinish(LoginBaseActivity.this, configure_NEXT_ACTIVITY_CLASS());
+                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(),
+                                    configure_APPLICATION_NAME(),
+                                    new Pair[] { new Pair<>("user_id", jsonObject.getString("id")) });
+                            ActivityUtils.startActivityWithFinish(LoginBaseActivity.this,
+                                    configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":
@@ -151,6 +160,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     public Pair[] configureHttpApiCallParameters() {
 
-        return new Pair[]{new Pair<>("username", editTextUsername.getText().toString()), new Pair<>("password", editTextPassword.getText().toString())};
+        return new Pair[] { new Pair<>("username", editTextUsername.getText().toString()),
+                new Pair<>("password", editTextPassword.getText().toString()) };
     }
 }
