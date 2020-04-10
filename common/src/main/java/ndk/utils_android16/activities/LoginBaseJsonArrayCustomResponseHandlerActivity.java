@@ -9,7 +9,7 @@ public abstract class LoginBaseJsonArrayCustomResponseHandlerActivity extends Lo
     public void performHttpApiSelectTask() {
 
         //Example Response : [{"user_count":"1","id":"125"},{"time_status":"1"}]
-        HttpApiSelectTaskWrapper.executePostThenReturnJsonArrayWithoutErrorStatusCheck(configure_SELECT_USER_URL(), activityContext, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), configure_JSON_ARRAY_RESPONSE_HANDLER());
+        HttpApiSelectTaskWrapper.executePostThenReturnJsonArrayWithoutErrorStatusCheck(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), configure_JSON_ARRAY_RESPONSE_HANDLER());
     }
 
     protected abstract HttpApiSelectTask.AsyncResponseJSONArray configure_JSON_ARRAY_RESPONSE_HANDLER();
