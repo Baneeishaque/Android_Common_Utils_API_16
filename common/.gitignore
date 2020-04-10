@@ -305,7 +305,7 @@ cmake-build-*/
 
 # *.iml
 # modules.xml
-# .idea/misc.xml
+#.idea/misc.xml
 # *.ipr
 
 # Sonarlint plugin
@@ -354,8 +354,7 @@ cmake-build-*/
 .idea/
 
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
-
-modules.xml
+# modules.xml
 
 ### Intellij+iml ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
