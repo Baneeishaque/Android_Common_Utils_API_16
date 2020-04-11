@@ -1,0 +1,3 @@
+[submodule "Java_Common_Utils"]
+	path = Java_Common_Utils
+	url = https://github.com/Baneeishaque/Java_Common_Utils.git
