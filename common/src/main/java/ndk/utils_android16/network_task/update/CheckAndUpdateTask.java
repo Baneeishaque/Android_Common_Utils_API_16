@@ -54,8 +54,10 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
         NetworkUtils.displayNetworkActionResponse(applicationName, networkActionResponseArray);
 
         if (networkActionResponseArray[0].equals("1")) {
+
             displayFriendlyExceptionMessage(currentActivity, networkActionResponseArray[1]);
             currentActivity.finish();
+
         } else {
 
             try {
@@ -70,6 +72,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
                         super(applicationName);
                     }
                 }
+
                 ErrorUtilsWrapper.displayException(currentActivity, e);
             }
         }
@@ -79,50 +82,56 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
         try {
             JSONObject tempJsonObject = jsonArray.getJSONObject(0);
+
             if (ServerUtils.checkSystemStatus(currentActivity, tempJsonObject.getString("system_status"), applicationName)) {
 
-                if (Integer.parseInt(tempJsonObject.getString("version_code")) != UpdateUtils.getVersionCode(currentActivity)) {
+                if (Integer.parseInt(tempJsonObject.getString("version_code")) != UpdateUtils.getVersionCode(currentActivity) || Float.parseFloat(tempJsonObject.getString("version_name")) != UpdateUtils.getVersionName(currentActivity)) {
+
                     updateApplication(applicationName, currentActivity, Float.parseFloat(tempJsonObject.getString("version_name")), updateUrl, securityFlag);
 
                 } else {
-                    if (Float.parseFloat(tempJsonObject.getString("version_name")) != UpdateUtils.getVersionName(currentActivity)) {
-                        updateApplication(applicationName, currentActivity, Float.parseFloat(tempJsonObject.getString("version_name")), updateUrl, securityFlag);
+
+                    class LogUtilsWrapper extends LogUtilsWrapperBase {
+
+                        private LogUtilsWrapper() {
+                            super(applicationName);
+                        }
+                    }
+
+                    LogUtilsWrapper.debug("Latest Version...");
+
+                    if (!securityFlag) {
+
+                        ToastUtils.shortToast(currentActivity, "Latest Version...");
+                    }
+                    // After completing http call will close this activity and launch main activity
+                    if (tabIndexFlag) {
+
+                        //TODO : Tab Index with Other extras
+                        ActivityUtils.startActivityWithFinishAndTabIndex(currentActivity, nextActivity, tabIndex);
+
                     } else {
 
-                        class LogUtilsWrapper extends LogUtilsWrapperBase {
-                            private LogUtilsWrapper() {
-                                super(applicationName);
-                            }
-                        }
+                        if (nextClassExtras.length == 0) {
 
-                        LogUtilsWrapper.debug("Latest Version...");
-                        if (!securityFlag) {
-                            ToastUtils.shortToast(currentActivity, "Latest Version...");
-                        }
-                        // After completing http call will close this activity and launch main activity
-                        if (tabIndexFlag) {
+                            ActivityUtils.startActivityWithFinish(currentActivity, nextActivity);
 
-                            //TODO : Tab Index with Other extras
-                            ActivityUtils.startActivityWithFinishAndTabIndex(currentActivity, nextActivity, tabIndex);
                         } else {
 
-                            if (nextClassExtras.length == 0) {
-                                ActivityUtils.startActivityWithFinish(currentActivity, nextActivity);
-                            } else {
-                                ActivityUtils.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextClassExtras);
-                            }
+                            ActivityUtils.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextClassExtras);
                         }
                     }
                 }
             }
-
         } catch (JSONException e) {
 
             class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
+
                 public ErrorUtilsWrapper(String applicationName) {
                     super(applicationName);
                 }
             }
+
             ErrorUtilsWrapper.displayException(currentActivity, e);
         }
     }

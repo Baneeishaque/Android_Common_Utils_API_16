@@ -2,18 +2,13 @@ package ndk.utils_android16.activities;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import ndk.utils_android14.ActivityUtils;
 import ndk.utils_android14.ContextActivity;
 import ndk.utils_android16.R;
-import ndk.utils_android16.ServerUtils;
-import ndk.utils_android16.ToastUtils;
-import ndk.utils_android16.UpdateUtils;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTaskWrapper;
@@ -38,7 +33,14 @@ public abstract class SplashWithAutomatedUpdateActivity extends ContextActivity 
         super.onCreate(savedInstanceState);
         initializeScreen();
 
-        HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), new Pair[]{}, jsonArray -> CheckAndUpdateTaskWrapper.getCheckAndUpdateWithoutTabIndexTask(configure_APPLICATION_NAME(), this, configure_GET_CONFIGURATION_URL(), configure_UPDATE_URL(), configure_NEXT_ACTIVITY_CLASS(), configure_SECURITY_FLAG(), configure_NEXT_ACTIVITY_CLASS_EXTRAS()));
+        HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), new Pair[]{}, new HttpApiSelectTask.AsyncResponseJSONArray() {
+
+            @Override
+            public void processFinish(JSONArray jsonArray) {
+
+                CheckAndUpdateTaskWrapper.getCheckAndUpdateWithoutTabIndexTask(configure_APPLICATION_NAME(), (AppCompatActivity) activityContext, configure_GET_CONFIGURATION_URL(), configure_UPDATE_URL(), configure_NEXT_ACTIVITY_CLASS(), configure_SECURITY_FLAG(), configure_NEXT_ACTIVITY_CLASS_EXTRAS());
+            }
+        });
     }
 
     public void initializeScreen() {

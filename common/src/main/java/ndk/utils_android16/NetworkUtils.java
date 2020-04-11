@@ -57,8 +57,8 @@ public class NetworkUtils {
     }
 
     public static String[] performHttpClientPostTask(String url, Pair[] namePairValues) {
-        try {
 
+        try {
             DefaultHttpClient defaultHttpClient;
             HttpPost httpPost;
             ArrayList<NameValuePair> nameValuePairs;
@@ -66,24 +66,33 @@ public class NetworkUtils {
 
             defaultHttpClient = new DefaultHttpClient();
             httpPost = new HttpPost(url);
+
             if (namePairValues.length != 0) {
+
                 nameValuePairs = new ArrayList<>(namePairValues.length);
+
                 for (Pair namePairValue : namePairValues) {
-                    nameValuePairs.add(
-                            new BasicNameValuePair(namePairValue.first != null ? namePairValue.first.toString() : null,
-                                    namePairValue.second != null ? namePairValue.second.toString() : null));
+
+                    nameValuePairs.add(new BasicNameValuePair(namePairValue.first != null ? namePairValue.first.toString() : null, namePairValue.second != null ? namePairValue.second.toString() : null));
                 }
+
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             }
+
             ResponseHandler<String> basicResponseHandler = new BasicResponseHandler();
             networkActionResponse = defaultHttpClient.execute(httpPost, basicResponseHandler);
             return new String[]{"0", networkActionResponse};
 
         } catch (UnsupportedEncodingException e) {
+
             return new String[]{"1", "UnsupportedEncodingException : " + e.getLocalizedMessage()};
+
         } catch (ClientProtocolException e) {
+
             return new String[]{"1", "ClientProtocolException : " + e.getLocalizedMessage()};
+
         } catch (IOException e) {
+
             return new String[]{"1", "IOException : " + e.getLocalizedMessage()};
         }
     }

@@ -145,6 +145,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         LogUtilsWrapper.debug("Network Action response is " + networkActionResponseArray[1]);
 
         if (progressFlag == 0) {
+
             showProgress(false, context, progressBar, scrollView);
         }
 
@@ -156,6 +157,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 asyncResponse.processFinish("exception");
 
             } else {
+
                 asyncResponse.processFinish(networkActionResponseArray[1]);
             }
 
@@ -166,11 +168,14 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 NetworkUtils.displayFriendlyExceptionMessage(context, networkActionResponseArray[1]);
 
             } else {
+
                 try {
+
                     JSONObject jsonObject = new JSONObject(networkActionResponseArray[1]);
                     asyncResponseJSONObject.processFinish(jsonObject);
 
                 } catch (JSONException e) {
+
                     ToastUtils.errorToast(context);
                     LogUtilsWrapper.debug("Error : " + e.getLocalizedMessage());
                 }
@@ -181,12 +186,16 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
             if (networkActionResponseArray[0].equals("1")) {
 
                 if (backgroundFlag) {
+
                     LogUtilsWrapper.debug("Error...");
+
                 } else {
+
                     ToastUtils.errorToast(context);
                 }
 
                 if (splashFlag == 1) {
+
                     ((AppCompatActivity) context).finish();
                 }
 
@@ -196,27 +205,35 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                     JSONArray jsonArray = new JSONArray(networkActionResponseArray[1]);
 
                     if ((splashFlag == 1) || (!errorFlag)) {
+
                         asyncResponseJSONArray.processFinish(jsonArray);
+
                     } else {
 
                         JSONObject tempJsonObject = jsonArray.getJSONObject(0);
+
                         switch (tempJsonObject.getString("status")) {
+
                             case "2":
                                 LogUtilsWrapper.debug("No Entries...");
                                 if (!backgroundFlag) {
                                     ToastUtils.longToast(context, "No Entries...");
                                 }
                                 break;
+
                             case "0":
                                 asyncResponseJSONArray.processFinish(jsonArray);
                                 break;
+
                             case "1":
                                 LogUtilsWrapper.debug("Error : " + tempJsonObject.getString("error"));
                                 ToastUtils.errorToast(context);
                                 break;
                         }
                     }
+
                 } catch (JSONException e) {
+
                     ToastUtils.errorToast(context);
                     LogUtilsWrapper.debug("Error : " + ExceptionUtils.getExceptionDetails(e));
                 }
@@ -226,24 +243,30 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
     @Override
     protected void onCancelled() {
+
         if (progressFlag == 0) {
+
             showProgress(false, context, progressBar, scrollView);
         }
     }
 
     public interface AsyncResponseJSONArray {
+
         void processFinish(JSONArray jsonArray);
     }
 
     public interface AsyncResponse {
+
         void processFinish(String response);
     }
 
     public interface AsyncResponseJSONObject {
+
         void processFinish(JSONObject jsonObject);
     }
 
     private class LogUtilsWrapper extends LogUtilsWrapperBase {
+
         private LogUtilsWrapper() {
             super(tag);
         }
