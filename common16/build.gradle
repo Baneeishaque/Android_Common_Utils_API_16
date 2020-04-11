@@ -43,9 +43,6 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-//    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_1:0726486cb3'
-//    api 'com.github.Baneeishaque:Android_Common_Utils_API_14:c1762751c7'
-
     implementation 'javax.inject:javax.inject:1'
 
     implementation 'com.github.kimkevin:cachepot:1.2.0'
@@ -62,10 +59,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
-    api project(path: ':Android_Common_Utils_API_16:Java_Common_Utils')
-
-    api project(path: ':Android_Common_Utils_API_14:common14')
-
+    implementation project(path: ':Android_Common_Utils_API_14:common14')
+    implementation project(path: ':Android_Common_Utils_API_16:Java_Common_Utils')
 //    implementation project(path: ':Java_Common_Utils')
 }
 
