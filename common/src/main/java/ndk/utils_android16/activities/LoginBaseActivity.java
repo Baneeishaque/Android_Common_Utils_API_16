@@ -2,12 +2,14 @@ package ndk.utils_android16.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.core.util.Pair;
 
@@ -54,14 +56,18 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
         editTextUsername = findViewById(R.id.editText_username);
         editTextPassword = findViewById(R.id.editText_password);
-        editTextPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
-            if (id == EditorInfo.IME_ACTION_DONE) {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 
-                attemptLogin();
-                return true;
+                if (id == EditorInfo.IME_ACTION_DONE) {
+
+                    attemptLogin();
+                    return true;
+                }
+                return false;
             }
-            return false;
         });
 
         Button buttonSignIn = findViewById(R.id.button_sign_in);
@@ -76,17 +82,16 @@ public abstract class LoginBaseActivity extends ContextActivity {
     private void attemptLogin() {
 
         // Reset errors.
-        ValidationUtils.resetErrors(new EditText[] { editTextUsername, editTextPassword });
+        ValidationUtils.resetErrors(new EditText[]{editTextUsername, editTextPassword});
 
         // TODO : Check Warning, Use org.javatuples
         Pair<Boolean, EditText> emptyCheckEditTextPairsResult = ValidationUtils
-                .emptyCheckEditTextPairs(new Pair[] { new Pair<>(editTextUsername, "Please Enter Username..."),
-                        new Pair<>(editTextPassword, "Please Enter Password...") });
+                .emptyCheckEditTextPairs(new Pair[]{new Pair<>(editTextUsername, "Please Enter Username..."),
+                        new Pair<>(editTextPassword, "Please Enter Password...")});
 
         if (!Objects.requireNonNull(emptyCheckEditTextPairsResult.first)) {
 
-            // There was an error; don't attempt login and focus the first form field with
-            // an error.
+            // There was an error; don't attempt login and focus the first form field with an error.
             if (emptyCheckEditTextPairsResult.second != null) {
 
                 emptyCheckEditTextPairsResult.second.requestFocus();
@@ -94,13 +99,11 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
         } else {
 
-            InputMethodManager inputManager = (InputMethodManager) getApplicationContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
             if (inputManager != null) {
 
-                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
 
             performHttpApiSelectTask();
@@ -109,8 +112,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     public void performHttpApiSelectTask() {
 
-        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar,
-                scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
+        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
     }
 
     public HttpApiSelectTask.AsyncResponseJSONObject handleJsonObject() {
@@ -134,25 +136,22 @@ public abstract class LoginBaseActivity extends ContextActivity {
                     switch (userCount) {
 
                         case "1":
-                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(),
-                                    configure_APPLICATION_NAME(),
-                                    new Pair[] { new Pair<>("user_id", jsonObject.getString("id")) });
-                            ActivityUtils.startActivityWithFinish(LoginBaseActivity.this,
-                                    configure_NEXT_ACTIVITY_CLASS());
+                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                            ActivityUtils.startActivityWithFinish(activityContext, configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":
-                            ToastUtils.longToast(LoginBaseActivity.this, "Login Failure!");
+                            ToastUtils.longToast(activityContext, "Login Failure!");
                             editTextUsername.requestFocus();
                             break;
 
                         default:
-                            ErrorUtilsWrapper.displayJSONFieldMiss(LoginBaseActivity.this, jsonObject);
+                            ErrorUtilsWrapper.displayJSONFieldMiss(activityContext, jsonObject);
                     }
 
                 } catch (JSONException e) {
 
-                    ErrorUtilsWrapper.displayException(LoginBaseActivity.this, e);
+                    ErrorUtilsWrapper.displayException(activityContext, e);
                 }
             }
         };
@@ -160,7 +159,6 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
     public Pair[] configureHttpApiCallParameters() {
 
-        return new Pair[] { new Pair<>("username", editTextUsername.getText().toString()),
-                new Pair<>("password", editTextPassword.getText().toString()) };
+        return new Pair[]{new Pair<>("username", editTextUsername.getText().toString()), new Pair<>("password", editTextPassword.getText().toString())};
     }
 }
