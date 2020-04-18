@@ -1,2 +1,1 @@
-include ':common16', ':tests16', ':Android_Common_Utils_API_14:common14'
-include ':Java_Common_Utils'
+include ':common16', ':tests16', ':Android_Common_Utils_API_14:common14', ':Java_Common_Utils'
