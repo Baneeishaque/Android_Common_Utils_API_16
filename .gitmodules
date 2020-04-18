@@ -1,3 +1,6 @@
 [submodule "Java_Common_Utils"]
 	path = Java_Common_Utils
 	url = https://github.com/Baneeishaque/Java_Common_Utils.git
+[submodule "Android_Common_Utils_API_14"]
+	path = Android_Common_Utils_API_14
+	url = https://github.com/Baneeishaque/Android_Common_Utils_API_14.git

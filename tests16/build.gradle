@@ -42,7 +42,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
-    implementation 'com.github.Baneeishaque:Android_Common_Utils_API_14:c1762751c7'
+    implementation project(path: ':Android_Common_Utils_API_14:common14')
 
     testImplementation 'junit:junit:4.13'
 
