@@ -12,6 +12,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.javatuples.Triplet;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ValidationUtils {
@@ -139,36 +140,36 @@ public class ValidationUtils {
         return new Pair<>(true, null);
     }
 
-    public static Pair<Boolean, EditText> nonEmptyCheckEditTextPairs(Pair<EditText, String>[] editTextErrorPairs) {
+    public static org.javatuples.Pair<Boolean, EditText> nonEmptyCheckEditTextPairs(ArrayList<org.javatuples.Pair<EditText, String>> editTextErrorPairs) {
 
         // true & null - if all are non-empty
         // false & editText - if one is empty
 
-        for (Pair<EditText, String> editTextErrorPair : editTextErrorPairs) {
+        for (org.javatuples.Pair<EditText, String> editTextErrorPair : editTextErrorPairs) {
 
-            if (emptyCheckEditText(Objects.requireNonNull(editTextErrorPair.first))) {
+            if (emptyCheckEditText(editTextErrorPair.getValue0())) {
 
-                Objects.requireNonNull(editTextErrorPair.first).setError(editTextErrorPair.second);
-                return new Pair<>(false, editTextErrorPair.first);
+                editTextErrorPair.getValue0().setError(editTextErrorPair.getValue1());
+                return org.javatuples.Pair.with(false, editTextErrorPair.getValue0());
             }
         }
-        return new Pair<>(true, null);
+        return org.javatuples.Pair.with(true, null);
     }
 
-    public static Pair<Boolean, EditText> mobileNumberCheckEditTextPairs(Pair<EditText, String>[] editTextErrorPairs) {
+    public static org.javatuples.Pair<Boolean, EditText> mobileNumberCheckEditTextPairs(ArrayList<org.javatuples.Pair<EditText, String>> editTextErrorPairs) {
 
         // true & null - if all contains valid phone numbers
         // false & editText - if one didn't contain valid phone number
 
-        for (Pair<EditText, String> editTextErrorPair : editTextErrorPairs) {
+        for (org.javatuples.Pair<EditText, String> editTextErrorPair : editTextErrorPairs) {
 
-            if (!android.util.Patterns.PHONE.matcher(Objects.requireNonNull(editTextErrorPair.first).getText().toString()).matches()) {
+            if (!android.util.Patterns.PHONE.matcher(editTextErrorPair.getValue0().getText().toString()).matches()) {
 
-                Objects.requireNonNull(editTextErrorPair.first).setError(editTextErrorPair.second);
-                return new Pair<>(false, editTextErrorPair.first);
+                editTextErrorPair.getValue0().setError(editTextErrorPair.getValue1());
+                return org.javatuples.Pair.with(false, editTextErrorPair.getValue0());
             }
         }
-        return new Pair<>(true, null);
+        return org.javatuples.Pair.with(true, null);
     }
 
     public static Pair<Integer, EditText> countrySpecificMobileNumberCheckEditTextPairs(Triplet<EditText, String, String>[] editTextErrorPairs, Context activityContext, String countryIsoCode) {
