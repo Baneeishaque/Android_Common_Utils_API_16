@@ -120,7 +120,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                     } else {
 
                         //TODO : Use Direct Pattern
-                        enterTransactions(JsonUtils.sort_JSON_array_by_date_field(networkActionResponseArray[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time"), passBookEntryV2s, 0);
+                        enterTransactions(JsonUtils.sortJsonArrayByDateField(networkActionResponseArray[1], Date_Utils.mysql_date_time_format.toPattern(), "event_date_time", tag), passBookEntryV2s, 0);
                     }
 
                 } else {
