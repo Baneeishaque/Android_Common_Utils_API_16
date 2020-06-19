@@ -36,7 +36,7 @@ import static android.graphics.Color.RED;
 
 public class NetworkUtils {
 
-    private static further_Actions further_actions;
+    private static furtherActions furtherActions;
 
     public static void displayOfflineLongNoFabBottomSnackBar(View view, View.OnClickListener networkFunction) {
         Snackbar snackbar = Snackbar.make(view, "Internet unavailable!", Snackbar.LENGTH_INDEFINITE).setAction("Retry",
@@ -97,73 +97,73 @@ public class NetworkUtils {
         }
     }
 
-    public static void handle_json_insertion_response_and_switch_with_finish_or_clear_fields(String[] network_action_response_array, AppCompatActivity current_activity, Class to_switch_activity, EditText[] texts_to_clear, View view_to_focus_on_error,String tag, int action_flag, Pair[] next_class_extras, further_Actions further_actions) {
+    public static void handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(String[] networkActionResponseArray, AppCompatActivity currentActivity, Class toSwitchActivity, EditText[] editTextsToClear, View viewToFocusOnError, String tag, int actionFlag, Pair[] nextClassExtras, furtherActions furtherActions) {
 
-        NetworkUtils.further_actions = further_actions;
+        NetworkUtils.furtherActions = furtherActions;
 
-        LogUtils.debug(tag, "Network Action Response Index 0 : " + network_action_response_array[0], BuildConfig.DEBUG);
-        LogUtils.debug(tag, "Network Action Response Index 1 : " + network_action_response_array[1], BuildConfig.DEBUG);
+        LogUtils.debug(tag, "Network Action Response Index 0 : " + networkActionResponseArray[0], BuildConfig.DEBUG);
+        LogUtils.debug(tag, "Network Action Response Index 1 : " + networkActionResponseArray[1], BuildConfig.DEBUG);
 
-        if (network_action_response_array[0].equals("1")) {
+        if (networkActionResponseArray[0].equals("1")) {
 
-            Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
-            LogUtils.debug(tag, "Error, Network Action Response Index 1 : " + network_action_response_array[1], BuildConfig.DEBUG);
+            Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
+            LogUtils.debug(tag, "Error, Network Action Response Index 1 : " + networkActionResponseArray[1], BuildConfig.DEBUG);
 
         } else {
 
             try {
-                JSONObject json = new JSONObject(network_action_response_array[1]);
+                JSONObject json = new JSONObject(networkActionResponseArray[1]);
 
                 switch (json.getString("status")) {
 
                     case "0":
 
-                        Toast.makeText(current_activity, "OK", Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, "OK", Toast.LENGTH_LONG).show();
 
-                        switch (action_flag) {
+                        switch (actionFlag) {
 
                             case 1: // finish and switch
-                                ActivityUtils.startActivityWithFinish(current_activity, to_switch_activity);
+                                ActivityUtils.startActivityWithFinish(currentActivity, toSwitchActivity);
                                 break;
 
                             case 2: // clear fields
-                                Text_Clear_Utils.reset_fields(texts_to_clear);
+                                TextClearUtils.resetFields(editTextsToClear);
                                 break;
 
                             case 3: // self finish
-                                current_activity.finish();
+                                currentActivity.finish();
                                 break;
 
                             case 4: // finish and switch with extras
-                                ActivityUtils.startActivityWithStringExtrasAndFinish(current_activity,
-                                        to_switch_activity, next_class_extras);
+                                ActivityUtils.startActivityWithStringExtrasAndFinish(currentActivity,
+                                        toSwitchActivity, nextClassExtras);
                                 break;
 
                             case 5: // No Action
                                 LogUtils.debug(tag, "Further Action...", BuildConfig.DEBUG);
-                                further_actions.onSuccess();
+                                furtherActions.onSuccess();
                                 break;
 
                             case 6: // clear fields & further actions
                                 LogUtils.debug(tag, "Further Action...", BuildConfig.DEBUG);
-                                Text_Clear_Utils.reset_fields(texts_to_clear);
-                                further_actions.onSuccess();
+                                TextClearUtils.resetFields(editTextsToClear);
+                                furtherActions.onSuccess();
                                 break;
                         }
                         break;
 
                     case "1":
-                        Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
                         LogUtils.debug(tag, "Error : " + json.getString("error"), BuildConfig.DEBUG);
-                        view_to_focus_on_error.requestFocus();
+                        viewToFocusOnError.requestFocus();
                         break;
 
                     default:
-                        Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
                         LogUtils.debug(tag, "Error : Application_Utils json", BuildConfig.DEBUG);
                 }
             } catch (JSONException e) {
-                Toast.makeText(current_activity, "Error...", Toast.LENGTH_LONG).show();
+                Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
                 LogUtils.debug(tag, "Error : " + e.getLocalizedMessage(), BuildConfig.DEBUG);
             }
         }
@@ -176,15 +176,13 @@ public class NetworkUtils {
         }
     }
 
-    void handle_json_insertion_response_and_switch_with_finish_and_toggle_view(String[] network_action_response_array, Class to_switch_activity, View view_to_focus_on_error, View view_to_toggle, String tag, AppCompatActivity current_activity) {
+    void handleJsonInsertionResponseAndSwitchWithFinishAndToggleView(String[] networkActionResponseArray, Class toSwitchActivity, View viewToFocusOnError, View viewToToggle, String tag, AppCompatActivity currentActivity) {
 
-        handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array,
-                current_activity, to_switch_activity, new EditText[]{}, view_to_focus_on_error,  tag, 1, new Pair[]{}, further_actions);
-        view_to_toggle.setEnabled(true);
+        handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, toSwitchActivity, new EditText[]{}, viewToFocusOnError, tag, 1, new Pair[]{}, furtherActions);
+        viewToToggle.setEnabled(true);
     }
 
-    public static void check_network_then_start_activity_with_string_extras(Context context, Class activity,
-                                                                            Pair[] extras, boolean for_result_flag, int request_code) {
+    public static void checkNetworkThenStartActivityWithStringExtras(Context context, Class activity, Pair[] extras, boolean forResultFlag, int requestCode) {
         if (isOnline(context)) {
             ActivityUtils.startActivityWithStringExtras(context, activity, extras);
         } else {
@@ -192,7 +190,7 @@ public class NetworkUtils {
         }
     }
 
-    public static void check_network_then_start_activity(Context context, Class activity) {
+    public static void checkNetworkThenStartActivity(Context context, Class activity) {
         if (isOnline(context)) {
             ActivityUtils.startActivity(context, activity);
         } else {
@@ -200,7 +198,7 @@ public class NetworkUtils {
         }
     }
 
-    public interface further_Actions {
+    public interface furtherActions {
         void onSuccess();
     }
 

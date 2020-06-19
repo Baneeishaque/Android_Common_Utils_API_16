@@ -11,7 +11,7 @@ import androidx.core.util.Pair;
 import ndk.utils_android16.ProgressBarUtils;
 import ndk.utils_android16.ToastUtils;
 
-import static ndk.utils_android16.NetworkUtils.further_Actions;
+import static ndk.utils_android16.NetworkUtils.furtherActions;
 import static ndk.utils_android16.NetworkUtils.isOnline;
 
 public class REST_Insert_Task_Wrapper {
@@ -64,7 +64,7 @@ public class REST_Insert_Task_Wrapper {
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, EditText[] texts_to_clear, further_Actions further_actions) {
+    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, EditText[] texts_to_clear, furtherActions further_actions) {
 
         Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
 
@@ -96,7 +96,7 @@ public class REST_Insert_Task_Wrapper {
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, further_Actions further_actions) {
+    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, furtherActions further_actions) {
 
         Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
 

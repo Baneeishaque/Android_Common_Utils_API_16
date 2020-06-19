@@ -9,7 +9,7 @@ import java.util.List;
 
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.toolkit.LongPressAwareTableDataAdapter;
-import ndk.utils_android16.Date_Utils;
+import ndk.utils_android16.DateUtils;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 
 import static android.graphics.Color.BLACK;
@@ -31,7 +31,7 @@ public class Pass_Book_TableView_Data_Adapter_v2 extends LongPressAwareTableData
 
         switch (columnIndex) {
             case 0:
-                renderedView = renderString(Date_Utils.normal_date_time_short_year_format.format(pass_book_entryv2.getInsertionDate()));
+                renderedView = renderString(DateUtils.normalDateTimeShortYearFormat.format(pass_book_entryv2.getInsertionDate()));
                 break;
             case 1:
                 renderedView = renderString(pass_book_entryv2.getParticulars());
