@@ -11,7 +11,7 @@ import androidx.core.util.Pair;
 import ndk.utils_android16.ProgressBarUtils;
 import ndk.utils_android16.ToastUtils;
 
-import static ndk.utils_android16.NetworkUtils.furtherActions;
+import static ndk.utils_android16.NetworkUtils.FurtherActions;
 import static ndk.utils_android16.NetworkUtils.isOnline;
 
 public class RestInsertTaskWrapper {
@@ -64,7 +64,7 @@ public class RestInsertTaskWrapper {
         }
     }
 
-    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, EditText[] editTextsToClear, furtherActions furtherActions) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, EditText[] editTextsToClear, FurtherActions furtherActions) {
 
         Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
@@ -96,7 +96,7 @@ public class RestInsertTaskWrapper {
         }
     }
 
-    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, furtherActions furtherActions) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, FurtherActions furtherActions) {
 
         Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 

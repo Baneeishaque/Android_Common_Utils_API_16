@@ -10,7 +10,7 @@ public class MenuItemActionTodoActivity extends ContextActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        TodoUtils.displayTodoSnackBar(activityContext);
+        TodoUtils.displayTodoSnackBar(currentActivityContext);
         return true;
     }
 }

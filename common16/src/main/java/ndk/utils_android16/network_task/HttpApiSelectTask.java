@@ -35,11 +35,11 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     private Pair[] nameValuePairs;
 
     private boolean errorFlag = true;
-    private AsyncResponseJSONArray asyncResponseJSONArray = null;
+    private AsyncResponseJsonArray asyncResponseJSONArray = null;
     private AsyncResponse asyncResponse = null;
     private AsyncResponseJSONObject asyncResponseJSONObject = null;
 
-    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray
+    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray
     ) {
         this.url = url;
         this.context = context;
@@ -85,7 +85,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         responseFlag = 1;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray) {
+    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray) {
 
         this.url = url;
         this.context = context;
@@ -96,7 +96,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         splashFlag = 1;
     }
 
-    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
         this.url = url;
         this.context = context;
@@ -108,7 +108,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         this.errorFlag = errorFlag;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag) {
+    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
         this.url = url;
         this.context = context;
@@ -119,7 +119,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         this.errorFlag = errorFlag;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJSONArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
+    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
 
         this.url = url;
         this.context = context;
@@ -250,7 +250,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
         }
     }
 
-    public interface AsyncResponseJSONArray {
+    public interface AsyncResponseJsonArray {
 
         void processFinish(JSONArray jsonArray);
     }

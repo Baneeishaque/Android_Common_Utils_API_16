@@ -36,7 +36,7 @@ import static android.graphics.Color.RED;
 
 public class NetworkUtils {
 
-    private static furtherActions furtherActions;
+    private static FurtherActions furtherActions;
 
     public static void displayOfflineLongNoFabBottomSnackBar(View view, View.OnClickListener networkFunction) {
         Snackbar snackbar = Snackbar.make(view, "Internet unavailable!", Snackbar.LENGTH_INDEFINITE).setAction("Retry",
@@ -97,7 +97,7 @@ public class NetworkUtils {
         }
     }
 
-    public static void handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(String[] networkActionResponseArray, AppCompatActivity currentActivity, Class toSwitchActivity, EditText[] editTextsToClear, View viewToFocusOnError, String tag, int actionFlag, Pair[] nextClassExtras, furtherActions furtherActions) {
+    public static void handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(String[] networkActionResponseArray, AppCompatActivity currentActivity, Class toSwitchActivity, EditText[] editTextsToClear, View viewToFocusOnError, String tag, int actionFlag, Pair[] nextClassExtras, FurtherActions furtherActions) {
 
         NetworkUtils.furtherActions = furtherActions;
 
@@ -198,15 +198,17 @@ public class NetworkUtils {
         }
     }
 
-    public interface furtherActions {
+    public interface FurtherActions {
+
         void onSuccess();
     }
 
     public static void displayNetworkActionResponse(String tag, String[] networkActionResponseArray) {
 
         class LogUtilsWrapper extends LogUtilsWrapperBase {
+
             private LogUtilsWrapper() {
-                super(tag);
+                super(tag, BuildConfig.DEBUG);
             }
         }
 

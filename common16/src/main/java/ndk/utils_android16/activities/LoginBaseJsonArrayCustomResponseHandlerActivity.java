@@ -12,5 +12,5 @@ public abstract class LoginBaseJsonArrayCustomResponseHandlerActivity extends Lo
         HttpApiSelectTaskWrapper.executePostThenReturnJsonArrayWithoutErrorStatusCheck(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), configure_JSON_ARRAY_RESPONSE_HANDLER());
     }
 
-    protected abstract HttpApiSelectTask.AsyncResponseJSONArray configure_JSON_ARRAY_RESPONSE_HANDLER();
+    protected abstract HttpApiSelectTask.AsyncResponseJsonArray configure_JSON_ARRAY_RESPONSE_HANDLER();
 }

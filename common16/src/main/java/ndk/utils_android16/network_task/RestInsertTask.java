@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
 import ndk.utils_android16.NetworkUtils;
-import ndk.utils_android16.NetworkUtils.furtherActions;
+import ndk.utils_android16.NetworkUtils.FurtherActions;
 
 import static ndk.utils_android16.NetworkUtils.performHttpClientPostTask;
 import static ndk.utils_android16.ProgressBarUtils.showProgress;
@@ -26,7 +26,7 @@ public class RestInsertTask extends AsyncTask<Void, Void, String[]> {
     private boolean clearAndFurtherActionsFlag = true;
     private EditText[] editTextsToClear;
     private boolean clearFieldsFlag = true;
-    private furtherActions furtherActions;
+    private FurtherActions furtherActions;
     private Pair[] nextClassExtras;
 
     //finish with next activity
@@ -61,7 +61,7 @@ public class RestInsertTask extends AsyncTask<Void, Void, String[]> {
     }
 
     //further actions
-    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, furtherActions furtherActions) {
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, FurtherActions furtherActions) {
 
         this.url = url;
         this.currentActivity = currentActivity;
@@ -79,7 +79,7 @@ public class RestInsertTask extends AsyncTask<Void, Void, String[]> {
     }
 
     //clear fields & further actions
-    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, EditText[] editTextsToClear, furtherActions furtherActions) {
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, EditText[] editTextsToClear, FurtherActions furtherActions) {
 
         this.url = url;
         this.currentActivity = currentActivity;

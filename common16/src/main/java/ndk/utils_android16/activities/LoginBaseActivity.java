@@ -137,21 +137,21 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
                         case "1":
                             SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils.startActivityWithFinish(activityContext, configure_NEXT_ACTIVITY_CLASS());
+                            ActivityUtils.startActivityWithFinish(currentActivityContext, configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":
-                            ToastUtils.longToast(activityContext, "Login Failure!");
+                            ToastUtils.longToast(currentActivityContext, "Login Failure!");
                             editTextUsername.requestFocus();
                             break;
 
                         default:
-                            ErrorUtilsWrapper.displayJSONFieldMiss(activityContext, jsonObject);
+                            ErrorUtilsWrapper.displayJSONFieldMiss(currentActivityContext, jsonObject);
                     }
 
                 } catch (JSONException e) {
 
-                    ErrorUtilsWrapper.displayException(activityContext, e);
+                    ErrorUtilsWrapper.displayException(currentActivityContext, e);
                 }
             }
         };

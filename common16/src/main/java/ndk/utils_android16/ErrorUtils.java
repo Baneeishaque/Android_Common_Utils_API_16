@@ -8,13 +8,15 @@ import ndk.utils_android14.LogUtils;
 
 public class ErrorUtils {
 
-    public static void displayException(Context context, Exception exception, String applicationName) {
+    public static void displayException(Context context, Exception exception, String applicationName, boolean isDebug) {
+
         ToastUtils.errorToast(context);
-        LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(exception), BuildConfig.DEBUG);
+        LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(exception), isDebug);
     }
 
-    public static void displayJSONFieldMiss(Context context, JSONObject jsonObject, String applicationName) {
+    public static void displayJSONFieldMiss(Context context, JSONObject jsonObject, String applicationName, boolean isDebug) {
+
         ToastUtils.errorToast(context);
-        LogUtils.debug(applicationName, "Error, Check JSON : " + jsonObject, BuildConfig.DEBUG);
+        LogUtils.debug(applicationName, "Error, Check JSON : " + jsonObject, isDebug);
     }
 }

@@ -2,8 +2,8 @@ package ndk.utils_android16.network_task;
 
 import androidx.core.util.Pair;
 
-public class REST_GET_Task {
-    public static String get_Get_URL(String URL, Pair[] keys) {
+public class RestGetTask {
+    public static String prepareGetUrl(String URL, Pair[] keys) {
         if (keys.length != 0) {
             StringBuilder URLBuilder = new StringBuilder(URL);
             for (int i = 0; i < keys.length; i++) {
