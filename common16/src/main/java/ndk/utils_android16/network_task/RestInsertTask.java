@@ -8,147 +8,147 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
 import ndk.utils_android16.NetworkUtils;
-import ndk.utils_android16.NetworkUtils.further_Actions;
+import ndk.utils_android16.NetworkUtils.furtherActions;
 
 import static ndk.utils_android16.NetworkUtils.performHttpClientPostTask;
 import static ndk.utils_android16.ProgressBarUtils.showProgress;
 
-public class REST_Insert_Task extends AsyncTask<Void, Void, String[]> {
+public class RestInsertTask extends AsyncTask<Void, Void, String[]> {
 
-    private String URL, TAG;
-    private AppCompatActivity current_activity;
-    private View progressBar, form, focus_on_error;
-    private Pair[] name_value_pair;
-    private Class next_activity;
-    private boolean finish_flag = true;
-    private boolean self_finish_flag = true;
-    private boolean further_actions_flag = true;
-    private boolean clear_and_further_actions_flag = true;
-    private EditText[] texts_to_clear;
-    private boolean clear_fields_flag = true;
-    private further_Actions further_actions;
-    private Pair[] next_class_extras;
+    private String url, tag;
+    private AppCompatActivity currentActivity;
+    private View progressBarView, formView, focusOnError;
+    private Pair[] nameValuePairs;
+    private Class nextActivity;
+    private boolean finishFlag = true;
+    private boolean selfFinishFlag = true;
+    private boolean furtherActionsFlag = true;
+    private boolean clearAndFurtherActionsFlag = true;
+    private EditText[] editTextsToClear;
+    private boolean clearFieldsFlag = true;
+    private furtherActions furtherActions;
+    private Pair[] nextClassExtras;
 
     //finish with next activity
-    public REST_Insert_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pair[] name_value_pair, View focus_on_error, Class next_activity) {
-        this.URL = URL;
-        this.current_activity = current_activity;
-        this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.name_value_pair = name_value_pair;
-        this.focus_on_error = focus_on_error;
-        this.next_activity = next_activity;
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, Class nextActivity) {
+        this.url = url;
+        this.currentActivity = currentActivity;
+        this.progressBarView = progressBarView;
+        this.formView = formView;
+        this.tag = tag;
+        this.nameValuePairs = nameValuePairs;
+        this.focusOnError = focusOnError;
+        this.nextActivity = nextActivity;
     }
 
     //finish with next activity and extras
-    public REST_Insert_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pair[] name_value_pair, View focus_on_error, Class next_activity, Pair[] next_class_extras) {
-        this.URL = URL;
-        this.current_activity = current_activity;
-        this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.name_value_pair = name_value_pair;
-        this.focus_on_error = focus_on_error;
-        this.next_activity = next_activity;
-        this.next_class_extras = next_class_extras;
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, Class nextActivity, Pair[] nextClassExtras) {
+        this.url = url;
+        this.currentActivity = currentActivity;
+        this.progressBarView = progressBarView;
+        this.formView = formView;
+        this.tag = tag;
+        this.nameValuePairs = nameValuePairs;
+        this.focusOnError = focusOnError;
+        this.nextActivity = nextActivity;
+        this.nextClassExtras = nextClassExtras;
 
-        this.finish_flag = false;
-        this.self_finish_flag = false;
-        this.clear_fields_flag = false;
-        this.further_actions_flag = false;
-        this.clear_and_further_actions_flag = false;
+        this.finishFlag = false;
+        this.selfFinishFlag = false;
+        this.clearFieldsFlag = false;
+        this.furtherActionsFlag = false;
+        this.clearAndFurtherActionsFlag = false;
     }
 
     //further actions
-    public REST_Insert_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pair[] name_value_pair, View focus_on_error, further_Actions further_actions) {
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, furtherActions furtherActions) {
 
-        this.URL = URL;
-        this.current_activity = current_activity;
-        this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.name_value_pair = name_value_pair;
-        this.focus_on_error = focus_on_error;
+        this.url = url;
+        this.currentActivity = currentActivity;
+        this.progressBarView = progressBarView;
+        this.formView = formView;
+        this.tag = tag;
+        this.nameValuePairs = nameValuePairs;
+        this.focusOnError = focusOnError;
 
-        this.finish_flag = false;
-        this.self_finish_flag = false;
-        this.clear_fields_flag = false;
+        this.finishFlag = false;
+        this.selfFinishFlag = false;
+        this.clearFieldsFlag = false;
 
-        this.further_actions = further_actions;
+        this.furtherActions = furtherActions;
     }
 
     //clear fields & further actions
-    public REST_Insert_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pair[] name_value_pair, View focus_on_error, EditText[] texts_to_clear, further_Actions further_actions) {
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, EditText[] editTextsToClear, furtherActions furtherActions) {
 
-        this.URL = URL;
-        this.current_activity = current_activity;
-        this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.name_value_pair = name_value_pair;
-        this.focus_on_error = focus_on_error;
+        this.url = url;
+        this.currentActivity = currentActivity;
+        this.progressBarView = progressBarView;
+        this.formView = formView;
+        this.tag = tag;
+        this.nameValuePairs = nameValuePairs;
+        this.focusOnError = focusOnError;
 
-        this.finish_flag = false;
-        this.self_finish_flag = false;
-        this.clear_fields_flag = false;
-        this.further_actions_flag = false;
+        this.finishFlag = false;
+        this.selfFinishFlag = false;
+        this.clearFieldsFlag = false;
+        this.furtherActionsFlag = false;
 
-        this.texts_to_clear = texts_to_clear;
-        this.further_actions = further_actions;
+        this.editTextsToClear = editTextsToClear;
+        this.furtherActions = furtherActions;
     }
 
     //clear fields
-    public REST_Insert_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pair[] name_value_pair, View focus_on_error, EditText[] texts_to_clear) {
-        this.URL = URL;
-        this.current_activity = current_activity;
-        this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.name_value_pair = name_value_pair;
-        this.focus_on_error = focus_on_error;
-        this.finish_flag = false;
-        this.self_finish_flag = false;
-        this.texts_to_clear = texts_to_clear;
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError, EditText[] editTextsToClear) {
+        this.url = url;
+        this.currentActivity = currentActivity;
+        this.progressBarView = progressBarView;
+        this.formView = formView;
+        this.tag = tag;
+        this.nameValuePairs = nameValuePairs;
+        this.focusOnError = focusOnError;
+        this.finishFlag = false;
+        this.selfFinishFlag = false;
+        this.editTextsToClear = editTextsToClear;
     }
 
     //self finish
-    public REST_Insert_Task(String URL, AppCompatActivity current_activity, View progressBar, View form, String TAG, Pair[] name_value_pair, View focus_on_error) {
-        this.URL = URL;
-        this.current_activity = current_activity;
-        this.progressBar = progressBar;
-        this.form = form;
-        this.TAG = TAG;
-        this.name_value_pair = name_value_pair;
-        this.focus_on_error = focus_on_error;
-        this.finish_flag = false;
+    public RestInsertTask(String url, AppCompatActivity currentActivity, View progressBarView, View formView, String tag, Pair[] nameValuePairs, View focusOnError) {
+        this.url = url;
+        this.currentActivity = currentActivity;
+        this.progressBarView = progressBarView;
+        this.formView = formView;
+        this.tag = tag;
+        this.nameValuePairs = nameValuePairs;
+        this.focusOnError = focusOnError;
+        this.finishFlag = false;
     }
 
     @Override
     protected String[] doInBackground(Void... params) {
-        return performHttpClientPostTask(URL, name_value_pair);
+        return performHttpClientPostTask(url, nameValuePairs);
     }
 
     @Override
-    protected void onPostExecute(final String[] network_action_response_array) {
-        showProgress(false, current_activity, progressBar, form);
-        if (finish_flag) {
-            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 1, new Pair[]{}, further_actions);
-        } else if (self_finish_flag) {
-            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 3, new Pair[]{}, further_actions);
-        } else if (clear_fields_flag) {
-            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, texts_to_clear, focus_on_error, TAG, 2, new Pair[]{}, further_actions);
-        } else if (further_actions_flag) {
-            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 5, new Pair[]{}, further_actions);
-        } else if (clear_and_further_actions_flag) {
-            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, texts_to_clear, focus_on_error, TAG, 6, new Pair[]{}, further_actions);
+    protected void onPostExecute(final String[] networkActionResponseArray) {
+        showProgress(false, currentActivity, progressBarView, formView);
+        if (finishFlag) {
+            NetworkUtils.handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, nextActivity, new EditText[]{}, focusOnError, tag, 1, new Pair[]{}, furtherActions);
+        } else if (selfFinishFlag) {
+            NetworkUtils.handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, nextActivity, new EditText[]{}, focusOnError, tag, 3, new Pair[]{}, furtherActions);
+        } else if (clearFieldsFlag) {
+            NetworkUtils.handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, nextActivity, editTextsToClear, focusOnError, tag, 2, new Pair[]{}, furtherActions);
+        } else if (furtherActionsFlag) {
+            NetworkUtils.handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, nextActivity, new EditText[]{}, focusOnError, tag, 5, new Pair[]{}, furtherActions);
+        } else if (clearAndFurtherActionsFlag) {
+            NetworkUtils.handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, nextActivity, editTextsToClear, focusOnError, tag, 6, new Pair[]{}, furtherActions);
         } else {
-            NetworkUtils.handle_json_insertion_response_and_switch_with_finish_or_clear_fields(network_action_response_array, current_activity, next_activity, new EditText[]{}, focus_on_error, TAG, 4, next_class_extras, further_actions);
+            NetworkUtils.handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(networkActionResponseArray, currentActivity, nextActivity, new EditText[]{}, focusOnError, tag, 4, nextClassExtras, furtherActions);
         }
     }
 
     @Override
     protected void onCancelled() {
-        showProgress(false, current_activity, progressBar, form);
+        showProgress(false, currentActivity, progressBarView, formView);
     }
 }

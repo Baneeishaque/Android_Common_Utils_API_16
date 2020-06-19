@@ -14,99 +14,99 @@ import ndk.utils_android16.ToastUtils;
 import static ndk.utils_android16.NetworkUtils.furtherActions;
 import static ndk.utils_android16.NetworkUtils.isOnline;
 
-public class REST_Insert_Task_Wrapper {
+public class RestInsertTaskWrapper {
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, Class next_activity) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, Class nextActivity) {
 
-        Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
+        Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, progressView, formView);
 
-            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, next_activity);
+            RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressView, formView, applicationName, nameValuePairs, viewToFocusOnError, nextActivity);
 
-            rest_insert_task.execute();
+            restInsertTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, Class next_activity, Pair[] next_class_extras) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, Class nextActivity, Pair[] nextClassExtras) {
 
-        Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
+        Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
 
-            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, next_activity, next_class_extras);
+            RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, nextActivity, nextClassExtras);
 
-            rest_insert_task.execute();
+            restInsertTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, EditText[] texts_to_clear) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, EditText[] editTextsToClear) {
 
-        Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
+        Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
 
-            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, texts_to_clear);
+            RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, editTextsToClear);
 
-            rest_insert_task.execute();
+            restInsertTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, EditText[] texts_to_clear, furtherActions further_actions) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, EditText[] editTextsToClear, furtherActions furtherActions) {
 
-        Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
+        Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
 
-            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, texts_to_clear, further_actions);
+            RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, editTextsToClear, furtherActions);
 
-            rest_insert_task.execute();
+            restInsertTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError) {
 
-        Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
+        Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
 
-            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error);
+            RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError);
 
-            rest_insert_task.execute();
+            restInsertTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
     }
 
-    public static void execute(Context context, String task_URL, AppCompatActivity current_activity, View mProgressView, View mLoginFormView, String APPLICATION_NAME, Pair[] name_value_pairs, View view_to_focus_on_error, furtherActions further_actions) {
+    public static void execute(Context context, String taskUrl, AppCompatActivity currentActivity, View progressBarView, View formView, String applicationName, Pair[] nameValuePairs, View viewToFocusOnError, furtherActions furtherActions) {
 
-        Log.d(APPLICATION_NAME, "REST Insert TASK URL : " + task_URL);
+        Log.d(applicationName, "REST Insert TASK URL : " + taskUrl);
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, mProgressView, mLoginFormView);
+            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
 
-            REST_Insert_Task rest_insert_task = new REST_Insert_Task(task_URL, current_activity, mProgressView, mLoginFormView, APPLICATION_NAME, name_value_pairs, view_to_focus_on_error, further_actions);
+            RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, furtherActions);
 
-            rest_insert_task.execute();
+            restInsertTask.execute();
         } else {
             ToastUtils.longToast(context, "Internet is unavailable");
         }
