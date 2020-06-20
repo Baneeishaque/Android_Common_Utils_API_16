@@ -17,11 +17,11 @@ public class ErrorUtilsWrapperBase {
 
     public static void displayException(Context context, Exception exception) {
 
-        ErrorUtils.displayException(context, exception, applicationName, isDebug);
+        ErrorUtils.displayException(context, exception, applicationName);
     }
 
     public static void displayJSONFieldMiss(Context context, JSONObject jsonObject) {
 
-        ErrorUtils.displayJSONFieldMiss(context, jsonObject, applicationName, isDebug);
+        ErrorUtils.displayJSONFieldMiss(context, jsonObject, applicationName);
     }
 }

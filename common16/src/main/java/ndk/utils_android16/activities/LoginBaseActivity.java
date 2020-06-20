@@ -2,24 +2,24 @@ package ndk.utils_android16.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.core.util.Pair;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import ndk.utils_android1.ContextActivity;
 import ndk.utils_android14.ActivityUtils;
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ErrorUtilsWrapperBase;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils;
@@ -27,23 +27,23 @@ import ndk.utils_android16.ToastUtils;
 import ndk.utils_android16.ValidationUtils;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
+import ndk.utils_android16.network_task.RestGetTask;
 
 //TODO : Create Layout initialization
 
 public abstract class LoginBaseActivity extends ContextActivity {
 
-    ProgressBar progressBar;
-    ScrollView scrollView;
+    public ProgressBar progressBar;
+    public ScrollView scrollView;
 
-    // UI references.
     private EditText editTextUsername;
     private EditText editTextPassword;
 
-    protected abstract String configure_SELECT_USER_URL();
+    public abstract String configure_SELECT_USER_URL();
 
-    protected abstract String configure_APPLICATION_NAME();
+    public abstract String configure_APPLICATION_NAME();
 
-    protected abstract Class configure_NEXT_ACTIVITY_CLASS();
+    public abstract Class configure_NEXT_ACTIVITY_CLASS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,48 +56,42 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
         editTextUsername = findViewById(R.id.editText_username);
         editTextPassword = findViewById(R.id.editText_password);
-        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//        if(BuildConfig.DEBUG){
+//
+//            editTextUsername.setText(configureTestUsername());
+//            editTextPassword.setText(configureTestPassword());
+//        }
 
-                if (id == EditorInfo.IME_ACTION_DONE) {
+        editTextPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
 
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+            if (id == EditorInfo.IME_ACTION_DONE) {
+
+                attemptLogin();
+                return true;
             }
+            return false;
         });
 
         Button buttonSignIn = findViewById(R.id.button_sign_in);
         buttonSignIn.setOnClickListener(view -> attemptLogin());
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form. If
-     * there are form errors (missing fields, etc.), the errors are presented and no
-     * actual login attempt is made.
-     */
+    public abstract String configureTestPassword();
+
+    public abstract String configureTestUsername();
+
     private void attemptLogin() {
 
         // Reset errors.
         ValidationUtils.resetErrors(new EditText[]{editTextUsername, editTextPassword});
 
-        // TODO : Check Warning, Use org.javatuples
-        Pair<Boolean, EditText> emptyCheckEditTextPairsResult = ValidationUtils
-                .emptyCheckEditTextPairs(new Pair[]{new Pair<>(editTextUsername, "Please Enter Username..."),
-                        new Pair<>(editTextPassword, "Please Enter Password...")});
+        ArrayList<org.javatuples.Pair<EditText, String>> editTextsWithErrorMessages = new ArrayList<>();
+        editTextsWithErrorMessages.add(org.javatuples.Pair.with(editTextUsername, "Please Enter Username..."));
+        editTextsWithErrorMessages.add(org.javatuples.Pair.with(editTextPassword, "Please Enter Password..."));
+        org.javatuples.Pair<Boolean, EditText> nonEmptyCheckEditTextPairsResult = ValidationUtils.nonEmptyCheckEditTextPairs(editTextsWithErrorMessages);
 
-        if (!Objects.requireNonNull(emptyCheckEditTextPairsResult.first)) {
-
-            // There was an error; don't attempt login and focus the first form field with an error.
-            if (emptyCheckEditTextPairsResult.second != null) {
-
-                emptyCheckEditTextPairsResult.second.requestFocus();
-            }
-
-        } else {
+        if (nonEmptyCheckEditTextPairsResult.getValue0()) {
 
             InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -107,18 +101,21 @@ public abstract class LoginBaseActivity extends ContextActivity {
             }
 
             performHttpApiSelectTask();
+
+        } else {
+
+            nonEmptyCheckEditTextPairsResult.getValue1().requestFocus();
         }
     }
 
     public void performHttpApiSelectTask() {
 
-        HttpApiSelectTaskWrapper.executePostThenReturnJsonObject(configure_SELECT_USER_URL(), this, progressBar, scrollView, configure_APPLICATION_NAME(), configureHttpApiCallParameters(), handleJsonObject());
+        HttpApiSelectTaskWrapper.executeGetThenReturnJsonObject(RestGetTask.prepareGetUrl(configure_SELECT_USER_URL(), configureHttpApiCallParameters()), this, progressBar, scrollView, configure_APPLICATION_NAME(), handleJsonResponseObject());
     }
 
-    public HttpApiSelectTask.AsyncResponseJSONObject handleJsonObject() {
+    public HttpApiSelectTask.AsyncResponseJSONObject handleJsonResponseObject() {
 
         return new HttpApiSelectTask.AsyncResponseJSONObject() {
-
             @Override
             public void processFinish(JSONObject jsonObject) {
 
@@ -126,7 +123,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
                     private ErrorUtilsWrapper() {
 
-                        super(configure_APPLICATION_NAME());
+                        super(configure_APPLICATION_NAME(), BuildConfig.DEBUG);
                     }
                 }
 
@@ -136,8 +133,8 @@ public abstract class LoginBaseActivity extends ContextActivity {
                     switch (userCount) {
 
                         case "1":
-                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils.startActivityWithFinish(currentActivityContext, configure_NEXT_ACTIVITY_CLASS());
+                            SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                            ActivityUtils.startActivityWithFinish(currentActivityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":

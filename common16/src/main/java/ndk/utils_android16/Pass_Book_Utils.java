@@ -17,26 +17,25 @@ public class Pass_Book_Utils {
     public static ArrayList<PassBookEntry> current_pass_book_entries = new ArrayList<>();
     public static ArrayList<PassBookEntryV2> current_pass_book_entries_v2 = new ArrayList<>();
 
-    public static boolean v2_flag;
+    public static boolean v2Flag;
 
     public static void bind(PassBookTableView pass_book_tableView, Context context, ArrayList<PassBookEntry> pass_book_entries) {
         if (pass_book_tableView != null) {
             final Pass_Book_TableView_Data_Adapter pass_book_tableView_data_adapter = new Pass_Book_TableView_Data_Adapter(context, pass_book_entries, pass_book_tableView);
             pass_book_tableView.setDataAdapter(pass_book_tableView_data_adapter);
             current_pass_book_entries = pass_book_entries;
-            v2_flag = false;
+            v2Flag = false;
         }
     }
 
-    public static void bindv2(PassBookTableViewV2 pass_book_tableView_v2, Context context, ArrayList<PassBookEntryV2> pass_book_entries_v2) {
+    public static void bindV2(PassBookTableViewV2 pass_book_tableView_v2, Context context, ArrayList<PassBookEntryV2> pass_book_entries_v2) {
 
         if (pass_book_tableView_v2 != null) {
 
             final Pass_Book_TableView_Data_Adapter_v2 pass_book_tableView_data_adapter_v2 = new Pass_Book_TableView_Data_Adapter_v2(context, pass_book_entries_v2, pass_book_tableView_v2);
             pass_book_tableView_v2.setDataAdapter(pass_book_tableView_data_adapter_v2);
-//            pass_book_tableView_v2.setScrollY(pass_book_tableView_v2.getBottom());
             current_pass_book_entries_v2 = pass_book_entries_v2;
-            v2_flag = true;
+            v2Flag = true;
         }
     }
 

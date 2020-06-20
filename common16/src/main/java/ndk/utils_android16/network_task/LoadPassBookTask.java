@@ -1,10 +1,8 @@
 package ndk.utils_android16.network_task;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
@@ -15,7 +13,9 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import ndk.utils_android14.LogUtils;
 import ndk.utils_android16.DateUtils;
+import ndk.utils_android16.ErrorUtils;
 import ndk.utils_android16.Float_Utils;
 import ndk.utils_android16.JsonUtils;
 import ndk.utils_android16.NetworkUtils;
@@ -31,7 +31,7 @@ import static ndk.utils_android16.ProgressBarUtils.showProgress;
 
 public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
-    private String url, tag;
+    private String url, applicationName;
     private AppCompatActivity currentActivity;
     private ProgressBar progressBar;
     private View scrollView;
@@ -41,39 +41,39 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
     private boolean v2Flag, sortFlag;
     private String currentAccountId;
 
-    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String tag, PassBookTableView passBookTableView, Pair[] nameValuePair) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String applicationName, PassBookTableView passBookTableView, Pair[] nameValuePair) {
 
         this.url = url;
         this.currentActivity = currentActivity;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
-        this.tag = tag;
+        this.applicationName = applicationName;
         this.passBookTableView = passBookTableView;
         this.nameValuePair = nameValuePair;
         this.v2Flag = false;
         this.sortFlag = false;
     }
 
-    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String applicationName, PassBookTableViewV2 passBookTableViewV2, String currentAccountId) {
 
         this.url = url;
         this.currentActivity = currentActivity;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
-        this.tag = tag;
+        this.applicationName = applicationName;
         this.passBookTableViewV2 = passBookTableViewV2;
         this.currentAccountId = currentAccountId;
         this.v2Flag = true;
         this.sortFlag = false;
     }
 
-    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String tag, PassBookTableViewV2 passBookTableViewV2, String currentAccountId, boolean sortFlag) {
+    public LoadPassBookTask(String url, AppCompatActivity currentActivity, ProgressBar progressBar, View scrollView, String applicationName, PassBookTableViewV2 passBookTableViewV2, String currentAccountId, boolean sortFlag) {
 
         this.url = url;
         this.currentActivity = currentActivity;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
-        this.tag = tag;
+        this.applicationName = applicationName;
         this.passBookTableViewV2 = passBookTableViewV2;
         this.currentAccountId = currentAccountId;
         this.v2Flag = true;
@@ -86,7 +86,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
     protected String[] doInBackground(Void... params) {
 
         if (v2Flag) {
-            return NetworkUtils.performHttpClientPostTask(url, new Pair[]{});
+            return NetworkUtils.performHttpClientGetTask(url);
         } else {
             return NetworkUtils.performHttpClientPostTask(url, nameValuePair);
         }
@@ -98,7 +98,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
         showProgress(false, currentActivity, progressBar, scrollView);
 
-        NetworkUtils.displayNetworkActionResponse(tag, networkActionResponseArray);
+        NetworkUtils.displayNetworkActionResponse(applicationName, networkActionResponseArray);
 
         ArrayList<PassBookEntry> passBookEntries = new ArrayList<>();
         ArrayList<PassBookEntryV2> passBookEntryV2s = new ArrayList<>();
@@ -111,52 +111,47 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
             try {
 
-                if (sortFlag) {
+                JSONArray tempJsonArray = new JSONArray(networkActionResponseArray[1]);
+                String tempStatus = tempJsonArray.getJSONObject(0).getString("status");
+                if (tempStatus.equals("2")) {
 
-                    if (networkActionResponseArray[1].equals("[]")) {
+                    ToastUtils.noEntriesToast(currentActivity);
 
-                        ToastUtils.noEntriesToast(currentActivity);
+                } else if (tempStatus.equals("0")) {
+
+                    if (sortFlag) {
+
+                        //TODO : Enhancement - Use Direct Pattern
+                        enterTransactions(JsonUtils.sortJsonArrayByDateInSimpleDateFormatField(tempJsonArray, DateUtils.mysqlDateTimeFormat, "event_date_time", applicationName), passBookEntryV2s, 1);
 
                     } else {
 
-                        //TODO : Use Direct Pattern
-                        enterTransactions(JsonUtils.sortJsonArrayByDateField(networkActionResponseArray[1], DateUtils.mysqlDateTimeFormat.toPattern(), "event_date_time", tag), passBookEntryV2s, 0);
-                    }
-
-                } else {
-
-                    JSONArray json_array = new JSONArray(networkActionResponseArray[1]);
-
-                    if (json_array.getJSONObject(0).getString("status").equals("2")) {
-
-                        Toast.makeText(currentActivity, "No Entries...", Toast.LENGTH_LONG).show();
-
-                    } else if (json_array.getJSONObject(0).getString("status").equals("0")) {
-
                         if (v2Flag) {
 
-                            enterTransactions(json_array, passBookEntryV2s, 1);
+                            enterTransactions(tempJsonArray, passBookEntryV2s, 1);
 
                         } else {
 
                             float balance = 0;
 
-                            for (int i = 1; i < json_array.length(); i++) {
+                            for (int i = 1; i < tempJsonArray.length(); i++) {
 
-                                if (json_array.getJSONObject(i).getString("particulars").contains("Credit")) {
+                                if (tempJsonArray.getJSONObject(i).getString("particulars").contains("Credit")) {
 
-                                    balance = balance + Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+                                    balance = balance + Float.parseFloat(tempJsonArray.getJSONObject(i).getString("amount"));
 
-                                    passBookEntries.add(new PassBookEntry(mysqlDateTimeFormat.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(json_array.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
-                                    Log.d(tag, String.valueOf(balance));
+                                    passBookEntries.add(0, new PassBookEntry(mysqlDateTimeFormat.parse(tempJsonArray.getJSONObject(i).getString("event_date_time")), tempJsonArray.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(tempJsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
+
+                                    LogUtils.debug(applicationName, "Balance : " + balance);
                                 }
 
-                                if (json_array.getJSONObject(i).getString("particulars").contains("Debit")) {
+                                if (tempJsonArray.getJSONObject(i).getString("particulars").contains("Debit")) {
 
-                                    balance = balance - Float.parseFloat(json_array.getJSONObject(i).getString("amount"));
+                                    balance = balance - Float.parseFloat(tempJsonArray.getJSONObject(i).getString("amount"));
 
-                                    passBookEntries.add(new PassBookEntry(mysqlDateTimeFormat.parse(json_array.getJSONObject(i).getString("event_date_time")), json_array.getJSONObject(i).getString("particulars"), Double.parseDouble(json_array.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance)));
-                                    Log.d(tag, String.valueOf(balance));
+                                    passBookEntries.add(new PassBookEntry(mysqlDateTimeFormat.parse(tempJsonArray.getJSONObject(i).getString("event_date_time")), tempJsonArray.getJSONObject(i).getString("particulars"), Double.parseDouble(tempJsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance)));
+
+                                    LogUtils.debug(applicationName, "Balance : " + balance);
                                 }
                             }
 
@@ -164,15 +159,9 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                         }
                     }
                 }
-            } catch (JSONException e) {
+            } catch (JSONException | ParseException e) {
 
-                Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(tag, e.getLocalizedMessage());
-
-            } catch (ParseException e) {
-
-                Toast.makeText(currentActivity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                Log.d(tag, e.getLocalizedMessage());
+                ErrorUtils.displayException(currentActivity, e, applicationName);
             }
         }
     }
@@ -184,53 +173,43 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
         try {
             for (int i = jsonArrayStartIndex; i < jsonArray.length(); i++) {
 
-                if (jsonArrayStartIndex == 0) {
+//                if (jsonArrayStartIndex == 1) {
 
-                    if (jsonArray.getJSONObject(i).getString("from_account_id").equals(jsonArray.getJSONObject(i).getString("parent_account_id"))) {
+                if (jsonArray.getJSONObject(i).getString("from_account_id").equals(currentAccountId)) {
 
-                        balance = balance - Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
+                    balance = balance - Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
 
-//                        Log.d(tag, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
-
-                        passBookEntryV2s.add(new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), "", jsonArray.getJSONObject(i).getString("to_account_name"), 0, Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
-
-                    } else {
-
-                        balance = balance + Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
-
-                        passBookEntryV2s.add(new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("from_account_name"), "", Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
-                    }
+                    passBookEntryV2s.add(0, new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("from_account_name"), jsonArray.getJSONObject(i).getString("to_account_name"), 0, Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
 
                 } else {
 
-                    if (jsonArray.getJSONObject(i).getString("from_account_id").equals(currentAccountId)) {
+                    balance = balance + Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
 
-                        balance = balance - Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
-
-//                        Log.d(tag, "Event Date : " + json_array.getJSONObject(i).getString("event_date_time"));
-
-                        passBookEntryV2s.add(new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("to_account_name"), "", 0, Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
-
-                    } else {
-
-                        balance = balance + Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
-
-                        passBookEntryV2s.add(new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("from_account_name"), "", Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
-                    }
+                    passBookEntryV2s.add(0, new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("to_account_name"), jsonArray.getJSONObject(i).getString("from_account_name"), Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
                 }
+
+//                } else {
+//
+//                    if (jsonArray.getJSONObject(i).getString("from_account_id").equals(currentAccountId)) {
+//
+//                        balance = balance - Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
+//
+//                        passBookEntryV2s.add(0, new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("to_account_name"), "", 0, Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
+//
+//                    } else {
+//
+//                        balance = balance + Float.parseFloat(jsonArray.getJSONObject(i).getString("amount"));
+//
+//                        passBookEntryV2s.add(new PassBookEntryV2(mysqlDateTimeFormat.parse(jsonArray.getJSONObject(i).getString("event_date_time")), jsonArray.getJSONObject(i).getString("particulars"), jsonArray.getJSONObject(i).getString("from_account_name"), "", Double.parseDouble(jsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance), jsonArray.getJSONObject(i).getInt("from_account_id"), jsonArray.getJSONObject(i).getInt("to_account_id"), jsonArray.getJSONObject(i).getInt("id"), jsonArray.getJSONObject(i).getString("from_account_full_name"), jsonArray.getJSONObject(i).getString("to_account_full_name")));
+//                    }
+//                }
             }
 
-            Pass_Book_Utils.bindv2(passBookTableViewV2, currentActivity, passBookEntryV2s);
+            Pass_Book_Utils.bindV2(passBookTableViewV2, currentActivity, passBookEntryV2s);
 
-        } catch (JSONException e) {
+        } catch (JSONException | ParseException e) {
 
-            Toast.makeText(currentActivity, "Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            Log.d(tag, e.getLocalizedMessage());
-
-        } catch (ParseException e) {
-
-            Toast.makeText(currentActivity, "Date Error : " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            Log.d(tag, e.getLocalizedMessage());
+            ErrorUtils.displayException(currentActivity, e, applicationName);
         }
     }
 

@@ -2,24 +2,25 @@ package ndk.utils_android16.activities;
 
 import java.util.Objects;
 
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ErrorUtilsWrapperBase;
 
 public class LoginBundleActivity extends LoginBaseActivity {
 
     @Override
-    protected String configure_SELECT_USER_URL() {
+    public String configure_SELECT_USER_URL() {
 
         return getIntent().getStringExtra("SELECT_USER_URL");
     }
 
     @Override
-    protected String configure_APPLICATION_NAME() {
+    public String configure_APPLICATION_NAME() {
 
         return getIntent().getStringExtra("APPLICATION_NAME");
     }
 
     @Override
-    protected Class configure_NEXT_ACTIVITY_CLASS() {
+    public Class configure_NEXT_ACTIVITY_CLASS() {
 
         try {
 
@@ -30,7 +31,8 @@ public class LoginBundleActivity extends LoginBaseActivity {
             class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
 
                 private ErrorUtilsWrapper() {
-                    super(configure_APPLICATION_NAME());
+
+                    super(configure_APPLICATION_NAME(), BuildConfig.DEBUG);
                 }
             }
 
@@ -38,5 +40,16 @@ public class LoginBundleActivity extends LoginBaseActivity {
             return null;
         }
     }
-}
 
+    @Override
+    public String configureTestPassword() {
+
+        return "9895204814";
+    }
+
+    @Override
+    public String configureTestUsername() {
+
+        return "banee_ishaque_k_10_04_2019";
+    }
+}

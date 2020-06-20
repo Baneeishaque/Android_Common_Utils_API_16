@@ -16,7 +16,7 @@ public class FCM_Utils {
             for (String topic : topics) {
 
                 FirebaseMessaging.getInstance().subscribeToTopic(topic);
-                LogUtils.debug(tag, "Subscribed for topic " + topic, BuildConfig.DEBUG);
+                LogUtils.debug(tag, "Subscribed for topic " + topic);
             }
         }
     }
@@ -28,7 +28,7 @@ public class FCM_Utils {
             for (String topic : topics) {
 
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
-                LogUtils.debug(tag, "Unsubscribed from topic " + topic, BuildConfig.DEBUG);
+                LogUtils.debug(tag, "Unsubscribed from topic " + topic);
             }
         }
     }

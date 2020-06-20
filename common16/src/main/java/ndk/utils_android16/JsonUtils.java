@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import ndk.utils_android14.LogUtilsWrapperBase;
@@ -47,40 +48,67 @@ public class JsonUtils {
         return jsonObjectList;
     }
 
-    public static JSONArray sortJsonArrayByDateField(String jsonArray, String desiredDateFormat, String keyField, String applicationName) {
+    public static JSONArray sortJsonArrayInStringByUkLocaleDateField(String jsonArray, String desiredDateFormatInUkLocale, String keyField, String applicationName) {
 
-        return sortJsonArrayByDateField(jsonArray, new SimpleDateFormat(desiredDateFormat), keyField, applicationName);
+        return sortJsonArrayInStringByDateInSimpleDateFormatField(jsonArray, new SimpleDateFormat(desiredDateFormatInUkLocale, Locale.UK), keyField, applicationName);
     }
 
-    private static JSONArray sortJsonArrayByDateField(String JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName) {
+    public static JSONArray sortJsonArrayInStringByLocalizedDateField(String jsonArray, String desiredDateFormat, Locale locale, String keyField, String applicationName) {
 
-        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(JSON_array_to_JSON_object_list(JSON_array, applicationName), desired_date_format, key_field));
+        return sortJsonArrayInStringByDateInSimpleDateFormatField(jsonArray, new SimpleDateFormat(desiredDateFormat, locale), keyField, applicationName);
     }
 
-    private static List<JSONObject> JSON_array_to_JSON_object_list(String JSON_array, String applicationName) {
+    public static JSONArray sortJsonArrayInStringByDateInSimpleDateFormatField(String JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName) {
+
+        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(jsonArrayInStringToJsonObjectList(JSON_array, applicationName), desired_date_format, key_field));
+    }
+
+    public static JSONArray sortJsonArrayByDateInSimpleDateFormatField(JSONArray JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName) {
+
+        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(jsonArrayToJsonObjectList(JSON_array, applicationName), desired_date_format, key_field));
+    }
+
+    private static List<JSONObject> jsonArrayInStringToJsonObjectList(String jsonArray, String applicationName) {
+
+        try {
+
+            return jsonArrayToJsonObjectList(new JSONArray(jsonArray), applicationName);
+
+        } catch (JSONException e) {
+
+            class LogUtilsWrapper extends LogUtilsWrapperBase {
+
+                private LogUtilsWrapper() {
+
+                    super(applicationName);
+                }
+            }
+
+            LogUtilsWrapper.debug(ExceptionUtils.getExceptionDetails(e));
+            return jsonArrayToJsonObjectList(new JSONArray(), applicationName);
+        }
+    }
+
+    private static List<JSONObject> jsonArrayToJsonObjectList(JSONArray jsonArray, String applicationName) {
 
         List<JSONObject> JSON_object_list = new ArrayList<>();
 
         try {
+            for (int i = 0; i < jsonArray.length(); i++) {
 
-            JSONArray array_JSON = new JSONArray(JSON_array);
-
-            for (int i = 0; i < array_JSON.length(); i++) {
-
-                JSON_object_list.add(array_JSON.getJSONObject(i));
+                JSON_object_list.add(jsonArray.getJSONObject(i));
             }
         } catch (JSONException e) {
 
             class LogUtilsWrapper extends LogUtilsWrapperBase {
 
                 private LogUtilsWrapper() {
+
                     super(applicationName);
                 }
             }
-
             LogUtilsWrapper.debug(ExceptionUtils.getExceptionDetails(e));
         }
-
         return JSON_object_list;
     }
 
@@ -148,7 +176,7 @@ public class JsonUtils {
 
     public static JSONArray sort_JSON_array_by_integer_field(String JSON_array, String key_field, String applicationName) {
 
-        return JSON_object_list_to_JSON_array(sort_JSON_array_by_integer_field(JSON_array_to_JSON_object_list(JSON_array, applicationName), key_field));
+        return JSON_object_list_to_JSON_array(sort_JSON_array_by_integer_field(jsonArrayInStringToJsonObjectList(JSON_array, applicationName), key_field));
     }
 
     public static void jsonObjectFieldsToSharedPreferences(JSONObject jsonObject, boolean fieldsToIgnoreFlag, String[] fieldsToIgnore, Context applicationContext, String applicationName) {
