@@ -24,12 +24,6 @@ import ndk.utils_android16.R;
 import ndk.utils_android16.ToastUtils;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 
-
-/**
- * An extension of the {@link SortableTableView} that handles {@link PassBookEntryV2}s.
- *
- * @author ISchwarz
- */
 public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {
 
     private OnRowLongClickListener rowLongClickListener;
@@ -93,41 +87,33 @@ public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {
 
 //        setDataRowBackgroundProvider(TableDataRowBackgroundProviders.alternatingRowColors(ContextCompat.getColor(context, R.color.table_data_row_even), ContextCompat.getColor(context, R.color.table_data_row_odd)));
 
-        setDataRowBackgroundProvider(new TableDataRowBackgroundProvider<PassBookEntryV2>() {
-            @Override
-            public Drawable getRowBackground(int rowIndex, PassBookEntryV2 rowData) {
+        setDataRowBackgroundProvider((rowIndex, rowData) -> {
 
-                int rowColor;
+            int rowColor;
 
-                if ((rowData.getCreditAmount() >= 100) && (rowData.getCreditAmount() < 500)) {
-                    rowColor = Color.WHITE;
-                } else if ((rowData.getCreditAmount() >= 500) && (rowData.getCreditAmount() < 1000)) {
-                    rowColor = Color.CYAN;
-                } else if (rowData.getCreditAmount() >= 1000) {
-                    rowColor = Color.GRAY;
-                } else if ((rowData.getDebitAmount() >= 100) && (rowData.getDebitAmount() < 500)) {
-                    rowColor = Color.MAGENTA;
-                } else if ((rowData.getDebitAmount() >= 500) && (rowData.getDebitAmount() < 1000)) {
-                    rowColor = Color.YELLOW;
-                } else if (rowData.getDebitAmount() >= 1000) {
-                    rowColor = Color.GREEN;
-                } else if ((rowIndex == 0) || (rowIndex % 2 == 0)) {
-                    rowColor = ContextCompat.getColor(context, R.color.table_data_row_even);
-                } else {
-                    rowColor = ContextCompat.getColor(context, R.color.table_data_row_odd);
-                }
-
-                return new ColorDrawable(rowColor);
+            if ((rowData.getCreditAmount() >= 100) && (rowData.getCreditAmount() < 500)) {
+                rowColor = Color.WHITE;
+            } else if ((rowData.getCreditAmount() >= 500) && (rowData.getCreditAmount() < 1000)) {
+                rowColor = Color.CYAN;
+            } else if (rowData.getCreditAmount() >= 1000) {
+                rowColor = Color.GRAY;
+            } else if ((rowData.getDebitAmount() >= 100) && (rowData.getDebitAmount() < 500)) {
+                rowColor = Color.MAGENTA;
+            } else if ((rowData.getDebitAmount() >= 500) && (rowData.getDebitAmount() < 1000)) {
+                rowColor = Color.YELLOW;
+            } else if (rowData.getDebitAmount() >= 1000) {
+                rowColor = Color.GREEN;
+            } else if ((rowIndex % 2 == 0)) {
+                rowColor = ContextCompat.getColor(context, R.color.table_data_row_even);
+            } else {
+                rowColor = ContextCompat.getColor(context, R.color.table_data_row_odd);
             }
+
+            return new ColorDrawable(rowColor);
         });
 
         setSwipeToRefreshEnabled(true);
-        setSwipeToRefreshListener(new SwipeToRefreshListener() {
-            @Override
-            public void onRefresh(RefreshIndicator refreshIndicator) {
-                ToastUtils.longToast(context, "Refresh View...");
-            }
-        });
+        setSwipeToRefreshListener(refreshIndicator -> ToastUtils.longToast(context, "Refresh View..."));
 
 //        setHeaderVisible( false );
 //        setHeaderVisible( false,100 );
@@ -135,46 +121,38 @@ public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {
 //        setHeaderVisible( true );
 //        setHeaderVisible( true,100 );
 
-        addDataClickListener(new TableDataClickListener<PassBookEntryV2>() {
-            @Override
-            public void onDataClicked(int rowIndex, PassBookEntryV2 clickedData) {
+        addDataClickListener((rowIndex, clickedData) -> {
 
-                Log.d("Clicked On : ", clickedData.toString());
-                ToastUtils.longToast(context, clickedData.toString());
-
-            }
+            Log.d("Clicked On : ", clickedData.toString());
+            ToastUtils.longToast(context, clickedData.toString());
         });
 
-        addDataLongClickListener(new TableDataLongClickListener<PassBookEntryV2>() {
-            @Override
-            public boolean onDataLongClicked(int rowIndex, PassBookEntryV2 clickedData) {
+        addDataLongClickListener((rowIndex, clickedData) -> {
 
-                Log.d("Clicked On : ", clickedData.toString());
-                rowLongClickListener.onRowLongClick(clickedData);
-                return true;
-            }
+            Log.d("Clicked On : ", clickedData.toString());
+            rowLongClickListener.onRowLongClick(clickedData);
+            return true;
         });
 
-        addHeaderClickListener(new TableHeaderClickListener() {
-            @Override
-            public void onHeaderClicked(int columnIndex) {
-                ToastUtils.longToast(context, "Column : " + columnIndex);
-            }
-        });
+        addHeaderClickListener(columnIndex -> ToastUtils.longToast(context, "Column : " + columnIndex));
 
         addOnScrollListener(new EndlessOnScrollListener() {
+
             @Override
             public void onReloadingTriggered(int firstRowItem, int visibleRowCount, int totalRowCount) {
+
                 ToastUtils.longToast(context, "Endless");
             }
         });
     }
 
     public void SetOnRowLongClickListener(final OnRowLongClickListener rowLongClickListener) {
+
         this.rowLongClickListener = rowLongClickListener;
     }
 
     public interface OnRowLongClickListener {
+
         void onRowLongClick(PassBookEntryV2 clickedData);
     }
 

@@ -5,11 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-import org.json.JSONArray;
-
 import ndk.utils_android1.ContextActivity;
 import ndk.utils_android16.R;
-import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTaskWrapper;
 
@@ -19,13 +16,13 @@ import ndk.utils_android16.network_task.update.CheckAndUpdateTaskWrapper;
 
 public abstract class SplashWithAutomatedUpdateActivity extends ContextActivity {
 
-    protected abstract String configure_GET_CONFIGURATION_URL();
+    public abstract String configure_GET_CONFIGURATION_URL();
 
-    protected abstract String configure_UPDATE_URL();
+    public abstract String configure_UPDATE_URL();
 
-    protected abstract Class configure_NEXT_ACTIVITY_CLASS();
+    public abstract Class configure_NEXT_ACTIVITY_CLASS();
 
-    protected abstract Pair[] configure_NEXT_ACTIVITY_CLASS_EXTRAS();
+    public abstract Pair[] configure_NEXT_ACTIVITY_CLASS_EXTRAS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +30,15 @@ public abstract class SplashWithAutomatedUpdateActivity extends ContextActivity 
         super.onCreate(savedInstanceState);
         initializeScreen();
 
-        HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), new Pair[]{}, new HttpApiSelectTask.AsyncResponseJsonArray() {
-
-            @Override
-            public void processFinish(JSONArray jsonArray) {
-
-                CheckAndUpdateTaskWrapper.getCheckAndUpdateWithoutTabIndexTask(configure_APPLICATION_NAME(), (AppCompatActivity) currentActivityContext, configure_GET_CONFIGURATION_URL(), configure_UPDATE_URL(), configure_NEXT_ACTIVITY_CLASS(), configure_SECURITY_FLAG(), configure_NEXT_ACTIVITY_CLASS_EXTRAS()).execute();
-            }
-        });
+        HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), jsonArray -> CheckAndUpdateTaskWrapper.getCheckAndUpdateWithoutTabIndexTask(configure_APPLICATION_NAME(), (AppCompatActivity) currentActivityContext, configure_GET_CONFIGURATION_URL(), configure_UPDATE_URL(), configure_NEXT_ACTIVITY_CLASS(), configure_SECURITY_FLAG(), configure_NEXT_ACTIVITY_CLASS_EXTRAS()).execute());
     }
 
     public void initializeScreen() {
+
         setContentView(R.layout.splash);
     }
 
-    protected abstract boolean configure_SECURITY_FLAG();
+    public abstract boolean configure_SECURITY_FLAG();
 
-    protected abstract String configure_APPLICATION_NAME();
+    public abstract String configure_APPLICATION_NAME();
 }

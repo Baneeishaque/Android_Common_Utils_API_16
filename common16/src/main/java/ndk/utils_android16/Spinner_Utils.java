@@ -8,8 +8,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.core.util.Pair;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -55,7 +53,7 @@ public class Spinner_Utils {
 
             showProgress(true, context, progress_Bar, form);
 
-            HttpApiSelectTask REST_select_task = new HttpApiSelectTask(URL, context, progress_Bar, form, application_name, new Pair[]{}, jsonArray -> populate_spinner_from_json_array(start_index, jsonArray, context, application_name, spinner, spinner_items, key));
+            HttpApiSelectTask REST_select_task = new HttpApiSelectTask(URL, context, progress_Bar, form, application_name, jsonArray -> populate_spinner_from_json_array(start_index, jsonArray, context, application_name, spinner, spinner_items, key));
 
             REST_select_task.execute();
 

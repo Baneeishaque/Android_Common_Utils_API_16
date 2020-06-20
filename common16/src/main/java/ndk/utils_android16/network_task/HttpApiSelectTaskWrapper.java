@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
 
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.ProgressBarUtils;
@@ -16,12 +15,12 @@ import static ndk.utils_android16.NetworkUtils.isOnline;
 
 public class HttpApiSelectTaskWrapper {
 
-    public static void executePostThenReturnResponse(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponse asyncResponse) {
+    public static void executePostThenReturnResponse(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, HttpApiSelectTask.AsyncResponse asyncResponse) {
 
         if (isOnline(context)) {
 
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
-            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponse);
+            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponse);
 
             httpApiSelectTask.execute();
 
@@ -31,13 +30,12 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonObject(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJSONObject asyncResponseJSONObject) {
+    public static void executeGetThenReturnJsonObject(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, HttpApiSelectTask.AsyncResponseJSONObject asyncResponseJSONObject) {
 
         if (isOnline(context)) {
 
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
-            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONObject);
-            httpApiSelectTask.execute();
+            new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONObject).execute();
 
         } else {
 
@@ -45,12 +43,12 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArray(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArray(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
         if (isOnline(context)) {
 
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
-            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray);
+            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONArray);
 
             httpApiSelectTask.execute();
 
@@ -60,13 +58,12 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatus(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
+    public static void executeGetThenReturnJsonArrayWithErrorStatus(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
         if (isOnline(context)) {
 
             ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
-            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag);
-            httpApiSelectTask.execute();
+            new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONArray, errorFlag).execute();
 
         } else {
 
@@ -74,23 +71,21 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, false);
+        executeGetThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONArray, false);
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusCheck(String taskUrl, Context context, ProgressBar progressBar, View scrollView, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, nameValuePairs, asyncResponseJSONArray, true);
+        executeGetThenReturnJsonArrayWithErrorStatus(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONArray, true);
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
 
         if (isOnline(context)) {
 
-            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag, backgroundFlag);
-
-            httpApiSelectTask.execute();
+            new HttpApiSelectTask(taskUrl, context, applicationName, asyncResponseJSONArray, errorFlag, backgroundFlag).execute();
 
         } else {
 
@@ -105,57 +100,55 @@ public class HttpApiSelectTaskWrapper {
         }
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean backgroundFlag) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean backgroundFlag) {
 
-        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, true, backgroundFlag);
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, asyncResponseJSONArray, true, backgroundFlag);
     }
 
-    public static void executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean backgroundFlag) {
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean backgroundFlag) {
 
-        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, false, backgroundFlag);
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, asyncResponseJSONArray, false, backgroundFlag);
     }
 
-    public static void executePostThenReturnJsonArrayWithBackgroundWorkStatusAndErrorStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
+    public static void executePostThenReturnJsonArrayWithBackgroundWorkStatusAndErrorStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
-        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag, true);
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, asyncResponseJSONArray, errorFlag, true);
     }
 
-    public static void executePostThenReturnJsonArrayWithoutBackgroundWorkStatusAndErrorStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
+    public static void executePostThenReturnJsonArrayWithoutBackgroundWorkStatusAndErrorStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
-        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, errorFlag, false);
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatus(taskUrl, context, applicationName, asyncResponseJSONArray, errorFlag, false);
     }
 
-    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheckAndWithoutBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheckAndWithoutBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, false);
+        executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, asyncResponseJSONArray, false);
     }
 
-    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheckAndWithBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithoutErrorStatusCheckAndWithBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, true);
+        executePostThenReturnJsonArrayWithoutErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, asyncResponseJSONArray, true);
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatusCheckAndWithoutBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusCheckAndWithoutBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, false);
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, asyncResponseJSONArray, false);
     }
 
-    public static void executePostThenReturnJsonArrayWithErrorStatusCheckAndWithBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, Pair[] nameValuePairs, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void executePostThenReturnJsonArrayWithErrorStatusCheckAndWithBackgroundWorkStatusCheck(String taskUrl, Context context, String applicationName, HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
 
-        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray, true);
+        executePostThenReturnJsonArrayWithErrorStatusAndBackgroundWorkStatusCheck(taskUrl, context, applicationName, asyncResponseJSONArray, true);
     }
 
-    public static void performSplashScreenThenReturnJsonArray(final Context context, final String taskUrl, final String applicationName, final Pair[] nameValuePairs, final HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJSONArray) {
+    public static void performSplashScreenThenReturnJsonArray(final Context context, final String taskUrl, final String applicationName, final HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJsonArray) {
 
         if (NetworkUtils.isOnline(context)) {
 
-            HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, applicationName, nameValuePairs, asyncResponseJSONArray);
-
-            httpApiSelectTask.execute();
+            new HttpApiSelectTask(taskUrl, context, applicationName, asyncResponseJsonArray).execute();
 
         } else {
 
-            View.OnClickListener retryFailedNetworkTask = view -> performSplashScreenThenReturnJsonArray(context, taskUrl, applicationName, nameValuePairs, asyncResponseJSONArray);
+            View.OnClickListener retryFailedNetworkTask = view -> performSplashScreenThenReturnJsonArray(context, taskUrl, applicationName, asyncResponseJsonArray);
 
             NetworkUtils.displayOfflineLongNoFabBottomSnackBar(((AppCompatActivity) context).getWindow().getDecorView(), retryFailedNetworkTask);
         }

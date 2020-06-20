@@ -97,17 +97,46 @@ public class NetworkUtils {
         }
     }
 
+    public static String[] performHttpClientGetTask(String url) {
+
+        try {
+            DefaultHttpClient defaultHttpClient;
+            HttpPost httpPost;
+            String networkActionResponse;
+
+            defaultHttpClient = new DefaultHttpClient();
+            httpPost = new HttpPost(url);
+            ResponseHandler<String> basicResponseHandler = new BasicResponseHandler();
+
+            networkActionResponse = defaultHttpClient.execute(httpPost, basicResponseHandler);
+
+            return new String[]{"0", networkActionResponse};
+
+        } catch (UnsupportedEncodingException e) {
+
+            return new String[]{"1", "UnsupportedEncodingException : " + e.getLocalizedMessage()};
+
+        } catch (ClientProtocolException e) {
+
+            return new String[]{"1", "ClientProtocolException : " + e.getLocalizedMessage()};
+
+        } catch (IOException e) {
+
+            return new String[]{"1", "IOException : " + e.getLocalizedMessage()};
+        }
+    }
+
     public static void handleJsonInsertionResponseAndSwitchWithFinishOrClearFields(String[] networkActionResponseArray, AppCompatActivity currentActivity, Class toSwitchActivity, EditText[] editTextsToClear, View viewToFocusOnError, String tag, int actionFlag, Pair[] nextClassExtras, FurtherActions furtherActions) {
 
         NetworkUtils.furtherActions = furtherActions;
 
-        LogUtils.debug(tag, "Network Action Response Index 0 : " + networkActionResponseArray[0], BuildConfig.DEBUG);
-        LogUtils.debug(tag, "Network Action Response Index 1 : " + networkActionResponseArray[1], BuildConfig.DEBUG);
+        LogUtils.debug(tag, "Network Action Response Index 0 : " + networkActionResponseArray[0]);
+        LogUtils.debug(tag, "Network Action Response Index 1 : " + networkActionResponseArray[1]);
 
         if (networkActionResponseArray[0].equals("1")) {
 
             Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
-            LogUtils.debug(tag, "Error, Network Action Response Index 1 : " + networkActionResponseArray[1], BuildConfig.DEBUG);
+            LogUtils.debug(tag, "Error, Network Action Response Index 1 : " + networkActionResponseArray[1]);
 
         } else {
 
@@ -140,12 +169,12 @@ public class NetworkUtils {
                                 break;
 
                             case 5: // No Action
-                                LogUtils.debug(tag, "Further Action...", BuildConfig.DEBUG);
+                                LogUtils.debug(tag, "Further Action...");
                                 furtherActions.onSuccess();
                                 break;
 
                             case 6: // clear fields & further actions
-                                LogUtils.debug(tag, "Further Action...", BuildConfig.DEBUG);
+                                LogUtils.debug(tag, "Further Action...");
                                 TextClearUtils.resetFields(editTextsToClear);
                                 furtherActions.onSuccess();
                                 break;
@@ -154,17 +183,17 @@ public class NetworkUtils {
 
                     case "1":
                         Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
-                        LogUtils.debug(tag, "Error : " + json.getString("error"), BuildConfig.DEBUG);
+                        LogUtils.debug(tag, "Error : " + json.getString("error"));
                         viewToFocusOnError.requestFocus();
                         break;
 
                     default:
                         Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
-                        LogUtils.debug(tag, "Error : Application_Utils json", BuildConfig.DEBUG);
+                        LogUtils.debug(tag, "Error : Application_Utils json");
                 }
             } catch (JSONException e) {
                 Toast.makeText(currentActivity, "Error...", Toast.LENGTH_LONG).show();
-                LogUtils.debug(tag, "Error : " + e.getLocalizedMessage(), BuildConfig.DEBUG);
+                LogUtils.debug(tag, "Error : " + e.getLocalizedMessage());
             }
         }
     }

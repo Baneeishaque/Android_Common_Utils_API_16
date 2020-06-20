@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +16,12 @@ import ndk.utils_android16.ExceptionUtils;
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.ToastUtils;
 
-import static ndk.utils_android16.NetworkUtils.performHttpClientPostTask;
+import static ndk.utils_android16.NetworkUtils.performHttpClientGetTask;
 import static ndk.utils_android16.ProgressBarUtils.showProgress;
 
 public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
-    private String url, tag;
+    private String url, applicationName;
     private Context context;
     private ProgressBar progressBar;
     private View scrollView;
@@ -32,99 +31,89 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     private int splashFlag = 0;
     private boolean backgroundFlag = false;
 
-    private Pair[] nameValuePairs;
-
     private boolean errorFlag = true;
     private AsyncResponseJsonArray asyncResponseJSONArray = null;
     private AsyncResponse asyncResponse = null;
     private AsyncResponseJSONObject asyncResponseJSONObject = null;
 
-    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray
+    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String applicationName, AsyncResponseJsonArray asyncResponseJSONArray
     ) {
         this.url = url;
         this.context = context;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponseJSONArray = asyncResponseJSONArray;
     }
 
-    HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponse asyncResponse) {
+    HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String applicationName, AsyncResponse asyncResponse) {
 
         this.url = url;
         this.context = context;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponse = asyncResponse;
         responseFlag = 1;
     }
 
-    HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJSONObject asyncResponseJSONObject) {
+    HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String applicationName, AsyncResponseJSONObject asyncResponseJSONObject) {
 
         this.url = url;
         this.context = context;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponseJSONObject = asyncResponseJSONObject;
         responseFlag = 2;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponse asyncResponse) {
+    public HttpApiSelectTask(String url, Context context, String applicationName, AsyncResponse asyncResponse) {
 
         this.url = url;
         this.context = context;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponse = asyncResponse;
         progressFlag = 1;
         responseFlag = 1;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray) {
+    public HttpApiSelectTask(String url, Context context, String applicationName, AsyncResponseJsonArray asyncResponseJsonArray) {
 
         this.url = url;
         this.context = context;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
-        this.asyncResponseJSONArray = asyncResponseJSONArray;
+        this.applicationName = applicationName;
+        this.asyncResponseJSONArray = asyncResponseJsonArray;
         progressFlag = 1;
         splashFlag = 1;
     }
 
-    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
+    public HttpApiSelectTask(String url, Context context, ProgressBar progressBar, View scrollView, String applicationName, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
         this.url = url;
         this.context = context;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponseJSONArray = asyncResponseJSONArray;
         this.progressBar = progressBar;
         this.scrollView = scrollView;
         this.errorFlag = errorFlag;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
+    public HttpApiSelectTask(String url, Context context, String applicationName, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag) {
 
         this.url = url;
         this.context = context;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponseJSONArray = asyncResponseJSONArray;
         this.progressFlag = 1;
         this.errorFlag = errorFlag;
     }
 
-    public HttpApiSelectTask(String url, Context context, String tag, Pair[] nameValuePairs, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
+    public HttpApiSelectTask(String url, Context context, String applicationName, AsyncResponseJsonArray asyncResponseJSONArray, boolean errorFlag, boolean backgroundFlag) {
 
         this.url = url;
         this.context = context;
-        this.tag = tag;
-        this.nameValuePairs = nameValuePairs;
+        this.applicationName = applicationName;
         this.asyncResponseJSONArray = asyncResponseJSONArray;
         this.progressFlag = 1;
         this.errorFlag = errorFlag;
@@ -135,7 +124,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     protected String[] doInBackground(Void... params) {
 
         LogUtilsWrapper.debug("URL : " + url);
-        return performHttpClientPostTask(url, nameValuePairs);
+        return performHttpClientGetTask(url);
     }
 
     @Override
@@ -268,7 +257,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     private class LogUtilsWrapper extends LogUtilsWrapperBase {
 
         private LogUtilsWrapper() {
-            super(tag);
+            super(applicationName);
         }
     }
 }

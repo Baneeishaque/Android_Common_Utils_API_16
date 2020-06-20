@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import ndk.utils_android14.ActivityUtils;
 import ndk.utils_android14.LogUtilsWrapperBase;
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ErrorUtilsWrapperBase;
 import ndk.utils_android16.NetworkUtils;
 import ndk.utils_android16.ServerUtils;
@@ -27,9 +28,9 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
     private String URL, applicationName, updateUrl;
     private boolean securityFlag, tabIndexFlag;
     private int tabIndex;
-    private Pair[] nextClassExtras;
+    private Pair[] nextActivityExtras;
 
-    public CheckAndUpdateTask(String applicationName, AppCompatActivity currentActivity, String URL, String updateUrl, Class nextActivity, boolean securityFlag, boolean tabIndexFlag, int tabIndex, Pair[] nextClassExtras) {
+    public CheckAndUpdateTask(String applicationName, AppCompatActivity currentActivity, String URL, String updateUrl, Class nextActivity, boolean securityFlag, boolean tabIndexFlag, int tabIndex, Pair[] nextActivityExtras) {
 
         this.currentActivity = currentActivity;
         this.URL = URL;
@@ -39,7 +40,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
         this.securityFlag = securityFlag;
         this.tabIndexFlag = tabIndexFlag;
         this.tabIndex = tabIndex;
-        this.nextClassExtras = nextClassExtras;
+        this.nextActivityExtras = nextActivityExtras;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                 class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
                     public ErrorUtilsWrapper(String applicationName) {
-                        super(applicationName);
+                        super(applicationName, BuildConfig.DEBUG);
                     }
                 }
 
@@ -112,13 +113,13 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                     } else {
 
-                        if (nextClassExtras.length == 0) {
+                        if (nextActivityExtras.length == 0) {
 
                             ActivityUtils.startActivityWithFinish(currentActivity, nextActivity);
 
                         } else {
 
-                            ActivityUtils.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextClassExtras);
+                            ActivityUtils.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextActivityExtras);
                         }
                     }
                 }
@@ -128,7 +129,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
             class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
 
                 public ErrorUtilsWrapper(String applicationName) {
-                    super(applicationName);
+                    super(applicationName,BuildConfig.DEBUG);
                 }
             }
 

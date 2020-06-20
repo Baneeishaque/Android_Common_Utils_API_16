@@ -16,22 +16,27 @@ final class Pass_Book_TableView_Comparators_v2 {
     }
 
     static Comparator<PassBookEntryV2> get_Insertion_Date_Comparator() {
+
         return new Insertion_Date_Comparator();
     }
 
     static Comparator<PassBookEntryV2> get_Particulars_Comparator() {
+
         return new Particulars_Comparator();
     }
 
     static Comparator<PassBookEntryV2> get_Second_Account_Comparator() {
+
         return new Second_Account_Comparator();
     }
 
     static Comparator<PassBookEntryV2> get_Credit_Amount_Comparator() {
+
         return new Credit_Amount_Comparator();
     }
 
     static Comparator<PassBookEntryV2> get_Debit_Amount_Comparator() {
+
         return new Debit_Amount_Comparator();
     }
 
@@ -43,11 +48,8 @@ final class Pass_Book_TableView_Comparators_v2 {
 
         @Override
         public int compare(final PassBookEntryV2 pass_book_entry1, final PassBookEntryV2 pass_book_entry2) {
-            if (pass_book_entry1.getInsertionDate().before(pass_book_entry2.getInsertionDate()))
-                return -1;
-            if (pass_book_entry1.getInsertionDate().after(pass_book_entry2.getInsertionDate()))
-                return 1;
-            return 0;
+
+            return pass_book_entry1.getInsertionDate().compareTo(pass_book_entry2.getInsertionDate());
         }
     }
 
@@ -58,15 +60,14 @@ final class Pass_Book_TableView_Comparators_v2 {
         public int compare(final PassBookEntryV2 pass_book_entry1, final PassBookEntryV2 pass_book_entry2) {
 
             return pass_book_entry1.getSecondAccountName().compareTo(pass_book_entry2.getSecondAccountName());
-
         }
-
     }
 
     private static class Credit_Amount_Comparator implements Comparator<PassBookEntryV2> {
 
         @Override
         public int compare(final PassBookEntryV2 pass_book_entry1, final PassBookEntryV2 pass_book_entry2) {
+
             return Double.compare(pass_book_entry1.getCreditAmount(), pass_book_entry2.getCreditAmount());
         }
     }
@@ -75,6 +76,7 @@ final class Pass_Book_TableView_Comparators_v2 {
 
         @Override
         public int compare(final PassBookEntryV2 pass_book_entry1, final PassBookEntryV2 pass_book_entry2) {
+
             return Double.compare(pass_book_entry1.getDebitAmount(), pass_book_entry2.getDebitAmount());
         }
     }
@@ -83,6 +85,7 @@ final class Pass_Book_TableView_Comparators_v2 {
 
         @Override
         public int compare(final PassBookEntryV2 pass_book_entry1, final PassBookEntryV2 pass_book_entry2) {
+
             return Double.compare(pass_book_entry1.getBalance(), pass_book_entry2.getBalance());
         }
     }
@@ -91,9 +94,8 @@ final class Pass_Book_TableView_Comparators_v2 {
 
         @Override
         public int compare(final PassBookEntryV2 pass_book_entry1, final PassBookEntryV2 pass_book_entry2) {
+
             return pass_book_entry1.getParticulars().compareTo(pass_book_entry2.getParticulars());
         }
     }
-
-
 }

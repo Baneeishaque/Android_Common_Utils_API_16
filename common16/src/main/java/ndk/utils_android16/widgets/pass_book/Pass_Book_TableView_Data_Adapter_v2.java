@@ -19,6 +19,7 @@ public class Pass_Book_TableView_Data_Adapter_v2 extends LongPressAwareTableData
     private static final int TEXT_SIZE = 14;
 
     public Pass_Book_TableView_Data_Adapter_v2(final Context context, final List<PassBookEntryV2> data, final TableView<PassBookEntryV2> tableView) {
+
         super(context, data, tableView);
     }
 
@@ -40,10 +41,10 @@ public class Pass_Book_TableView_Data_Adapter_v2 extends LongPressAwareTableData
                 renderedView = renderString(String.valueOf(pass_book_entryv2.getSecondAccountName()));
                 break;
             case 3:
-                renderedView = renderString(String.valueOf(pass_book_entryv2.getCreditAmount()));
+                renderedView = renderString(pass_book_entryv2.getCreditAmount() == 0 ? "" : String.valueOf(pass_book_entryv2.getCreditAmount()));
                 break;
             case 4:
-                renderedView = renderString(String.valueOf(pass_book_entryv2.getDebitAmount()));
+                renderedView = renderString(pass_book_entryv2.getDebitAmount() == 0 ? "" : String.valueOf(pass_book_entryv2.getDebitAmount()));
                 break;
             case 5:
                 renderedView = renderString(String.valueOf(pass_book_entryv2.getBalance()));
@@ -60,6 +61,7 @@ public class Pass_Book_TableView_Data_Adapter_v2 extends LongPressAwareTableData
     }
 
     private View renderString(final String value) {
+
         final TextView textView = new TextView(getContext());
         textView.setText(value);
         textView.setTextColor(BLACK);

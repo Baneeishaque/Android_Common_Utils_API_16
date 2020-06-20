@@ -8,7 +8,17 @@ public class ButtonUtils {
 
     public static void associateButtonWithIncrementedTimeStampOfFiveMinutes(Button buttonDate, Calendar calendar) {
 
-        calendar.setTime(org.apache.commons.lang3.time.DateUtils.addMinutes(calendar.getTime(), 5));
+        associateButtonWithIncrementedTimeStampOfMinutes(buttonDate, calendar, 1);
+    }
+
+    public static void associateButtonWithIncrementedTimeStampOfFiveMinutes(Button buttonDate, Calendar calendar) {
+
+        associateButtonWithIncrementedTimeStampOfMinutes(buttonDate, calendar, 5);
+    }
+
+    public static void associateButtonWithIncrementedTimeStampOfMinutes(Button buttonDate, Calendar calendar, int minutesToAdd) {
+
+        calendar.setTime(org.apache.commons.lang3.time.DateUtils.addMinutes(calendar.getTime(), minutesToAdd));
         associateButtonWithTimeStamp(buttonDate, calendar);
     }
 
