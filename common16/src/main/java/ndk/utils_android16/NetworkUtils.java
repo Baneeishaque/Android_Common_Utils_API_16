@@ -208,7 +208,7 @@ public class NetworkUtils {
         class LogUtilsWrapper extends LogUtilsWrapperBase {
 
             private LogUtilsWrapper() {
-                super(tag, BuildConfig.DEBUG);
+                super(tag);
             }
         }
 

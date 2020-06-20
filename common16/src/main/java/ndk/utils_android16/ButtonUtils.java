@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class ButtonUtils {
 
-    public static void associateButtonWithTimeStampPlusOneMinute(Button buttonDate, Calendar calendar) {
+    public static void associateButtonWithIncrementedTimeStampOfFiveMinutes(Button buttonDate, Calendar calendar) {
 
         calendar.setTime(org.apache.commons.lang3.time.DateUtils.addMinutes(calendar.getTime(), 5));
         associateButtonWithTimeStamp(buttonDate, calendar);
