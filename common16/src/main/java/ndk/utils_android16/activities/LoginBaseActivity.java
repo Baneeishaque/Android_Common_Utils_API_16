@@ -123,7 +123,7 @@ public abstract class LoginBaseActivity extends ContextActivity {
 
                     private ErrorUtilsWrapper() {
 
-                        super(configure_APPLICATION_NAME(), BuildConfig.DEBUG);
+                        super(configure_APPLICATION_NAME());
                     }
                 }
 

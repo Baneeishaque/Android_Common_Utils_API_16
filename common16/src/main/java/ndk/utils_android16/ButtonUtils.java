@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class ButtonUtils {
 
-    public static void associateButtonWithIncrementedTimeStampOfFiveMinutes(Button buttonDate, Calendar calendar) {
+    public static void associateButtonWithIncrementedTimeStampOfOneMinute(Button buttonDate, Calendar calendar) {
 
         associateButtonWithIncrementedTimeStampOfMinutes(buttonDate, calendar, 1);
     }

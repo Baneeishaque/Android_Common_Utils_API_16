@@ -32,7 +32,7 @@ public class LoginBundleActivity extends LoginBaseActivity {
 
                 private ErrorUtilsWrapper() {
 
-                    super(configure_APPLICATION_NAME(), BuildConfig.DEBUG);
+                    super(configure_APPLICATION_NAME());
                 }
             }
 

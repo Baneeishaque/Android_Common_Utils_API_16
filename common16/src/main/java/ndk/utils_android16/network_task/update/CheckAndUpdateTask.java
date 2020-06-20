@@ -70,7 +70,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                 class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
                     public ErrorUtilsWrapper(String applicationName) {
-                        super(applicationName, BuildConfig.DEBUG);
+                        super(applicationName);
                     }
                 }
 
@@ -129,7 +129,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
             class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
 
                 public ErrorUtilsWrapper(String applicationName) {
-                    super(applicationName,BuildConfig.DEBUG);
+                    super(applicationName);
                 }
             }
 
