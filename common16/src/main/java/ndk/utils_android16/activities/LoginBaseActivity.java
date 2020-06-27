@@ -17,13 +17,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import ndk.utils_android1.ContextActivity;
+import ndk.utils_android1.ActivityWithContexts;
 import ndk.utils_android14.ActivityUtils;
-import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.ErrorUtilsWrapperBase;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils;
-import ndk.utils_android16.ToastUtils;
+import ndk.utils_android1.ToastUtils;
 import ndk.utils_android16.ValidationUtils;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
@@ -31,7 +30,7 @@ import ndk.utils_android16.network_task.RestGetTask;
 
 //TODO : Create Layout initialization
 
-public abstract class LoginBaseActivity extends ContextActivity {
+public abstract class LoginBaseActivity extends ActivityWithContexts {
 
     public ProgressBar progressBar;
     public ScrollView scrollView;

@@ -11,7 +11,6 @@ public class CalendarUtils {
         return tempCalendar;
     }
 
-
     public static Calendar addFiveMinutesToCalendar(Calendar calendar) {
         
         return addMinutesToCalendar(calendar, 5);

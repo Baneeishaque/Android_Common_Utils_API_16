@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-import ndk.utils_android1.ContextActivity;
+import ndk.utils_android1.ActivityWithContexts;
 import ndk.utils_android16.R;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTaskWrapper;
@@ -14,7 +14,7 @@ import ndk.utils_android16.network_task.update.CheckAndUpdateTaskWrapper;
 //TODO : Implement hiding of fields - in case of layout
 //TODO : Develop tests
 
-public abstract class SplashWithAutomatedUpdateActivity extends ContextActivity {
+public abstract class SplashWithAutomatedUpdateActivity extends ActivityWithContexts {
 
     public abstract String configure_GET_CONFIGURATION_URL();
 

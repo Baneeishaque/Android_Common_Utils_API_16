@@ -3,25 +3,19 @@ package ndk.utils_android16.widgets.pass_book;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
 import de.codecrafters.tableview.SortableTableView;
-import de.codecrafters.tableview.listeners.SwipeToRefreshListener;
-import de.codecrafters.tableview.listeners.TableDataClickListener;
-import de.codecrafters.tableview.listeners.TableDataLongClickListener;
-import de.codecrafters.tableview.listeners.TableHeaderClickListener;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
-import de.codecrafters.tableview.providers.TableDataRowBackgroundProvider;
 import de.codecrafters.tableview.toolkit.EndlessOnScrollListener;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
 import ndk.utils_android16.R;
-import ndk.utils_android16.ToastUtils;
+import ndk.utils_android1.ToastUtils;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 
 public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {

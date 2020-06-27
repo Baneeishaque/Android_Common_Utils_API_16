@@ -7,6 +7,8 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
+import ndk.utils_android1.DateUtils;
+
 public class Date_Picker_Utils {
 
     public static void show_date_picker_up_to_today(Context context, DatePickerDialog.OnDateSetListener date_choose_listener, Calendar calendar) {
