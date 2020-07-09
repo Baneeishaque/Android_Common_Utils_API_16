@@ -124,6 +124,40 @@ public class ValidationUtils {
         return new Pair<>(true, null);
     }
 
+    public static org.javatuples.Pair<Boolean, EditText> zeroCheckEditTextPairs(ArrayList<org.javatuples.Pair<EditText, String>> editTextErrorPairs) {
+
+        // true & null - if all zero
+        // false & editText - if one is non-zero
+
+        for (org.javatuples.Pair<EditText, String> editTextErrorPair : editTextErrorPairs) {
+
+            if (nonZeroCheckEditText(editTextErrorPair.getValue0())) {
+
+                editTextErrorPair.getValue0().setError(editTextErrorPair.getValue1());
+                return org.javatuples.Pair.with(false, editTextErrorPair.getValue0());
+            }
+        }
+
+        return org.javatuples.Pair.with(true, null);
+    }
+
+    public static org.javatuples.Pair<Boolean, EditText> nonZeroCheckEditTextPairs(ArrayList<org.javatuples.Pair<EditText, String>> editTextErrorPairs) {
+
+        // true & null - if all non-zero
+        // false & editText - if one is zero
+
+        for (org.javatuples.Pair<EditText, String> editTextErrorPair : editTextErrorPairs) {
+
+            if (zeroCheckEditText(editTextErrorPair.getValue0())) {
+
+                editTextErrorPair.getValue0().setError(editTextErrorPair.getValue1());
+                return org.javatuples.Pair.with(false, editTextErrorPair.getValue0());
+            }
+        }
+
+        return org.javatuples.Pair.with(true, null);
+    }
+
     public static Pair<Boolean, EditText> emptyCheckEditTextPairs(Pair<EditText, String>[] editTextErrorPairs) {
 
         // true & null - if all empty

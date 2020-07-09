@@ -2,6 +2,7 @@ package ndk.util.tests;
 
 import androidx.core.util.Pair;
 
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.activities.LoginBundleActivity;
 import ndk.utils_android16.activities.SplashWithAutomatedUpdateActivity;
 
