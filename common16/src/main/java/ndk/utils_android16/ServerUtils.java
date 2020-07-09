@@ -4,8 +4,8 @@ import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ndk.utils_android1.LogUtils;
 import ndk.utils_android1.ToastUtils;
-import ndk.utils_android14.LogUtilsWrapperBase;
 
 public class ServerUtils {
 
@@ -17,13 +17,7 @@ public class ServerUtils {
 
         } else if (Integer.parseInt(systemStatus) == 1) {
 
-            class LogUtilsWrapper extends LogUtilsWrapperBase {
-                private LogUtilsWrapper() {
-                    super(applicationName);
-                }
-            }
-
-            LogUtilsWrapper.debug("System Status is OK");
+            LogUtils.debug(applicationName,"System Status is OK");
             return true;
         }
         return false;

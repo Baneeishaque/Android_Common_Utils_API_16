@@ -1,5 +1,7 @@
 package ndk.utils_android16;
 
+import ndk.utils_android1.UpdateUtils;
+
 public class UpdateUtilsWrapperBase {
 
     private static String applicationName;

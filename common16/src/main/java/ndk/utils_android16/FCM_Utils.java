@@ -2,7 +2,7 @@ package ndk.utils_android16;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import ndk.utils_android14.LogUtils;
+import ndk.utils_android1.LogUtils;
 
 /**
  * Created on 22-07-2018 13:03 under Android_Common_Utils.

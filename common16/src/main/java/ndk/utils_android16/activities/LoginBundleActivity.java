@@ -2,8 +2,7 @@ package ndk.utils_android16.activities;
 
 import java.util.Objects;
 
-import ndk.utils_android16.BuildConfig;
-import ndk.utils_android16.ErrorUtilsWrapperBase;
+import ndk.utils_android1.ErrorUtils;
 
 public class LoginBundleActivity extends LoginBaseActivity {
 
@@ -28,15 +27,7 @@ public class LoginBundleActivity extends LoginBaseActivity {
 
         } catch (ClassNotFoundException e) {
 
-            class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
-
-                private ErrorUtilsWrapper() {
-
-                    super(configure_APPLICATION_NAME());
-                }
-            }
-
-            ErrorUtilsWrapper.displayException(this, e);
+            ErrorUtils.displayException(this, e, configure_APPLICATION_NAME());
             return null;
         }
     }

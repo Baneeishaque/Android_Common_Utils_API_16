@@ -17,16 +17,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import ndk.utils_android1.ActivityUtils;
 import ndk.utils_android1.ActivityWithContexts;
-import ndk.utils_android14.ActivityUtils;
-import ndk.utils_android16.ErrorUtilsWrapperBase;
+import ndk.utils_android1.ErrorUtils;
+import ndk.utils_android1.RestGetTask;
+import ndk.utils_android1.ToastUtils;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils;
-import ndk.utils_android1.ToastUtils;
 import ndk.utils_android16.ValidationUtils;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
-import ndk.utils_android16.network_task.RestGetTask;
 
 //TODO : Create Layout initialization
 
@@ -118,14 +118,6 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
             @Override
             public void processFinish(JSONObject jsonObject) {
 
-                class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
-
-                    private ErrorUtilsWrapper() {
-
-                        super(configure_APPLICATION_NAME());
-                    }
-                }
-
                 try {
                     String userCount = jsonObject.getString("user_count");
 
@@ -133,7 +125,7 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
 
                         case "1":
                             SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils.startActivityWithFinish(currentActivityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                            ActivityUtils.startActivityForClassWithFinish(currentActivityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":
@@ -142,12 +134,12 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
                             break;
 
                         default:
-                            ErrorUtilsWrapper.displayJSONFieldMiss(currentActivityContext, jsonObject);
+                            ErrorUtils.displayJSONFieldMiss(currentActivityContext, jsonObject,configure_APPLICATION_NAME());
                     }
 
                 } catch (JSONException e) {
 
-                    ErrorUtilsWrapper.displayException(currentActivityContext, e);
+                    ErrorUtils.displayException(currentActivityContext, e,configure_APPLICATION_NAME());
                 }
             }
         };

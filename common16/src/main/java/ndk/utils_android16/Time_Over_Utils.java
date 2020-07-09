@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import ndk.utils_android1.ErrorUtils;
+
 /**
  * Created on 24-08-2018 21:22 under VLottery.
  */
@@ -20,7 +22,7 @@ public class Time_Over_Utils {
 
     }
 
-    public void check_Time_Status(AppCompatActivity activity, JSONArray json_array) {
+    public void check_Time_Status(AppCompatActivity activity, JSONArray json_array, String applicationName) {
         try {
 
             //Example Response : [{"user_count":"1","id":"125"},{"time_status":"1"}]
@@ -40,7 +42,7 @@ public class Time_Over_Utils {
 
         } catch (JSONException json_exception) {
 
-            ErrorUtilsWrapperBase.displayException(activity, json_exception);
+            ErrorUtils.displayException(activity, json_exception,applicationName);
 
         }
     }

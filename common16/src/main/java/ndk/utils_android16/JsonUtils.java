@@ -19,7 +19,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import ndk.utils_android14.LogUtilsWrapperBase;
+import ndk.utils_android1.ErrorUtils;
+import ndk.utils_android1.ExceptionUtils;
+import ndk.utils_android1.LogUtils;
 
 public class JsonUtils {
 
@@ -76,15 +78,7 @@ public class JsonUtils {
 
         } catch (JSONException e) {
 
-            class LogUtilsWrapper extends LogUtilsWrapperBase {
-
-                private LogUtilsWrapper() {
-
-                    super(applicationName);
-                }
-            }
-
-            LogUtilsWrapper.debug(ExceptionUtils.getExceptionDetails(e));
+            LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(e));
             return jsonArrayToJsonObjectList(new JSONArray(), applicationName);
         }
     }
@@ -100,14 +94,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            class LogUtilsWrapper extends LogUtilsWrapperBase {
-
-                private LogUtilsWrapper() {
-
-                    super(applicationName);
-                }
-            }
-            LogUtilsWrapper.debug(ExceptionUtils.getExceptionDetails(e));
+            LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(e));
         }
         return JSON_object_list;
     }
@@ -138,14 +125,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            class LogUtilsWrapper extends LogUtilsWrapperBase {
-
-                private LogUtilsWrapper() {
-                    super(applicationName);
-                }
-            }
-
-            LogUtilsWrapper.debug(ExceptionUtils.getExceptionDetails(e));
+            LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(e));
         }
 
     }
@@ -185,13 +165,7 @@ public class JsonUtils {
 
             try {
 
-                class LogUtilsWrapper extends LogUtilsWrapperBase {
-                    private LogUtilsWrapper() {
-                        super(applicationName);
-                    }
-                }
-
-                LogUtilsWrapper.debug("key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)));
+                LogUtils.debug(applicationName, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)));
 
                 String key = jsonObject.names().getString(i);
 
@@ -203,7 +177,7 @@ public class JsonUtils {
 
             } catch (JSONException json_exception) {
 
-                ErrorUtilsWrapperBase.displayException(applicationContext, json_exception);
+                ErrorUtils.displayException(applicationContext, json_exception, applicationName);
             }
         }
     }
@@ -226,13 +200,13 @@ public class JsonUtils {
 
             } catch (JSONException jsonException) {
 
-                ErrorUtilsWrapperBase.displayException(applicationContext, jsonException);
+                ErrorUtils.displayException(applicationContext, jsonException, applicationName);
             }
 
         }
     }
 
-    public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context) {
+    public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context, String applicationName) {
 
         for (int i = start_position; i < jsonArray.length(); i++) {
 
@@ -242,7 +216,7 @@ public class JsonUtils {
 
             } catch (JSONException e) {
 
-                ErrorUtilsWrapperBase.displayException(context, e);
+                ErrorUtils.displayException(context, e, applicationName);
 
             }
         }

@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ndk.utils_android14.ActivityUtils;
+import ndk.utils_android1.ActivityUtils;
 import ndk.utils_android16.activities.LoginBundleActivity;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
@@ -39,7 +39,7 @@ public class Login_Test {
 
             Context targetContext = getInstrumentation().getTargetContext();
 
-            return ActivityUtils.getIntentWithStringExtras(targetContext, LoginBundleActivity.class, new Pair[]{new Pair<>("APPLICATION_NAME", Application_Specification.APPLICATION_NAME), new Pair<>("NEXT_ACTIVITY_CLASS", "Splash_Version_OK"), new Pair<>("SELECT_USER_URL", "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")});
+            return ActivityUtils.constructIntentWithStringExtras(targetContext, LoginBundleActivity.class, new Pair[]{new Pair<>("APPLICATION_NAME", Application_Specification.APPLICATION_NAME), new Pair<>("NEXT_ACTIVITY_CLASS", "Splash_Version_OK"), new Pair<>("SELECT_USER_URL", "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")});
         }
     };
 

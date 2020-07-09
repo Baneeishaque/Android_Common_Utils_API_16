@@ -9,15 +9,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ndk.utils_android14.ActivityUtils;
-import ndk.utils_android14.LogUtilsWrapperBase;
-import ndk.utils_android16.ErrorUtilsWrapperBase;
-import ndk.utils_android16.NetworkUtils;
-import ndk.utils_android16.ServerUtils;
+import ndk.utils_android1.ActivityUtils;
+import ndk.utils_android1.ErrorUtils;
+import ndk.utils_android1.LogUtils;
+import ndk.utils_android1.NetworkUtils;
 import ndk.utils_android1.ToastUtils;
-import ndk.utils_android16.UpdateUtils;
+import ndk.utils_android1.UpdateUtils;
+import ndk.utils_android16.ServerUtils;
 
-import static ndk.utils_android16.NetworkUtils.displayFriendlyExceptionMessage;
+import static ndk.utils_android1.NetworkUtils.displayFriendlyExceptionMessage;
 import static ndk.utils_android16.update.UpdateApplication.updateApplication;
 
 public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
@@ -67,13 +67,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
             } catch (JSONException e) {
 
-                class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
-                    public ErrorUtilsWrapper(String applicationName) {
-                        super(applicationName);
-                    }
-                }
-
-                ErrorUtilsWrapper.displayException(currentActivity, e);
+                ErrorUtils.displayException(currentActivity, e,applicationName);
             }
         }
     }
@@ -91,14 +85,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                 } else {
 
-                    class LogUtilsWrapper extends LogUtilsWrapperBase {
-
-                        private LogUtilsWrapper() {
-                            super(applicationName);
-                        }
-                    }
-
-                    LogUtilsWrapper.debug("Latest Version...");
+                    LogUtils.debug(applicationName,"Latest Version...");
 
                     if (!securityFlag) {
 
@@ -114,7 +101,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                         if (nextActivityExtras.length == 0) {
 
-                            ActivityUtils.startActivityWithFinish(currentActivity, nextActivity);
+                            ActivityUtils.startActivityForClassWithFinish(currentActivity, nextActivity);
 
                         } else {
 
@@ -125,14 +112,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
             }
         } catch (JSONException e) {
 
-            class ErrorUtilsWrapper extends ErrorUtilsWrapperBase {
-
-                public ErrorUtilsWrapper(String applicationName) {
-                    super(applicationName);
-                }
-            }
-
-            ErrorUtilsWrapper.displayException(currentActivity, e);
+            ErrorUtils.displayException(currentActivity, e,applicationName);
         }
     }
 }

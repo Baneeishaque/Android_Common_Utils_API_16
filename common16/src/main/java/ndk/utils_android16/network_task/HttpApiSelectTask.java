@@ -11,13 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ndk.utils_android14.LogUtilsWrapperBase;
-import ndk.utils_android16.ExceptionUtils;
-import ndk.utils_android16.NetworkUtils;
+import ndk.utils_android1.ExceptionUtils;
+import ndk.utils_android1.LogUtils;
+import ndk.utils_android1.NetworkUtils;
 import ndk.utils_android1.ToastUtils;
 
-import static ndk.utils_android16.NetworkUtils.performHttpClientGetTask;
-import static ndk.utils_android16.ProgressBarUtils.showProgress;
+import static ndk.utils_android1.NetworkUtils.performHttpClientGetTask;
+import static ndk.utils_android1.ProgressBarUtils.showProgress;
 
 public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
@@ -123,15 +123,15 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     @Override
     protected String[] doInBackground(Void... params) {
 
-        LogUtilsWrapper.debug("URL : " + url);
+        LogUtils.debug(applicationName, "URL : " + url);
         return performHttpClientGetTask(url);
     }
 
     @Override
     protected void onPostExecute(final String[] networkActionResponseArray) {
 
-        LogUtilsWrapper.debug("Network Action status is " + networkActionResponseArray[0]);
-        LogUtilsWrapper.debug("Network Action response is " + networkActionResponseArray[1]);
+        LogUtils.debug(applicationName, "Network Action status is " + networkActionResponseArray[0]);
+        LogUtils.debug(applicationName, "Network Action response is " + networkActionResponseArray[1]);
 
         if (progressFlag == 0) {
 
@@ -166,7 +166,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 } catch (JSONException e) {
 
                     ToastUtils.errorToast(context);
-                    LogUtilsWrapper.debug("Error : " + e.getLocalizedMessage());
+                    LogUtils.debug(applicationName, "Error : " + e.getLocalizedMessage());
                 }
             }
 
@@ -176,7 +176,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
                 if (backgroundFlag) {
 
-                    LogUtilsWrapper.debug("Error...");
+                    LogUtils.debug(applicationName, "Error...");
 
                 } else {
 
@@ -204,7 +204,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                         switch (tempJsonObject.getString("status")) {
 
                             case "2":
-                                LogUtilsWrapper.debug("No Entries...");
+                                LogUtils.debug(applicationName, "No Entries...");
                                 if (!backgroundFlag) {
                                     ToastUtils.longToast(context, "No Entries...");
                                 }
@@ -215,7 +215,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                                 break;
 
                             case "1":
-                                LogUtilsWrapper.debug("Error : " + tempJsonObject.getString("error"));
+                                LogUtils.debug(applicationName, "Error : " + tempJsonObject.getString("error"));
                                 ToastUtils.errorToast(context);
                                 break;
                         }
@@ -224,7 +224,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 } catch (JSONException e) {
 
                     ToastUtils.errorToast(context);
-                    LogUtilsWrapper.debug("Error : " + ExceptionUtils.getExceptionDetails(e));
+                    LogUtils.debug(applicationName, "Error : " + ExceptionUtils.getExceptionDetails(e));
                 }
             }
         }
@@ -252,12 +252,5 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     public interface AsyncResponseJSONObject {
 
         void processFinish(JSONObject jsonObject);
-    }
-
-    private class LogUtilsWrapper extends LogUtilsWrapperBase {
-
-        private LogUtilsWrapper() {
-            super(applicationName);
-        }
     }
 }
