@@ -17,4 +17,9 @@ public class Float_Utils {
         a = Math.round(a);
         return (a / (float) temp);
     }
+
+    public static float roundOff_to_two_positions(String floatString) {
+
+        return roundOff_to_two_positions(Float.parseFloat(floatString));
+    }
 }
