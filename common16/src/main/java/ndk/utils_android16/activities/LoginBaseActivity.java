@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import ndk.utils_android1.ActivityUtils;
+import ndk.utils_android1.ActivityUtils1;
 import ndk.utils_android1.ActivityWithContexts;
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.RestGetTask;
@@ -53,8 +53,8 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
         scrollView = findViewById(R.id.scrollView);
         progressBar = findViewById(R.id.progressBar);
 
-        editTextUsername = findViewById(R.id.editText_username);
-        editTextPassword = findViewById(R.id.editText_password);
+        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextPassword = findViewById(R.id.editTextPassword);
 
 //        if(BuildConfig.DEBUG){
 //
@@ -72,7 +72,7 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
             return false;
         });
 
-        Button buttonSignIn = findViewById(R.id.button_sign_in);
+        Button buttonSignIn = findViewById(R.id.buttonSignIn);
         buttonSignIn.setOnClickListener(view -> attemptLogin());
     }
 
@@ -125,7 +125,7 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
 
                         case "1":
                             SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils.startActivityForClassWithFinish(currentActivityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                            ActivityUtils1.startActivityForClassWithFinish(currentActivityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":

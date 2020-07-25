@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import ndk.utils_android1.ErrorUtils;
-import ndk.utils_android1.ExceptionUtils;
+import ndk.utils_android1.ExceptionUtils1;
 import ndk.utils_android1.LogUtils;
 
 public class JsonUtils {
@@ -78,7 +78,7 @@ public class JsonUtils {
 
         } catch (JSONException e) {
 
-            LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(e));
+            LogUtils.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
             return jsonArrayToJsonObjectList(new JSONArray(), applicationName);
         }
     }
@@ -94,7 +94,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(e));
+            LogUtils.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
         }
         return JSON_object_list;
     }
@@ -125,7 +125,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            LogUtils.debug(applicationName, ExceptionUtils.getExceptionDetails(e));
+            LogUtils.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
         }
 
     }

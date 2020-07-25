@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ndk.utils_android1.ExceptionUtils;
+import ndk.utils_android1.ExceptionUtils1;
 import ndk.utils_android1.LogUtils;
 import ndk.utils_android1.NetworkUtils;
 import ndk.utils_android1.ToastUtils;
@@ -224,7 +224,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 } catch (JSONException e) {
 
                     ToastUtils.errorToast(context);
-                    LogUtils.debug(applicationName, "Error : " + ExceptionUtils.getExceptionDetails(e));
+                    LogUtils.debug(applicationName, "Error : " + ExceptionUtils1.getExceptionDetails(e));
                 }
             }
         }
