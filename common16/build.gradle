@@ -64,5 +64,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation project(path: ':Utils_14:common14')
-    implementation project(path: ':Utils_11:common11')
+    implementation project(path: ':Utils11:common11')
 }
