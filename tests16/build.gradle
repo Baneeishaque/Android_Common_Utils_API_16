@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
 
     compileSdkVersion 30
-    buildToolsVersion '30.0.1'
+    buildToolsVersion '30.0.2'
 
     defaultConfig {
 
@@ -20,19 +20,6 @@ android {
 
     buildTypes {
 
-        debug {
-
-            applicationIdSuffix ".debug"
-        }
-
-        release {
-
-            shrinkResources false
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-        //The `initWith` property allows you to copy configurations from other build types,then configure just the settings you want to change.
         staging {
 
             initWith release
@@ -40,10 +27,10 @@ android {
         }
     }
 
-    lintOptions {
-
-        abortOnError false
-    }
+//    lintOptions {
+//
+//        abortOnError false
+//    }
 
     // Specifies flavor dimension.
     flavorDimensions "relevence"
