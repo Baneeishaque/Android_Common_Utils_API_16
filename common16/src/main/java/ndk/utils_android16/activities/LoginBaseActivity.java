@@ -124,8 +124,8 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
                     switch (userCount) {
 
                         case "1":
-                            SharedPreferenceUtils.commitSharedPreferences(LoginBaseActivity.this.getApplicationContext(), LoginBaseActivity.this.configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils1.startActivityForClassWithFinish(currentActivityContext, LoginBaseActivity.this.configure_NEXT_ACTIVITY_CLASS());
+                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                            ActivityUtils1.startActivityForClassWithFinish(currentActivityContext, configure_NEXT_ACTIVITY_CLASS());
                             break;
 
                         case "0":
@@ -134,12 +134,12 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
                             break;
 
                         default:
-                            ErrorUtils.displayJSONFieldMiss(currentActivityContext, jsonObject,configure_APPLICATION_NAME());
+                            ErrorUtils.displayJSONFieldMiss(currentActivityContext, jsonObject, configure_APPLICATION_NAME());
                     }
 
                 } catch (JSONException e) {
 
-                    ErrorUtils.displayException(currentActivityContext, e,configure_APPLICATION_NAME());
+                    ErrorUtils.displayException(currentActivityContext, e, configure_APPLICATION_NAME());
                 }
             }
         };
