@@ -114,33 +114,30 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
 
     public HttpApiSelectTask.AsyncResponseJSONObject handleJsonResponseObject() {
 
-        return new HttpApiSelectTask.AsyncResponseJSONObject() {
-            @Override
-            public void processFinish(JSONObject jsonObject) {
+        return jsonObject -> {
 
-                try {
-                    String userCount = jsonObject.getString("user_count");
+            try {
+                String userCount = jsonObject.getString("user_count");
 
-                    switch (userCount) {
+                switch (userCount) {
 
-                        case "1":
-                            SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
-                            ActivityUtils1.startActivityForClassWithFinish(currentActivityContext, configure_NEXT_ACTIVITY_CLASS());
-                            break;
+                    case "1":
+                        SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                        ActivityUtils1.startActivityForClassWithFinish(currentActivityContext, configure_NEXT_ACTIVITY_CLASS());
+                        break;
 
-                        case "0":
-                            ToastUtils.longToast(currentActivityContext, "Login Failure!");
-                            editTextUsername.requestFocus();
-                            break;
+                    case "0":
+                        ToastUtils.longToast(currentActivityContext, "Login Failure!");
+                        editTextUsername.requestFocus();
+                        break;
 
-                        default:
-                            ErrorUtils.displayJSONFieldMiss(currentActivityContext, jsonObject, configure_APPLICATION_NAME());
-                    }
-
-                } catch (JSONException e) {
-
-                    ErrorUtils.displayException(currentActivityContext, e, configure_APPLICATION_NAME());
+                    default:
+                        ErrorUtils.displayJSONFieldMiss(currentActivityContext, jsonObject, configure_APPLICATION_NAME());
                 }
+
+            } catch (JSONException e) {
+
+                ErrorUtils.displayException(currentActivityContext, e, configure_APPLICATION_NAME());
             }
         };
     }

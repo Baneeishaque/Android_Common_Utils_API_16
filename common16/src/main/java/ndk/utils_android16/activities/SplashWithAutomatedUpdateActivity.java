@@ -30,6 +30,11 @@ public abstract class SplashWithAutomatedUpdateActivity extends ActivityWithCont
         super.onCreate(savedInstanceState);
         initializeScreen();
 
+        checkThenPerformUpdateIfNeeded();
+    }
+
+    public void checkThenPerformUpdateIfNeeded() {
+
         HttpApiSelectTaskWrapper.performSplashScreenThenReturnJsonArray(this, configure_GET_CONFIGURATION_URL(), configure_APPLICATION_NAME(), jsonArray -> CheckAndUpdateTaskWrapper.getCheckAndUpdateWithoutTabIndexTask(configure_APPLICATION_NAME(), (AppCompatActivity) currentActivityContext, configure_GET_CONFIGURATION_URL(), configure_UPDATE_URL(), configure_NEXT_ACTIVITY_CLASS(), configure_SECURITY_FLAG(), configure_NEXT_ACTIVITY_CLASS_EXTRAS()).execute());
     }
 
