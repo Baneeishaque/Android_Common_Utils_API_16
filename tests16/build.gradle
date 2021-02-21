@@ -96,7 +96,7 @@ dependencies {
 
     implementation project(path: ':Utils_14:common14')
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation 'androidx.annotation:annotation:1.1.0'
     // Optional -- Hamcrest library
