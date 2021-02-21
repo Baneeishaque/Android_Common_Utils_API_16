@@ -103,7 +103,7 @@ dependencies {
     implementation 'com.itextpdf:itext-pdfa:5.5.5'
     implementation 'org.apache.commons:commons-lang3:3.11'
 
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+    implementation platform('com.google.firebase:firebase-bom:25.13.0')
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore'
