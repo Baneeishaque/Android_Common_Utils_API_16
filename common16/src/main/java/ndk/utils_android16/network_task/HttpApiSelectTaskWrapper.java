@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ndk.utils_android1.NetworkUtils;
+import ndk.utils_android14.NetworkUtils14;
 import ndk.utils_android1.ProgressBarUtils;
 import ndk.utils_android1.ToastUtils;
 
@@ -150,7 +151,7 @@ public class HttpApiSelectTaskWrapper {
 
             View.OnClickListener retryFailedNetworkTask = view -> performSplashScreenThenReturnJsonArray(context, taskUrl, applicationName, asyncResponseJsonArray);
 
-            NetworkUtils.displayOfflineLongNoFabBottomSnackBar(((AppCompatActivity) context).getWindow().getDecorView(), retryFailedNetworkTask);
+            NetworkUtils14.displayOfflineLongNoFabBottomSnackBar(((AppCompatActivity) context).getWindow().getDecorView(), retryFailedNetworkTask);
         }
     }
 }

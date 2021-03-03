@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ndk.utils_android11.ApplicationVCSUtils;
+import ndk.utils_android14.ApplicationVCSUtils;
 
 public class UpdateApplication {
 

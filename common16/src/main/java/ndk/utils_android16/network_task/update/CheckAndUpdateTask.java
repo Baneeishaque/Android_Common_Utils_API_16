@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ndk.utils_android1.ActivityUtils1;
+import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.LogUtils;
 import ndk.utils_android1.NetworkUtils;
@@ -95,17 +96,17 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
                     if (tabIndexFlag) {
 
                         //TODO : Tab Index with Other extras
-                        ActivityUtils1.startActivityWithFinishAndTabIndex(currentActivity, nextActivity, tabIndex);
+                        ActivityUtils14.startActivityWithFinishAndTabIndex(currentActivity, nextActivity, tabIndex);
 
                     } else {
 
                         if (nextActivityExtras.length == 0) {
 
-                            ActivityUtils1.startActivityForClassWithFinish(currentActivity, nextActivity);
+                            ActivityUtils14.startActivityForClassWithFinish(currentActivity, nextActivity);
 
                         } else {
 
-                            ActivityUtils1.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextActivityExtras);
+                            ActivityUtils14.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextActivityExtras);
                         }
                     }
                 }

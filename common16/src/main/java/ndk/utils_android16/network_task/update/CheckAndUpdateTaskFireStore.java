@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ndk.utils_android1.ActivityUtils1;
+import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.FireStoreGetActions;
 import ndk.utils_android1.FireStoreRequestResponse;
@@ -23,7 +24,8 @@ import ndk.utils_android1.UpdateUtils;
 import ndk.utils_android16.ServerUtils;
 
 import static ndk.utils_android1.NetworkUtils.displayFriendlyExceptionMessage;
-import static ndk.utils_android1.UpdateUtils.getServerVersionFireStore;
+//TODO : Not compatiable with SDK 14
+// import static ndk.utils_android14.UpdateUtils14.getServerVersionFireStore;
 import static ndk.utils_android16.update.UpdateApplication.updateApplication;
 
 public class CheckAndUpdateTaskFireStore extends AsyncTask<Void, Void, String[]> {
@@ -55,26 +57,28 @@ public class CheckAndUpdateTaskFireStore extends AsyncTask<Void, Void, String[]>
     @Override
     protected String[] doInBackground(Void... params) {
 
-        FireStoreRequestResponse fireStoreRequestResponse = getServerVersionFireStore(firebaseFirestoreDb, applicationName, applicationContext);
-        switch (fireStoreRequestResponse.getStatus()) {
+        //TODO : Not compatiable with SDK 14
+        // FireStoreRequestResponse fireStoreRequestResponse = getServerVersionFireStore(firebaseFirestoreDb, applicationName, applicationContext);
+        // switch (fireStoreRequestResponse.getStatus()) {
 
-            case 2:
-                return new String[]{"1", "Action not performed yet..."};
+        //     case 2:
+        //         return new String[]{"1", "Action not performed yet..."};
 
-            case -1:
-                return new String[]{"1", "Exception : " + fireStoreRequestResponse.getException().getLocalizedMessage()};
+        //     case -1:
+        //         return new String[]{"1", "Exception : " + fireStoreRequestResponse.getException().getLocalizedMessage()};
 
-            case 1:
-                return new String[]{"1", "No document..."};
+        //     case 1:
+        //         return new String[]{"1", "No document..."};
 
-            case 0:
-                JSONArray jsonArray = new JSONArray();
-                jsonArray.put(new JSONObject(fireStoreRequestResponse.getData()));
-                return new String[]{"0", String.valueOf(jsonArray)};
+        //     case 0:
+        //         JSONArray jsonArray = new JSONArray();
+        //         jsonArray.put(new JSONObject(fireStoreRequestResponse.getData()));
+        //         return new String[]{"0", String.valueOf(jsonArray)};
 
-            default:
-                return new String[]{"1", "Unknown error..."};
-        }
+        //     default:
+        //         return new String[]{"1", "Unknown error..."};
+        // }
+        return new String[]{"1", "Unknown error..."};
     }
 
     @Override
@@ -124,17 +128,17 @@ public class CheckAndUpdateTaskFireStore extends AsyncTask<Void, Void, String[]>
                     if (tabIndexFlag) {
 
                         //TODO : Tab Index with Other extras
-                        ActivityUtils1.startActivityWithFinishAndTabIndex(currentActivity, nextActivity, tabIndex);
+                        ActivityUtils14.startActivityWithFinishAndTabIndex(currentActivity, nextActivity, tabIndex);
 
                     } else {
 
                         if (nextActivityExtras.length == 0) {
 
-                            ActivityUtils1.startActivityForClassWithFinish(currentActivity, nextActivity);
+                            ActivityUtils14.startActivityForClassWithFinish(currentActivity, nextActivity);
 
                         } else {
 
-                            ActivityUtils1.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextActivityExtras);
+                            ActivityUtils14.startActivityWithStringExtrasAndFinish(currentActivity, nextActivity, nextActivityExtras);
                         }
                     }
                 }

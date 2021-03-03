@@ -11,7 +11,7 @@ import androidx.core.util.Pair;
 import ndk.utils_android1.ProgressBarUtils;
 import ndk.utils_android1.ToastUtils;
 
-import static ndk.utils_android1.NetworkUtils.FurtherActions;
+import static ndk.utils_android14.NetworkUtils14.FurtherActions;
 import static ndk.utils_android1.NetworkUtils.isOnline;
 
 public class RestInsertTaskWrapper {

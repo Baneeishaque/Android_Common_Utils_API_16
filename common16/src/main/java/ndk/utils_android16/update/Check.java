@@ -9,7 +9,7 @@ import ndk.utils_android1.BuildConfig;
 import ndk.utils_android1.NetworkUtils;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTask;
 
-import static ndk.utils_android1.NetworkUtils.displayOfflineLongNoFabBottomSnackBar;
+import static ndk.utils_android14.NetworkUtils14.displayOfflineLongNoFabBottomSnackBar;
 
 public class Check {
 

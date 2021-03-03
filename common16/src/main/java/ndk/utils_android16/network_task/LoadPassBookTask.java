@@ -19,6 +19,7 @@ import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android16.Float_Utils;
 import ndk.utils_android16.JsonUtils;
 import ndk.utils_android1.NetworkUtils;
+import ndk.utils_android14.NetworkUtils14;
 import ndk.utils_android16.Pass_Book_Utils;
 import ndk.utils_android1.ToastUtils;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntry;
@@ -88,7 +89,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
         if (v2Flag) {
             return NetworkUtils.performHttpClientGetTask(url);
         } else {
-            return NetworkUtils.performHttpClientPostTask(url, nameValuePair);
+            return NetworkUtils14.performHttpClientPostTask(url, nameValuePair);
         }
     }
 
