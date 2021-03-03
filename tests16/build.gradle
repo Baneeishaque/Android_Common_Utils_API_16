@@ -17,7 +17,7 @@ android {
 
         // Enabling multidex support.
         multiDexEnabled true
-        
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
