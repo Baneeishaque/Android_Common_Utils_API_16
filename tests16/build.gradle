@@ -15,7 +15,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // Enabling multidex support.
         multiDexEnabled true
         
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,10 +28,6 @@ android {
             debuggable true
         }
     }
-
-    // lintOptions {
-    //     abortOnError false
-    // }
 
     // Specifies flavor dimension.
     flavorDimensions "relevence"
@@ -99,6 +94,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation project(path: ':Utils_14:common14')
+    implementation project(path: ':Utils_1:common1')
+
 
     testImplementation 'junit:junit:4.13.2'
 

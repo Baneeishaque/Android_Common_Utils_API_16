@@ -5,5 +5,8 @@ include ':tests16'
 include ':Utils_14:common14'
 include ':Utils11:common11'
 
+include ':Resources:common'
+project(':Resources:common').projectDir = new File(settingsDir, './Utils_14/Resources/common')
+
 include ':Utils_1:common1'
 project(':Utils_1:common1').projectDir = new File(settingsDir, './Utils_14/Utils_1/common1')

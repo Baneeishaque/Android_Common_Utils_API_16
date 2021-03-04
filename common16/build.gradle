@@ -18,7 +18,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         useLibrary 'org.apache.http.legacy'
-        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -34,11 +33,6 @@ android {
             debuggable true
         }
     }
-
-//    lintOptions {
-//
-//        abortOnError false
-//    }
 
     // Specifies flavor dimension.
     flavorDimensions "relevence"
@@ -125,4 +119,5 @@ dependencies {
 
     implementation project(path: ':Utils_14:common14')
     implementation project(path: ':Utils11:common11')
+    implementation project(path: ':Utils_1:common1')
 }
