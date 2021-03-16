@@ -117,7 +117,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation project(path: ':Utils_14:common14')
+    implementation project(path: ':Utils14:common14')
     implementation project(path: ':Utils11:common11')
-    implementation project(path: ':Utils_1:common1')
+    implementation project(path: ':Utils1:common1')
 }
