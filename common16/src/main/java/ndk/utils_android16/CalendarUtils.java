@@ -12,7 +12,7 @@ public class CalendarUtils {
     }
 
     public static Calendar addFiveMinutesToCalendar(Calendar calendar) {
-        
+
         return addMinutesToCalendar(calendar, 5);
     }
 }

@@ -14,6 +14,6 @@ public class ApiUtils {
 
     public static String getHttpApi(String methodName, String serverIpAddress, String httpApiFolder, String fileExtension) {
 
-        return serverIpAddress + "/" + httpApiFolder + "/" + methodName+fileExtension;
+        return serverIpAddress + "/" + httpApiFolder + "/" + methodName + fileExtension;
     }
 }

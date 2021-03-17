@@ -21,13 +21,13 @@ public class Check {
 
         if (NetworkUtils.isOnline(current_activity)) {
 
-            Update_Task = new CheckAndUpdateTask(application_name, current_activity, URL, update_URL, next_activity, BuildConfig.DEBUG, false, 0, new Pair[] {});
+            Update_Task = new CheckAndUpdateTask(application_name, current_activity, URL, update_URL, next_activity, BuildConfig.DEBUG, false, 0, new Pair[]{});
             Update_Task.execute();
 
         } else {
 
             final CheckAndUpdateTask final_Update_Task = Update_Task;
-            View.OnClickListener retry_Failed_Network_Task = view -> attempt_Update_Check(application_name,current_activity, URL, final_Update_Task, update_URL, next_activity);
+            View.OnClickListener retry_Failed_Network_Task = view -> attempt_Update_Check(application_name, current_activity, URL, final_Update_Task, update_URL, next_activity);
             displayOfflineLongNoFabBottomSnackBar(current_activity.getWindow().getDecorView(), retry_Failed_Network_Task);
         }
     }

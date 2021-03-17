@@ -12,17 +12,15 @@ import android.widget.ScrollView;
 import androidx.core.util.Pair;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import ndk.utils_android1.ActivityUtils1;
+import ndk.utils_android1.ErrorUtils;
+import ndk.utils_android1.ToastUtils;
 import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android14.ActivityWithContexts;
-import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android14.RestGetTask;
-import ndk.utils_android1.ToastUtils;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils;
 import ndk.utils_android16.ValidationUtils;

@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ndk.utils_android1.ActivityUtils1;
 import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android16.activities.LoginBundleActivity;
 

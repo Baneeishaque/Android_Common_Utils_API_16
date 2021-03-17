@@ -9,13 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ndk.utils_android1.ActivityUtils1;
-import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.LogUtils;
 import ndk.utils_android1.NetworkUtils;
 import ndk.utils_android1.ToastUtils;
 import ndk.utils_android1.UpdateUtils;
+import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android16.ServerUtils;
 
 import static ndk.utils_android1.NetworkUtils.displayFriendlyExceptionMessage;
@@ -68,7 +67,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
             } catch (JSONException e) {
 
-                ErrorUtils.displayException(currentActivity, e,applicationName);
+                ErrorUtils.displayException(currentActivity, e, applicationName);
             }
         }
     }
@@ -86,7 +85,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                 } else {
 
-                    LogUtils.debug(applicationName,"Latest Version...");
+                    LogUtils.debug(applicationName, "Latest Version...");
 
                     if (!securityFlag) {
 
@@ -113,7 +112,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
             }
         } catch (JSONException e) {
 
-            ErrorUtils.displayException(currentActivity, e,applicationName);
+            ErrorUtils.displayException(currentActivity, e, applicationName);
         }
     }
 }

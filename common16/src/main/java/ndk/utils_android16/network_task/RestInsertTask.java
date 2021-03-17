@@ -7,12 +7,11 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-import ndk.utils_android1.NetworkUtils;
 import ndk.utils_android14.NetworkUtils14;
 import ndk.utils_android14.NetworkUtils14.FurtherActions;
 
-import static ndk.utils_android14.NetworkUtils14.performHttpClientPostTask;
 import static ndk.utils_android1.ProgressBarUtils.showProgress;
+import static ndk.utils_android14.NetworkUtils14.performHttpClientPostTask;
 
 public class RestInsertTask extends AsyncTask<Void, Void, String[]> {
 
