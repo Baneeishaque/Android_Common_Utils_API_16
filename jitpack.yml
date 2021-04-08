@@ -1,4 +1,7 @@
 jdk:
   - openjdk11
 before_install:
+  - java --version
+  - pwd
+  - git -V
   - git submodule update --init --recursive
