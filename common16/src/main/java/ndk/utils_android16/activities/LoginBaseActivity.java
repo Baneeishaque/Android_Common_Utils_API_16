@@ -23,7 +23,7 @@ import ndk.utils_android14.ActivityWithContexts;
 import ndk.utils_android14.RestGetTask;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils;
-import ndk.utils_android16.ValidationUtils;
+import ndk.utils_android16.ValidationUtils16;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 
@@ -82,12 +82,12 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
     private void attemptLogin() {
 
         // Reset errors.
-        ValidationUtils.resetErrors(new EditText[]{editTextUsername, editTextPassword});
+        ValidationUtils16.resetErrors(new EditText[]{editTextUsername, editTextPassword});
 
         ArrayList<org.javatuples.Pair<EditText, String>> editTextsWithErrorMessages = new ArrayList<>();
         editTextsWithErrorMessages.add(org.javatuples.Pair.with(editTextUsername, "Please Enter Username..."));
         editTextsWithErrorMessages.add(org.javatuples.Pair.with(editTextPassword, "Please Enter Password..."));
-        org.javatuples.Pair<Boolean, EditText> nonEmptyCheckEditTextPairsResult = ValidationUtils.nonEmptyCheckEditTextPairs(editTextsWithErrorMessages);
+        org.javatuples.Pair<Boolean, EditText> nonEmptyCheckEditTextPairsResult = ValidationUtils16.nonEmptyCheckEditTextPairs(editTextsWithErrorMessages);
 
         if (nonEmptyCheckEditTextPairsResult.getValue0()) {
 
