@@ -13,11 +13,11 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 
-import static ndk.utils_android1.NetworkUtils.isOnline;
-import static ndk.utils_android1.ProgressBarUtils.showProgress;
+import static ndk.utils_android1.NetworkUtils1.isOnline;
+import static ndk.utils_android1.ProgressBarUtils1.showProgress;
 
 /**
  * Created on 20-09-2018 14:16 under VLottery.
@@ -60,7 +60,7 @@ public class Spinner_Utils {
 
         } else {
 
-            ToastUtils.longToast(context, "Internet is unavailable...");
+            ToastUtils1.longToast(context, "Internet is unavailable...");
         }
     }
 }

@@ -7,12 +7,12 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ndk.utils_android1.NetworkUtils;
-import ndk.utils_android1.ProgressBarUtils;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.NetworkUtils1;
+import ndk.utils_android1.ProgressBarUtils1;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android14.NetworkUtils14;
 
-import static ndk.utils_android1.NetworkUtils.isOnline;
+import static ndk.utils_android1.NetworkUtils1.isOnline;
 
 public class HttpApiSelectTaskWrapper {
 
@@ -20,14 +20,14 @@ public class HttpApiSelectTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
+            ProgressBarUtils1.showProgress(true, context, progressBar, scrollView);
             HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponse);
 
             httpApiSelectTask.execute();
 
         } else {
 
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -35,12 +35,12 @@ public class HttpApiSelectTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
+            ProgressBarUtils1.showProgress(true, context, progressBar, scrollView);
             new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONObject).execute();
 
         } else {
 
-            ToastUtils.offlineToast(context);
+            ToastUtils1.offlineToast(context);
         }
     }
 
@@ -48,14 +48,14 @@ public class HttpApiSelectTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
+            ProgressBarUtils1.showProgress(true, context, progressBar, scrollView);
             HttpApiSelectTask httpApiSelectTask = new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONArray);
 
             httpApiSelectTask.execute();
 
         } else {
 
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -63,12 +63,12 @@ public class HttpApiSelectTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBar, scrollView);
+            ProgressBarUtils1.showProgress(true, context, progressBar, scrollView);
             new HttpApiSelectTask(taskUrl, context, progressBar, scrollView, applicationName, asyncResponseJSONArray, errorFlag).execute();
 
         } else {
 
-            ToastUtils.offlineToast(context);
+            ToastUtils1.offlineToast(context);
         }
     }
 
@@ -96,7 +96,7 @@ public class HttpApiSelectTaskWrapper {
 
             } else {
 
-                ToastUtils.longToast(context, "Internet is unavailable");
+                ToastUtils1.longToast(context, "Internet is unavailable");
             }
         }
     }
@@ -143,7 +143,7 @@ public class HttpApiSelectTaskWrapper {
 
     public static void performSplashScreenThenReturnJsonArray(final Context context, final String taskUrl, final String applicationName, final HttpApiSelectTask.AsyncResponseJsonArray asyncResponseJsonArray) {
 
-        if (NetworkUtils.isOnline(context)) {
+        if (NetworkUtils1.isOnline(context)) {
 
             new HttpApiSelectTask(taskUrl, context, applicationName, asyncResponseJsonArray).execute();
 

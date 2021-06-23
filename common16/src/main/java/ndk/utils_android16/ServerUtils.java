@@ -4,8 +4,8 @@ import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ndk.utils_android1.LogUtils;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.LogUtils1;
+import ndk.utils_android1.ToastUtils1;
 
 public class ServerUtils {
 
@@ -17,7 +17,7 @@ public class ServerUtils {
 
         } else if (Integer.parseInt(systemStatus) == 1) {
 
-            LogUtils.debug(applicationName, "System Status is OK");
+            LogUtils1.debug(applicationName, "System Status is OK");
             return true;
         }
         return false;
@@ -27,7 +27,7 @@ public class ServerUtils {
 
         if (checkSystemStatus(context, systemStatus, applicationName)) {
 
-            ToastUtils.shortToast(context, "System Status is OK");
+            ToastUtils1.shortToast(context, "System Status is OK");
             return true;
         }
         return false;
@@ -36,7 +36,7 @@ public class ServerUtils {
     public static void onMaintenanceClose(AppCompatActivity activity) {
 
         //TODO : Close With Message on ActivityUtils
-        ToastUtils.longToast(activity, "System is in Maintenance, Try Again later...");
+        ToastUtils1.longToast(activity, "System is in Maintenance, Try Again later...");
         activity.finish();
     }
 }

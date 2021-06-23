@@ -2,7 +2,7 @@ package ndk.utils_android16;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import ndk.utils_android1.LogUtils;
+import ndk.utils_android1.LogUtils1;
 
 /**
  * Created on 22-07-2018 13:03 under Android_Common_Utils.
@@ -16,7 +16,7 @@ public class FCM_Utils {
             for (String topic : topics) {
 
                 FirebaseMessaging.getInstance().subscribeToTopic(topic);
-                LogUtils.debug(tag, "Subscribed for topic " + topic);
+                LogUtils1.debug(tag, "Subscribed for topic " + topic);
             }
         }
     }
@@ -28,7 +28,7 @@ public class FCM_Utils {
             for (String topic : topics) {
 
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
-                LogUtils.debug(tag, "Unsubscribed from topic " + topic);
+                LogUtils1.debug(tag, "Unsubscribed from topic " + topic);
             }
         }
     }

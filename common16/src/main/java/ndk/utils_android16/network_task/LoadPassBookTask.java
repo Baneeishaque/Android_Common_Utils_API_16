@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 import ndk.utils_android1.DateUtils;
 import ndk.utils_android1.ErrorUtils;
-import ndk.utils_android1.LogUtils;
-import ndk.utils_android1.NetworkUtils;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.LogUtils1;
+import ndk.utils_android1.NetworkUtils1;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android14.NetworkUtils14;
 import ndk.utils_android16.Float_Utils;
 import ndk.utils_android16.JsonUtils;
@@ -28,7 +28,7 @@ import ndk.utils_android16.widgets.pass_book.PassBookTableView;
 import ndk.utils_android16.widgets.pass_book.PassBookTableViewV2;
 
 import static ndk.utils_android1.DateUtils.mysqlDateTimeFormat;
-import static ndk.utils_android1.ProgressBarUtils.showProgress;
+import static ndk.utils_android1.ProgressBarUtils1.showProgress;
 
 public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
@@ -87,7 +87,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
     protected String[] doInBackground(Void... params) {
 
         if (v2Flag) {
-            return NetworkUtils.performHttpClientGetTask(url);
+            return NetworkUtils1.performHttpClientGetTask(url);
         } else {
             return NetworkUtils14.performHttpClientPostTask(url, nameValuePair);
         }
@@ -99,14 +99,14 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
         showProgress(false, currentActivity, progressBar, scrollView);
 
-        NetworkUtils.displayNetworkActionResponse(applicationName, networkActionResponseArray);
+        NetworkUtils1.displayNetworkActionResponse(applicationName, networkActionResponseArray);
 
         ArrayList<PassBookEntry> passBookEntries = new ArrayList<>();
         ArrayList<PassBookEntryV2> passBookEntryV2s = new ArrayList<>();
 
         if (networkActionResponseArray[0].equals("1")) {
 
-            ToastUtils.errorToast(currentActivity);
+            ToastUtils1.errorToast(currentActivity);
 
         } else {
 
@@ -116,7 +116,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                 String tempStatus = tempJsonArray.getJSONObject(0).getString("status");
                 if (tempStatus.equals("2")) {
 
-                    ToastUtils.noEntriesToast(currentActivity);
+                    ToastUtils1.noEntriesToast(currentActivity);
 
                 } else if (tempStatus.equals("0")) {
 
@@ -143,7 +143,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
                                     passBookEntries.add(0, new PassBookEntry(mysqlDateTimeFormat.parse(tempJsonArray.getJSONObject(i).getString("event_date_time")), tempJsonArray.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(tempJsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
 
-                                    LogUtils.debug(applicationName, "Balance : " + balance);
+                                    LogUtils1.debug(applicationName, "Balance : " + balance);
                                 }
 
                                 if (tempJsonArray.getJSONObject(i).getString("particulars").contains("Debit")) {
@@ -152,7 +152,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
                                     passBookEntries.add(new PassBookEntry(mysqlDateTimeFormat.parse(tempJsonArray.getJSONObject(i).getString("event_date_time")), tempJsonArray.getJSONObject(i).getString("particulars"), Double.parseDouble(tempJsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance)));
 
-                                    LogUtils.debug(applicationName, "Balance : " + balance);
+                                    LogUtils1.debug(applicationName, "Balance : " + balance);
                                 }
                             }
 

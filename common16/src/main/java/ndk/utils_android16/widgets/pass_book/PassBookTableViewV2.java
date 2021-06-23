@@ -14,7 +14,7 @@ import de.codecrafters.tableview.toolkit.EndlessOnScrollListener;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android16.R;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 
@@ -107,7 +107,7 @@ public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {
         });
 
         setSwipeToRefreshEnabled(true);
-        setSwipeToRefreshListener(refreshIndicator -> ToastUtils.longToast(context, "Refresh View..."));
+        setSwipeToRefreshListener(refreshIndicator -> ToastUtils1.longToast(context, "Refresh View..."));
 
 //        setHeaderVisible( false );
 //        setHeaderVisible( false,100 );
@@ -118,7 +118,7 @@ public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {
         addDataClickListener((rowIndex, clickedData) -> {
 
             Log.d("Clicked On : ", clickedData.toString());
-            ToastUtils.longToast(context, clickedData.toString());
+            ToastUtils1.longToast(context, clickedData.toString());
         });
 
         addDataLongClickListener((rowIndex, clickedData) -> {
@@ -128,14 +128,14 @@ public class PassBookTableViewV2 extends SortableTableView<PassBookEntryV2> {
             return true;
         });
 
-        addHeaderClickListener(columnIndex -> ToastUtils.longToast(context, "Column : " + columnIndex));
+        addHeaderClickListener(columnIndex -> ToastUtils1.longToast(context, "Column : " + columnIndex));
 
         addOnScrollListener(new EndlessOnScrollListener() {
 
             @Override
             public void onReloadingTriggered(int firstRowItem, int visibleRowCount, int totalRowCount) {
 
-                ToastUtils.longToast(context, "Endless");
+                ToastUtils1.longToast(context, "Endless");
             }
         });
     }

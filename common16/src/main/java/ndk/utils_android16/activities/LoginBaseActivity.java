@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import ndk.utils_android1.ErrorUtils;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android14.ActivityUtils14;
-import ndk.utils_android14.ActivityWithContexts;
+import ndk.utils_android14.ActivityWithContexts14;
 import ndk.utils_android14.RestGetTask;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils;
@@ -29,7 +29,7 @@ import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 
 //TODO : Create Layout initialization
 
-public abstract class LoginBaseActivity extends ActivityWithContexts {
+public abstract class LoginBaseActivity extends ActivityWithContexts14 {
 
     public ProgressBar progressBar;
     public ScrollView scrollView;
@@ -126,7 +126,7 @@ public abstract class LoginBaseActivity extends ActivityWithContexts {
                         break;
 
                     case "0":
-                        ToastUtils.longToast(currentActivityContext, "Login Failure!");
+                        ToastUtils1.longToast(currentActivityContext, "Login Failure!");
                         editTextUsername.requestFocus();
                         break;
 

@@ -8,10 +8,10 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-import ndk.utils_android1.ProgressBarUtils;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.ProgressBarUtils1;
+import ndk.utils_android1.ToastUtils1;
 
-import static ndk.utils_android1.NetworkUtils.isOnline;
+import static ndk.utils_android1.NetworkUtils1.isOnline;
 import static ndk.utils_android14.NetworkUtils14.FurtherActions;
 
 public class RestInsertTaskWrapper {
@@ -22,12 +22,12 @@ public class RestInsertTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressView, formView);
+            ProgressBarUtils1.showProgress(true, context, progressView, formView);
 
             new RestInsertTask(taskUrl, currentActivity, progressView, formView, applicationName, nameValuePairs, viewToFocusOnError, nextActivity).execute();
 
         } else {
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -37,14 +37,14 @@ public class RestInsertTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
+            ProgressBarUtils1.showProgress(true, context, progressBarView, formView);
 
             RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, nextActivity, nextClassExtras);
 
             restInsertTask.execute();
 
         } else {
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -54,14 +54,14 @@ public class RestInsertTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
+            ProgressBarUtils1.showProgress(true, context, progressBarView, formView);
 
             RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, editTextsToClear);
 
             restInsertTask.execute();
 
         } else {
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -71,13 +71,13 @@ public class RestInsertTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
+            ProgressBarUtils1.showProgress(true, context, progressBarView, formView);
 
             new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, editTextsToClear, furtherActions).execute();
 
         } else {
 
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -87,7 +87,7 @@ public class RestInsertTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
+            ProgressBarUtils1.showProgress(true, context, progressBarView, formView);
 
             RestInsertTask restInsertTask = new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError);
 
@@ -95,7 +95,7 @@ public class RestInsertTaskWrapper {
 
         } else {
 
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 
@@ -105,13 +105,13 @@ public class RestInsertTaskWrapper {
 
         if (isOnline(context)) {
 
-            ProgressBarUtils.showProgress(true, context, progressBarView, formView);
+            ProgressBarUtils1.showProgress(true, context, progressBarView, formView);
 
             new RestInsertTask(taskUrl, currentActivity, progressBarView, formView, applicationName, nameValuePairs, viewToFocusOnError, furtherActions).execute();
 
         } else {
 
-            ToastUtils.longToast(context, "Internet is unavailable");
+            ToastUtils1.longToast(context, "Internet is unavailable");
         }
     }
 }

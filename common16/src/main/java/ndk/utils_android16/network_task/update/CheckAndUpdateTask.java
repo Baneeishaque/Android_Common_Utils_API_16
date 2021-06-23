@@ -10,14 +10,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ndk.utils_android1.ErrorUtils;
-import ndk.utils_android1.LogUtils;
-import ndk.utils_android1.NetworkUtils;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.LogUtils1;
+import ndk.utils_android1.NetworkUtils1;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android1.UpdateUtils;
 import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android16.ServerUtils;
 
-import static ndk.utils_android1.NetworkUtils.displayFriendlyExceptionMessage;
+import static ndk.utils_android1.NetworkUtils1.displayFriendlyExceptionMessage;
 import static ndk.utils_android16.update.UpdateApplication.updateApplication;
 
 public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
@@ -51,7 +51,7 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
     @Override
     protected void onPostExecute(final String[] networkActionResponseArray) {
 
-        NetworkUtils.displayNetworkActionResponse(applicationName, networkActionResponseArray);
+        NetworkUtils1.displayNetworkActionResponse(applicationName, networkActionResponseArray);
 
         if (networkActionResponseArray[0].equals("1")) {
 
@@ -85,11 +85,11 @@ public class CheckAndUpdateTask extends AsyncTask<Void, Void, String[]> {
 
                 } else {
 
-                    LogUtils.debug(applicationName, "Latest Version...");
+                    LogUtils1.debug(applicationName, "Latest Version...");
 
                     if (!securityFlag) {
 
-                        ToastUtils.shortToast(currentActivity, "Latest Version...");
+                        ToastUtils1.shortToast(currentActivity, "Latest Version...");
                     }
                     // After completing http call will close this activity and launch main activity
                     if (tabIndexFlag) {

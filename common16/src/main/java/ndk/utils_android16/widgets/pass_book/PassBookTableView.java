@@ -14,7 +14,7 @@ import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
-import ndk.utils_android1.ToastUtils;
+import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android16.R;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntry;
 
@@ -64,7 +64,7 @@ public class PassBookTableView extends SortableTableView<PassBookEntry> {
             @Override
             public void onDataClicked(int rowIndex, PassBookEntry clickedData) {
 
-                ToastUtils.longToast(context, clickedData.toString());
+                ToastUtils1.longToast(context, clickedData.toString());
             }
         });
 
@@ -72,7 +72,7 @@ public class PassBookTableView extends SortableTableView<PassBookEntry> {
             @Override
             public boolean onDataLongClicked(int rowIndex, PassBookEntry clickedData) {
 
-                ToastUtils.longToast(context, clickedData.toString());
+                ToastUtils1.longToast(context, clickedData.toString());
                 return false;
             }
         });
@@ -80,12 +80,12 @@ public class PassBookTableView extends SortableTableView<PassBookEntry> {
         addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScroll(ListView tableDataView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                ToastUtils.longToast(context, "Contents : First Visible Item - " + firstVisibleItem + ", Visible Item Count - " + visibleItemCount + ", Total Item Count - " + totalItemCount);
+                ToastUtils1.longToast(context, "Contents : First Visible Item - " + firstVisibleItem + ", Visible Item Count - " + visibleItemCount + ", Total Item Count - " + totalItemCount);
             }
 
             @Override
             public void onScrollStateChanged(ListView tableDateView, ScrollState scrollState) {
-                ToastUtils.longToast(context, "Scroll State " + scrollState.getValue());
+                ToastUtils1.longToast(context, "Scroll State " + scrollState.getValue());
             }
         });
 

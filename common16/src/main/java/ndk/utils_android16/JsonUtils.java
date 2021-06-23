@@ -21,7 +21,7 @@ import java.util.Objects;
 
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.ExceptionUtils1;
-import ndk.utils_android1.LogUtils;
+import ndk.utils_android1.LogUtils1;
 
 public class JsonUtils {
 
@@ -78,7 +78,7 @@ public class JsonUtils {
 
         } catch (JSONException e) {
 
-            LogUtils.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
+            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
             return jsonArrayToJsonObjectList(new JSONArray(), applicationName);
         }
     }
@@ -94,7 +94,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            LogUtils.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
+            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
         }
         return JSON_object_list;
     }
@@ -125,7 +125,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            LogUtils.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
+            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
         }
 
     }
@@ -165,7 +165,7 @@ public class JsonUtils {
 
             try {
 
-                LogUtils.debug(applicationName, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)));
+                LogUtils1.debug(applicationName, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)));
 
                 String key = jsonObject.names().getString(i);
 
