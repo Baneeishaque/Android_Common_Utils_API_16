@@ -22,7 +22,7 @@ import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android14.ActivityWithContexts14;
 import ndk.utils_android14.RestGetTask;
 import ndk.utils_android16.R;
-import ndk.utils_android16.SharedPreferenceUtils;
+import ndk.utils_android16.SharedPreferenceUtils16;
 import ndk.utils_android16.ValidationUtils16;
 import ndk.utils_android16.network_task.HttpApiSelectTask;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
@@ -121,7 +121,7 @@ public abstract class LoginBaseActivity extends ActivityWithContexts14 {
                 switch (userCount) {
 
                     case "1":
-                        SharedPreferenceUtils.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
+                        SharedPreferenceUtils16.commitSharedPreferences(getApplicationContext(), configure_APPLICATION_NAME(), new Pair[]{new Pair<>("user_id", jsonObject.getString("id"))});
                         ActivityUtils14.startActivityForClassWithFinish(currentActivityContext, configure_NEXT_ACTIVITY_CLASS());
                         break;
 

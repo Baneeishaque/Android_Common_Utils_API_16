@@ -13,7 +13,7 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import ndk.utils_android1.DateUtils;
+import ndk.utils_android1.DateUtils1;
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.LogUtils1;
 import ndk.utils_android1.NetworkUtils1;
@@ -27,7 +27,7 @@ import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 import ndk.utils_android16.widgets.pass_book.PassBookTableView;
 import ndk.utils_android16.widgets.pass_book.PassBookTableViewV2;
 
-import static ndk.utils_android1.DateUtils.mysqlDateTimeFormat;
+import static ndk.utils_android1.DateUtils1.mysqlDateTimeFormat;
 import static ndk.utils_android1.ProgressBarUtils1.showProgress;
 
 public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
@@ -123,7 +123,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                     if (sortFlag) {
 
                         //TODO : Enhancement - Use Direct Pattern
-                        enterTransactions(JsonUtils.sortJsonArrayByDateInSimpleDateFormatField(tempJsonArray, DateUtils.mysqlDateTimeFormat, "event_date_time", applicationName), passBookEntryV2s, 1);
+                        enterTransactions(JsonUtils.sortJsonArrayByDateInSimpleDateFormatField(tempJsonArray, DateUtils1.mysqlDateTimeFormat, "event_date_time", applicationName), passBookEntryV2s, 1);
 
                     } else {
 

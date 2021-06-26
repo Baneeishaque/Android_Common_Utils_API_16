@@ -173,7 +173,7 @@ public class JsonUtils {
                     continue;
                 }
 
-                SharedPreferenceUtils.commitSharedPreferences(applicationContext, applicationName, new Pair[]{new Pair<>(key, jsonObject.get(key))});
+                SharedPreferenceUtils16.commitSharedPreferences(applicationContext, applicationName, new Pair[]{new Pair<>(key, jsonObject.get(key))});
 
             } catch (JSONException json_exception) {
 
