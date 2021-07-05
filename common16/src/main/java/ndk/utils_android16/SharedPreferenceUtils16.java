@@ -14,7 +14,7 @@ public class SharedPreferenceUtils16 {
         commitSharedPreferences(SharedPreferencesUtils1.getSharedPreferences(applicationContext, applicationName), sharedPreferencePairs);
     }
 
-    public static void commitSharedPreferences(SharedPreferences sharedPreferences, Pair[] sharedPreferencePairs) {
+    public static boolean commitSharedPreferences(SharedPreferences sharedPreferences, Pair[] sharedPreferencePairs) {
 
         if (sharedPreferencePairs.length != 0) {
 
@@ -23,8 +23,9 @@ public class SharedPreferenceUtils16 {
 
                 editor.putString(shared_preference_pair.first != null ? shared_preference_pair.first.toString() : null, shared_preference_pair.second != null ? shared_preference_pair.second.toString() : null);
             }
-            editor.apply();
+            return editor.commit();
         }
+        return true;
     }
 
     public static boolean isFirstRun(Context context, String applicationName, FirstRunActions firstRunActions) {
