@@ -6,7 +6,7 @@ import com.chootdev.csnackbar.Duration;
 import com.chootdev.csnackbar.Type;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class SnackbarUtils {
+public class SnackbarUtils16 {
 
     public static void displayShortNoFabSuccessBottomSnackBar(Context context, String message) {
         com.chootdev.csnackbar.Snackbar.with(context, null)

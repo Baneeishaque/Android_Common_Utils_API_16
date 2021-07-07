@@ -4,6 +4,6 @@ import android.content.Context;
 
 public class TodoUtils {
     public static void displayTodoSnackBar(Context context) {
-        SnackbarUtils.displayLongNoFabWarningBottomSnackBar(context, "To Implement...");
+        SnackbarUtils16.displayLongNoFabWarningBottomSnackBar(context, "To Implement...");
     }
 }
